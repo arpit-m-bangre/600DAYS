@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>🕖 Arpit’s Daily Habit Tracker</title>
+
+  <style>
+    /* ===== Theme ===== */
+    :root{
+      --bg: radial-gradient(circle at top left, #0a0a0f, #050505);
+      --panel: rgba(20,20,30,0.7);
+      --border: rgba(255,255,255,0.12);
+      --muted: #cfcfd4;
+      --text: #e0e0e0;
+      --glow: #00ffe0;
+      --glowSoft: rgba(0,255,224,0.1);
+    }
+    *{ box-sizing:border-box; }
+    html,body{ margin:0; padding:0; }
+    body{
+      font-family:'Poppins',system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+      background:var(--bg);
+      color:var(--text);
+      line-height:1.65;
+      overflow-x:hidden;
+    }
+
+    /* ===== Layout ===== */
+    .container{
+      width:min(900px,92%);
+      margin:40px auto;
+      background:var(--panel);
+      border-radius:20px;
+      padding:clamp(20px,4vw,32px);
+      box-shadow:0 0 30px rgba(0,255,200,0.12);
+      backdrop-filter:blur(10px);
+    }
+    h1,h2{
+      color:var(--glow);
+      text-shadow:0 0 10px var(--glow);
+      text-align:center;
+      margin:0 0 14px;
+      line-height:1.25;
+    }
+    h1{ font-size:clamp(1.6rem,2.6vw,2.1rem); }
+    h2{ font-size:clamp(1.25rem,2.2vw,1.6rem); margin-top:26px; }
+    p,li{ color:var(--muted); }
+
+    /* ===== Divider ===== */
+    .rule{
+      height:1px;
+      background:linear-gradient(90deg,transparent,var(--border),transparent);
+      margin:20px 0;
+    }
+
+    /* ===== Progress ===== */
+    .progress{
+      margin:10px 0 6px;
+      display:flex; align-items:center; justify-content:space-between;
+      gap:12px;
+    }
+    .progress-bar{
+      position:relative;
+      height:14px; flex:1;
+      border:1px solid var(--border);
+      border-radius:999px;
+      overflow:hidden;
+      background:rgba(255,255,255,0.06);
+      box-shadow:inset 0 0 0 1px rgba(255,255,255,0.03);
+    }
+    .progress-fill{
+      height:100%;
+      width:0%;
+      background:linear-gradient(90deg, rgba(0,255,224,0.5), rgba(0,255,224,0.9));
+      box-shadow:0 0 14px rgba(0,255,224,0.35);
+      transition:width .25s ease;
+    }
+    .progress-text{
+      min-width:72px; text-align:right; font-weight:600; color:#dffff9;
+    }
+
+    /* ===== Actions ===== */
+    .actions{
+      display:flex; gap:10px; justify-content:flex-end; margin:8px 0 4px;
+    }
+    .btn{
+      border:1px solid var(--glow);
+      color:var(--glow);
+      background:transparent;
+      padding:8px 12px;
+      border-radius:10px;
+      font-size:.95rem;
+      cursor:pointer;
+      transition:.2s ease;
+    }
+    .btn:hover{ background:var(--glowSoft); box-shadow:0 0 10px rgba(0,255,224,0.25); }
+
+    /* ===== Lists ===== */
+    .list{
+      list-style:none; padding:0; margin:8px 0 0;
+      display:grid; grid-template-columns:1fr; gap:8px;
+    }
+    .item{
+      display:flex; align-items:center; gap:10px;
+      padding:10px 12px;
+      border:1px solid var(--border);
+      background:rgba(255,255,255,0.03);
+      border-radius:12px;
+    }
+    .item input[type="checkbox"]{
+      width:20px; height:20px; accent-color: #00ffe0; cursor:pointer;
+    }
+    .item label{ flex:1; cursor:pointer; }
+
+    /* hint text */
+    .hint{ font-size:.92rem; text-align:center; color:#cfeeed; margin-top:4px; }
+
+    /* goal card */
+    .goal{
+      background:var(--glowSoft);
+      border:1px solid rgba(0,255,200,0.25);
+      padding:18px;
+      border-radius:12px;
+      text-align:center;
+      color:var(--glow);
+      font-weight:600;
+      box-shadow:0 0 20px rgba(0,255,200,0.10);
+      margin-top:22px;
+    }
+
+    @media (max-width:700px){
+      .btn{ padding:8px 10px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🕖 Arpit’s Daily Habit Tracker</h1>
+
+    <!-- Progress + actions -->
+    <div class="progress">
+      <div class="progress-bar"><div id="progressFill" class="progress-fill"></div></div>
+      <div id="progressText" class="progress-text">0%</div>
+    </div>
+    <div class="actions">
+      <button id="resetBtn" class="btn">↺ Reset for Today</button>
+    </div>
+    <p class="hint">Your checklist auto-saves to this device. Reset clears today’s checkmarks.</p>
+
+    <div class="rule"></div>
+
+    <!-- Morning -->
+    <h2>🌅 Morning Routine</h2>
+    <ul class="list">
+      <li class="item">
+        <input id="m-wake" type="checkbox"><label for="m-wake">⏰ Wake up – 6:30 / 8:30 AM</label>
+      </li>
+      <li class="item">
+        <input id="m-water" type="checkbox"><label for="m-water">💧 Drink 2 glasses of water (only once)</label>
+      </li>
+      <li class="item">
+        <input id="m-med" type="checkbox"><label for="m-med">🧘‍♂️ Meditation – calm & balanced mind</label>
+      </li>
+      <li class="item">
+        <input id="m-workout" type="checkbox"><label for="m-workout">💪 Workout – strength + energy</label>
+      </li>
+      <li class="item">
+        <input id="m-brush" type="checkbox"><label for="m-brush">🪥 Brush teeth</label>
+      </li>
+      <li class="item">
+        <input id="m-care" type="checkbox"><label for="m-care">🌿 Ayurvedic skin & hair care</label>
+      </li>
+      <li class="item">
+        <input id="m-groom" type="checkbox"><label for="m-groom">✂️ Grooming</label>
+      </li>
+      <li class="item">
+        <input id="m-bath" type="checkbox"><label for="m-bath">🚿 Bath</label>
+      </li>
+      <li class="item">
+        <input id="m-chalisa" type="checkbox"><label for="m-chalisa">🙏 Hanuman Chalisa ॐ</label>
+      </li>
+      <li class="item">
+        <input id="m-breakfast" type="checkbox"><label for="m-breakfast">🍳 Healthy breakfast</label>
+      </li>
+    </ul>
+
+    <!-- Workday -->
+    <h2>💼 Workday (9:00 / 11:00 AM – 5:30 / 7:30 PM)</h2>
+    <ul class="list">
+      <li class="item">
+        <input id="w-lunch" type="checkbox"><label for="w-lunch">🥗 Healthy lunch</label>
+      </li>
+      <li class="item">
+        <input id="w-supp" type="checkbox"><label for="w-supp">💊 Supplements</label>
+      </li>
+      <li class="item">
+        <input id="w-water" type="checkbox"><label for="w-water">💦 Hydration – 3+ litres daily</label>
+      </li>
+      <li class="item">
+        <input id="w-nap" type="checkbox"><label for="w-nap">😴 Power nap (short)</label>
+      </li>
+      <li class="item">
+        <input id="w-walk" type="checkbox"><label for="w-walk">🚶‍♂️ Evening walk</label>
+      </li>
+      <li class="item">
+        <input id="w-reading" type="checkbox"><label for="w-reading">📚 English reading & self-growth</label>
+      </li>
+    </ul>
+
+    <!-- Night -->
+    <h2>🌙 Night Routine</h2>
+    <ul class="list">
+      <li class="item">
+        <input id="n-dinner" type="checkbox"><label for="n-dinner">🍲 Healthy dinner (1 plate)</label>
+      </li>
+      <li class="item">
+        <input id="n-skin" type="checkbox"><label for="n-skin">🧴 Night skincare + hair oiling</label>
+      </li>
+      <li class="item">
+        <input id="n-lip" type="checkbox"><label for="n-lip">💋 Lip moisturizer</label>
+      </li>
+      <li class="item">
+        <input id="n-brush" type="checkbox"><label for="n-brush">🪥 Brush teeth</label>
+      </li>
+      <li class="item">
+        <input id="n-relax" type="checkbox"><label for="n-relax">😂 Relax time – Comedy content (1 hr)</label>
+      </li>
+      <li class="item">
+        <input id="n-sleep" type="checkbox"><label for="n-sleep">😴 Sleep by 12–12:30 / 2–2:30 AM</label>
+      </li>
+      <li class="item">
+        <input id="n-posture" type="checkbox"><label for="n-posture">🛏️ Sleep straight – no bed X</label>
+      </li>
+    </ul>
+
+    <!-- Personality -->
+    <h2>⚖️ Personality Goals</h2>
+    <ul class="list">
+      <li class="item">
+        <input id="p-rancho" type="checkbox"><label for="p-rancho">🧠 Rancho-like: Simple, calm, and curious</label>
+      </li>
+      <li class="item">
+        <input id="p-comm" type="checkbox"><label for="p-comm">😌 Calm & balanced communication</label>
+      </li>
+      <li class="item">
+        <input id="p-body" type="checkbox"><label for="p-body">🗣️ Confident body language</label>
+      </li>
+      <li class="item">
+        <input id="p-inspo" type="checkbox"><label for="p-inspo">💬 Inspired by: Anshu | Zakir | Munawar | Kapil | Samay</label>
+      </li>
+      <li class="item">
+        <input id="p-consistency" type="checkbox"><label for="p-consistency">⏳ Consistency: 50Y → 1Y → 1M → 1W → 1D → 1H</label>
+      </li>
+    </ul>
+
+    <div class="goal">
+      🚫 NO distractions: ❌ No YouTube • ❌ No Instagram • ❌ No Songs
+      <br/>🧘‍♂️ Focus. Discipline. Self-Mastery.
+    </div>
+  </div>
+
+  <script>
+    // ===== Simple localStorage checklist with daily scope =====
+    (function(){
+      const STORAGE_KEY = 'arpit_habits';
+      const todayKey = new Date().toISOString().slice(0,10); // YYYY-MM-DD
+      const store = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+
+      // Ensure today bucket
+      if(!store[todayKey]) store[todayKey] = {};
+      // Remove buckets older than 7 days to keep storage small
+      Object.keys(store).forEach(k=>{
+        const age = (Date.now() - new Date(k+'T00:00:00').getTime())/86400000;
+        if(age > 7) delete store[k];
+      });
+
+      const boxes = Array.from(document.querySelectorAll('input[type="checkbox"]'));
+      const progressFill = document.getElementById('progressFill');
+      const progressText = document.getElementById('progressText');
+      const resetBtn = document.getElementById('resetBtn');
+
+      // Restore state
+      boxes.forEach(cb=>{
+        cb.checked = !!store[todayKey][cb.id];
+        cb.addEventListener('change', ()=>{
+          store[todayKey][cb.id] = cb.checked;
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(store));
+          updateProgress();
+        });
+      });
+
+      function updateProgress(){
+        const total = boxes.length;
+        const done = boxes.filter(cb=>cb.checked).length;
+        const pct = total ? Math.round((done/total)*100) : 0;
+        progressFill.style.width = pct + '%';
+        progressText.textContent = pct + '%';
+      }
+
+      // Reset today
+      resetBtn.addEventListener('click', ()=>{
+        if(!confirm('Clear all checkmarks for today?')) return;
+        store[todayKey] = {};
+        boxes.forEach(cb=> cb.checked = false);
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(store));
+        updateProgress();
+      });
+
+      updateProgress();
+    })();
+  </script>
+</body>
+</html>

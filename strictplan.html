@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>🌅 LIFE 2.0 — Discipline Blueprint</title>
+  <style>
+    :root{
+      --bg:#0a0b10;          /* deep space */
+      --bg-2:#0f1020;        /* panel */
+      --txt:#d7e1ff;         /* soft ice */
+      --muted:#9aa4bf;       /* muted */
+      --neon:#64ffda;        /* teal neon */
+      --neon-2:#7c5cff;      /* violet neon */
+      --danger:#ff6b6b;
+      --ok:#19db8a;
+      --card:rgba(16,18,28,.66);
+      --stroke:rgba(127,149,255,.28);
+      --glass:rgba(255,255,255,.04);
+      --shadow:0 10px 30px rgba(0,0,0,.45), inset 0 0 0 1px var(--stroke);
+      --radius:18px;
+    }
+
+    /* ===== Global ===== */
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0; background:radial-gradient(1200px 600px at 10% 10%, rgba(100,255,218,.08), transparent 60%),
+      radial-gradient(900px 500px at 90% 20%, rgba(124,92,255,.09), transparent 60%),
+      radial-gradient(700px 500px at 50% 110%, rgba(124,92,255,.07), transparent 60%),
+      linear-gradient(180deg, #0a0b10 0%, #080a12 100%);
+      color:var(--txt); font:400 16px/1.6 system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji","Segoe UI Emoji";
+      overflow-x:hidden;
+    }
+    a{color:var(--neon)}
+    h1,h2,h3{line-height:1.15; margin:0 0 .6rem}
+    h1{font-weight:800; font-size:clamp(28px, 5vw, 46px); letter-spacing:.4px}
+    h2{font-weight:700; font-size:clamp(20px, 3.2vw, 28px)}
+    p{margin:.5rem 0 1rem}
+
+    /* floating stars */
+    .stars{position:fixed; inset:0; pointer-events:none; z-index:0;}
+    .stars span{position:absolute; width:2px; height:2px; background:rgba(255,255,255,.5); border-radius:50%; filter:drop-shadow(0 0 6px rgba(124,92,255,.9)); animation:twinkle var(--d) linear infinite; opacity:.8}
+    @keyframes twinkle{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-10px) scale(1.6); opacity:.6}}
+
+    /* header */
+    header{
+      position:relative; z-index:1; padding:28px 18px 10px; backdrop-filter:saturate(140%) blur(6px);
+    }
+    .mast{
+      max-width:1150px; margin:0 auto; padding:18px; border-radius:var(--radius);
+      background:linear-gradient(120deg, rgba(124,92,255,.14), rgba(100,255,218,.06)); box-shadow:var(--shadow);
+    }
+    .subtitle{color:var(--muted); font-size:clamp(14px,2.2vw,18px)}
+    .motto{display:inline-block; margin-top:8px; padding:6px 12px; border-radius:999px; background:linear-gradient(90deg, rgba(100,255,218,.14), rgba(124,92,255,.14)); border:1px solid var(--stroke); color:#cfe; font-weight:600; text-transform:uppercase; letter-spacing:.6px}
+
+    /* nav */
+    .nav{
+      position:sticky; top:0; z-index:10; padding:10px 16px; background:rgba(8,10,18,.65); backdrop-filter:blur(8px) saturate(140%);
+      border-bottom:1px solid var(--stroke);
+    }
+    .nav .wrap{max-width:1150px; margin:0 auto; display:flex; gap:10px; flex-wrap:wrap; align-items:center}
+    .nav a{display:inline-flex; gap:8px; align-items:center; padding:10px 14px; border-radius:12px; text-decoration:none; color:var(--txt); border:1px solid transparent}
+    .nav a:hover{border-color:var(--stroke); background:var(--glass)}
+    .nav .right{margin-left:auto; display:flex; gap:8px}
+    .btn{cursor:pointer; border:1px solid var(--stroke); background:linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02)); border-radius:12px; padding:10px 14px; color:var(--txt)}
+
+    /* layout */
+    .container{max-width:1150px; margin:18px auto 100px; padding:0 18px; position:relative; z-index:1}
+    .grid{display:grid; gap:18px}
+    @media (min-width: 900px){ .grid-2{grid-template-columns:1.2fr .8fr} }
+
+    /* cards */
+    .card{background:linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.01)); border:1px solid var(--stroke); box-shadow:var(--shadow); border-radius:var(--radius); padding:18px}
+    .card h2 .ping{display:inline-block; width:8px; height:8px; background:var(--neon); border-radius:50%; box-shadow:0 0 18px var(--neon); margin-left:8px}
+
+    /* table */
+    .table{width:100%; border-collapse:separate; border-spacing:0; overflow:hidden; border-radius:12px; border:1px solid var(--stroke)}
+    .table th, .table td{padding:12px 14px; text-align:left}
+    .table thead th{font-size:.9rem; color:#cfe; background:rgba(124,92,255,.14)}
+    .table tbody tr{background:rgba(255,255,255,.02)}
+    .table tbody tr:nth-child(odd){background:rgba(255,255,255,.04)}
+    .now{position:relative; outline:2px solid var(--neon); box-shadow:0 0 0 2px rgba(100,255,218,.15) inset}
+    .badge{display:inline-flex; align-items:center; gap:8px; padding:4px 10px; border-radius:999px; font-size:.78rem; border:1px solid var(--stroke); background:rgba(100,255,218,.1)}
+
+    /* accordion */
+    details{background:linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.01)); border:1px solid var(--stroke); border-radius:12px; padding:14px 16px}
+    details+details{margin-top:10px}
+    summary{cursor:pointer; list-style:none; display:flex; align-items:center; justify-content:space-between; font-weight:700}
+    summary::-webkit-details-marker{display:none}
+
+    /* checklist */
+    .checklist{display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:10px}
+    .item{display:flex; align-items:center; gap:12px; padding:12px; border:1px solid var(--stroke); border-radius:12px; background:rgba(255,255,255,.03)}
+    .item input{accent-color:var(--neon); width:18px; height:18px}
+    .status{margin-left:auto; font-weight:700; color:var(--ok)}
+
+    /* progress */
+    .progress{height:10px; background:rgba(255,255,255,.05); border:1px solid var(--stroke); border-radius:999px; overflow:hidden}
+    .progress > i{display:block; height:100%; width:0%; background:linear-gradient(90deg, var(--neon), var(--neon-2)); box-shadow:0 0 18px rgba(100,255,218,.35) inset}
+
+    /* footer */
+    footer{padding:40px 16px 80px; text-align:center; color:var(--muted)}
+
+    /* floating to-top */
+    .to-top{position:fixed; right:18px; bottom:18px; z-index:11; opacity:.9}
+
+    /* subtle in-view animation */
+    .reveal{transform:translateY(16px); opacity:0; transition:all .6s ease}
+    .reveal.show{transform:none; opacity:1}
+  </style>
+</head>
+<body>
+  <!-- starfield -->
+  <div class="stars" aria-hidden="true"></div>
+
+  <header>
+    <div class="mast">
+      <h1>🌅 LIFE 2.0 — DISCIPLINE BLUEPRINT <span class="ping" aria-hidden="true"></span></h1>
+      <p class="subtitle">Theme: You’re not restarting your life — you’re rebuilding it stronger, calmer, and laser-focused.</p>
+      <span class="motto">Motto: “Simple. Focused. Unstoppable.”</span>
+    </div>
+  </header>
+
+  <nav class="nav">
+    <div class="wrap">
+      <a href="#routine">🕗 Routine</a>
+      <a href="#energizer">💥 Morning Energizer</a>
+      <a href="#hydration">💧 Hydration</a>
+      <a href="#rules">💪 Discipline Rules</a>
+      <a href="#dashboard">⚙️ Dashboard</a>
+      <a href="#narrative">📖 Narrative</a>
+      <div class="right">
+        <button class="btn" id="focusToggle">🧠 Focus Mode</button>
+        <button class="btn" id="markAll">✅ Mark All Done</button>
+      </div>
+    </div>
+  </nav>
+
+  <main class="container">
+    <section id="routine" class="card reveal">
+      <h2>🕗 Daily Routine Table</h2>
+      <p class="subtitle">Automatically highlights the current block based on your local time.</p>
+      <div class="table-wrap">
+        <table class="table" id="routineTable" aria-label="Daily routine table">
+          <thead>
+            <tr><th style="width:32%">Time</th><th>Routine</th><th style="width:20%">Status</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>8:30 AM</td><td>🌞 Wake Up</td><td></td></tr>
+            <tr><td>8:30–8:35 AM</td><td>💧 Hydrate</td><td></td></tr>
+            <tr><td>8:35–9:30 AM</td><td>🏋️ Morning Energizer Routine</td><td></td></tr>
+            <tr><td>9:30–10:30 AM</td><td>🧼 Grooming & Prep</td><td></td></tr>
+            <tr><td>10:30 AM</td><td>🍳 Breakfast</td><td></td></tr>
+            <tr><td>11:00 AM – 8:00 PM</td><td>💼 Deep Work Zone</td><td></td></tr>
+            <tr><td>12:30–1:00 PM</td><td>🥗 Lunch</td><td></td></tr>
+            <tr><td>2:30 PM</td><td>💧 Hydration Checkpoint</td><td></td></tr>
+            <tr><td>4:30–6:30 PM</td><td>🌇 Evening Refresh</td><td></td></tr>
+            <tr><td>7:30–8:30 PM</td><td>🍽️ Dinner</td><td></td></tr>
+            <tr><td>9:30 PM</td><td>💧 Final Hydration</td><td></td></tr>
+            <tr><td>10:00–11:30 PM</td><td>📖 Reflection & Gratitude</td><td></td></tr>
+            <tr><td>11:30–12:00 AM</td><td>🧴 Night Care</td><td></td></tr>
+            <tr><td>12:00–12:30 AM</td><td>😴 Sleep</td><td></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="energizer" class="grid grid-2 reveal">
+      <div class="card">
+        <h2>🌞 Morning Energizer Routine <small style="color:var(--muted); font-weight:500">(30–40 min total)</small></h2>
+        <details open>
+          <summary>1. Warm-Up (5 min)</summary>
+          <p>Light movements — neck rolls, arm circles, leg swings, and 1-min jog.</p>
+        </details>
+        <details>
+          <summary>2. Skipping / Cardio (5–7 min)</summary>
+          <p>300–500 skips or fast jumping in place. Builds stamina and focus.</p>
+        </details>
+        <details>
+          <summary>3. Strength Set (15–20 min)</summary>
+          <p>Push-ups, squats, planks, and mountain climbers — 3 rounds each. Rest briefly between sets.</p>
+        </details>
+        <details>
+          <summary>4. Stretch & Breath (5–10 min)</summary>
+          <p>Cat–Cow, side bends, butterfly stretch, and deep breathing.</p>
+        </details>
+        <details>
+          <summary>5. Meditation (5 min)</summary>
+          <p>“I am calm, strong, and grateful.”<br>💧 Finish with warm water and a few moments of gratitude.</p>
+        </details>
+      </div>
+      <div class="card">
+        <h2>✨ Tips</h2>
+        <ul>
+          <li>Prep your mat and bottle at night. Reduce friction.</li>
+          <li>Keep reps clean, form-first. Consistency over intensity.</li>
+          <li>Track sets with the dashboard below.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="hydration" class="card reveal">
+      <h2>💧 Hydration Schedule</h2>
+      <div class="table-wrap">
+        <table class="table" aria-label="Hydration schedule">
+          <thead><tr><th>Time</th><th>Amount</th></tr></thead>
+          <tbody>
+            <tr><td>8:30 AM</td><td>500 ml</td></tr>
+            <tr><td>10:00 AM</td><td>500 ml</td></tr>
+            <tr><td>11:30 AM</td><td>500 ml</td></tr>
+            <tr><td>2:30 PM</td><td>500 ml</td></tr>
+            <tr><td>6:00 PM</td><td>500 ml</td></tr>
+            <tr><td>9:30 PM</td><td>500 ml</td></tr>
+            <tr><td><strong>Total</strong></td><td>~3 Liters/day</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="rules" class="card reveal">
+      <h2>💪 Discipline Rules (Mindset 101)</h2>
+      <ul>
+        <li>One day = one victory. Win today, forget tomorrow.</li>
+        <li>Don’t chase motivation — build discipline.</li>
+        <li>Cut noise: no unnecessary scrolling or gossip.</li>
+        <li>Trust God’s timing — move with faith, not fear.</li>
+        <li>Stay well-groomed, humble, and consistent.</li>
+        <li>Keep your circle small, loyal, and positive.</li>
+        <li>When tired, rest — don’t quit.</li>
+        <li>Stick to the plan — no thinking, only doing.</li>
+        <li>No adult content or masturbation — protect your energy and focus.</li>
+      </ul>
+    </section>
+
+    <section id="dashboard" class="card reveal">
+      <h2>⚙️ Daily Summary Dashboard</h2>
+      <div style="margin:.4rem 0 .8rem; color:var(--muted)">Tick items as you complete them. Progress auto-updates & saves locally.</div>
+      <div class="progress" aria-label="Completion progress"><i id="progressBar"></i></div>
+      <div class="checklist" id="checks">
+        <label class="item"><input type="checkbox" data-key="wake"><span>⏰ Wake Up — <em style="color:var(--muted)">8:30 AM</em></span><span class="status">✅</span></label>
+        <label class="item"><input type="checkbox" data-key="sleep"><span>😴 Sleep — <em>12:00–12:30 AM</em></span><span class="status">✅</span></label>
+        <label class="item"><input type="checkbox" data-key="water"><span>💧 Water — <em>6 × 500 ml</em></span><span class="status">✅</span></label>
+        <label class="item"><input type="checkbox" data-key="meals"><span>🍽️ Meals — <em>3 clean + green tea</em></span><span class="status">✅</span></label>
+        <label class="item"><input type="checkbox" data-key="exercise"><span>💪 Exercise — <em>45–60 mins</em></span><span class="status">✅</span></label>
+        <label class="item"><input type="checkbox" data-key="work"><span>💼 Work — <em>11:00 AM – 8:00 PM</em></span><span class="status">✅</span></label>
+        <label class="item"><input type="checkbox" data-key="avoid"><span>🚫 Avoid — <em>Sugar, junk, distractions</em></span><span class="status">✅</span></label>
+        <label class="item"><input type="checkbox" data-key="mindset"><span>🧘 Mindset — <em>Simple. Focused. Unstoppable.</em></span><span class="status">✅</span></label>
+        <label class="item"><input type="checkbox" data-key="groom"><span>👕 Grooming — <em>Daily</em></span><span class="status">✅</span></label>
+        <label class="item"><input type="checkbox" data-key="circle"><span>🧑‍🤝‍🧑 Circle — <em>Small & Positive</em></span><span class="status">✅</span></label>
+      </div>
+    </section>
+
+    <section id="narrative" class="card reveal">
+      <h2>📖 Narrative Summary</h2>
+      <p>Each morning begins with silence — the calm before greatness. You rise with the sun, body awake, mind grounded. The world moves in chaos, but you walk with clarity. Every meal is fuel, every workout a promise, every task a brick in your foundation. By night, you’ve moved closer to mastery — quietly, consistently, faithfully. You close your eyes, not tired, but satisfied — ready to repeat and rise again.</p>
+    </section>
+
+  </main>
+
+  <footer>
+    <div>Built for your <strong>LIFE 2.0</strong> era. Stay calm. Stay sharp. Stay unstoppable.</div>
+  </footer>
+
+  <a href="#top" class="btn to-top" title="Back to Top">⬆️</a>
+
+  <script>
+    /* === Starfield generation === */
+    (function(){
+      const s=document.querySelector('.stars');
+      for(let i=0;i<80;i++){
+        const sp=document.createElement('span');
+        sp.style.left=Math.random()*100+'%';
+        sp.style.top=Math.random()*100+'%';
+        sp.style.opacity=(.4+Math.random()*0.6).toFixed(2);
+        sp.style.setProperty('--d', (4+Math.random()*6)+'s');
+        s.appendChild(sp);
+      }
+    })();
+
+    /* === In-view reveal === */
+    const io=new IntersectionObserver(entries=>{
+      entries.forEach(e=> e.target.classList.toggle('show', e.isIntersecting));
+    },{threshold:.12});
+    document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+    /* === Smooth scroll for anchor links === */
+    document.querySelectorAll('a[href^="#"]').forEach(a=>{
+      a.addEventListener('click', e=>{
+        const id=a.getAttribute('href');
+        const target=document.querySelector(id);
+        if(target){ e.preventDefault(); target.scrollIntoView({behavior:'smooth', block:'start'}); }
+      });
+    });
+
+    /* === Focus Mode === */
+    const focusBtn=document.getElementById('focusToggle');
+    let focus=false;
+    focusBtn.addEventListener('click',()=>{
+      focus=!focus;
+      document.body.style.filter=focus? 'grayscale(.08) contrast(1.06)' : '';
+      document.querySelectorAll('section').forEach(sec=>sec.style.opacity=focus? .92 : 1);
+      focusBtn.textContent= focus? '🧠 Focus Mode On' : '🧠 Focus Mode';
+    });
+
+    /* === Dashboard persistence & progress === */
+    const checks=document.getElementById('checks');
+    const boxes=[...checks.querySelectorAll('input[type="checkbox"]')];
+    const bar=document.getElementById('progressBar');
+    const save=()=>{
+      const data=Object.fromEntries(boxes.map(b=>[b.dataset.key, b.checked]));
+      localStorage.setItem('life20_checks', JSON.stringify(data));
+      update();
+    };
+    const load=()=>{
+      try{ const data=JSON.parse(localStorage.getItem('life20_checks')||'{}');
+        boxes.forEach(b=> b.checked= !!data[b.dataset.key]);
+      }catch(_){/* noop */}
+      update();
+    };
+    const update=()=>{
+      const done=boxes.filter(b=>b.checked).length; const pct=Math.round(done/boxes.length*100);
+      bar.style.width=pct+'%'; bar.setAttribute('aria-valuenow', pct);
+      bar.title=pct+'% completed';
+    };
+    boxes.forEach(b=> b.addEventListener('change', save));
+    load();
+
+    document.getElementById('markAll').addEventListener('click',()=>{
+      const allChecked = boxes.every(b=>b.checked);
+      boxes.forEach(b=> b.checked=!allChecked);
+      save();
+    });
+
+    /* === Highlight current routine row === */
+    function toMinutes(h,m,ampm){
+      h = (h%12) + (ampm==='PM'?12:0);
+      return h*60 + m;
+    }
+    function parseRange(label){
+      // supports "8:30 AM", "8:30–8:35 AM", "11:00 AM – 8:00 PM", "11:30–12:00 AM"
+      const clean = label.replace(/\s+/g,' ').replace(/–/g,'-').replace(/\s?-\s?/,'-').trim();
+      if(clean.includes('-')){
+        // like 8:30-8:35 AM or 11:00 AM-8:00 PM
+        const [a,b] = clean.split('-');
+        const tail = (b.match(/AM|PM/i)||[''])[0].toUpperCase();
+        const headHas = /AM|PM/i.test(a);
+        const apA = (a.match(/AM|PM/i)||[tail])[0].toUpperCase();
+        const apB = tail;
+        const [h1,m1] = (a.match(/(\d{1,2}):(\d{2})/)||[]).slice(1).map(Number);
+        const [h2,m2] = (b.match(/(\d{1,2}):(\d{2})/)||[]).slice(1).map(Number);
+        const start = toMinutes(h1||0,m1||0, apA||'AM');
+        const end = toMinutes(h2||0,m2||0, apB||'AM');
+        return {start,end};
+      } else {
+        // single time -> treat as point event lasting 15 min
+        const m = clean.match(/(\d{1,2}):(\d{2})\s?(AM|PM)/i);
+        if(!m) return null;
+        const start = toMinutes(+m[1], +m[2], m[3].toUpperCase());
+        return {start, end:start+15};
+      }
+    }
+    (function highlightNow(){
+      const rows=[...document.querySelectorAll('#routineTable tbody tr')];
+      const now=new Date();
+      const mins=now.getHours()*60 + now.getMinutes();
+      let applied=false;
+      rows.forEach(r=>{
+        const str=r.children[0].textContent.trim();
+        const range=parseRange(str);
+        if(!range) return;
+        // handle wrap past midnight
+        let {start,end}=range;
+        if(end < start) end += 24*60;
+        let cur=mins;
+        if(mins < 240 && start > 20*60) cur += 24*60; // if after midnight but comparing previous evening ranges
+        if(cur>=start && cur<=end && !applied){
+          r.classList.add('now'); applied=true;
+          r.children[2].innerHTML='<span class="badge">NOW</span>';
+        }
+      });
+    })();
+  </script>
+</body>
+</html>

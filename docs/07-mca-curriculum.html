@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>🎓 MCA Master Study Plan (2025–2027)</title>
+
+  <style>
+    /* ===== Theme (consistent across docs) ===== */
+    :root{
+      --bg: radial-gradient(circle at top left, #0a0a0f, #050505);
+      --panel: rgba(20, 20, 30, 0.7);
+      --border: rgba(255,255,255,0.1);
+      --glow: #00ffe0;
+      --text: #e0e0e0;
+      --muted: #cfcfd4;
+    }
+    *{ box-sizing:border-box; }
+    html,body{ margin:0; padding:0; }
+    body{
+      font-family:'Poppins',system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+      background:var(--bg);
+      color:var(--text);
+      line-height:1.65;
+      overflow-x:hidden;
+    }
+
+    /* ===== Layout ===== */
+    .container{
+      width:min(1000px,92%);
+      margin:40px auto;
+      background:var(--panel);
+      border-radius:20px;
+      padding:clamp(20px,4vw,32px);
+      box-shadow:0 0 30px rgba(0,255,200,0.12);
+      backdrop-filter:blur(10px);
+    }
+
+    /* ===== Headings ===== */
+    h1,h2,h3{
+      color:var(--glow);
+      text-shadow:0 0 10px var(--glow);
+      text-align:center;
+      margin:0 0 14px;
+      line-height:1.25;
+    }
+    h1{ font-size:clamp(1.6rem,2.6vw,2.1rem); }
+    h2{ font-size:clamp(1.25rem,2.2vw,1.6rem); margin-top:28px; }
+    p,li{ color:var(--muted); font-size:1rem; }
+    .center{ text-align:center; }
+
+    /* ===== Divider ===== */
+    .rule{
+      height:1px;
+      background:linear-gradient(90deg,transparent,var(--border),transparent);
+      margin:24px 0;
+    }
+
+    /* ===== Label (emoji-title) ===== */
+    .label{
+      font-size:1.02rem;
+      margin:18px 0 8px;
+      color:#fff;
+      border-left:4px solid var(--glow);
+      padding-left:10px;
+      text-shadow:0 0 10px var(--glow);
+    }
+
+    /* ===== Lists ===== */
+    ul.clean{ list-style:none; padding-left:0; margin:8px 0 0; }
+    ul.clean li{
+      padding:8px 12px;
+      border:1px solid var(--border);
+      background:rgba(255,255,255,0.03);
+      border-radius:10px;
+      margin:8px 0;
+    }
+
+    /* ===== Tables (mobile scroll + sticky header) ===== */
+    .table-wrap{
+      margin-top:14px;
+      border:1px solid var(--border);
+      border-radius:12px;
+      overflow:hidden;
+      background:rgba(255,255,255,0.04);
+      box-shadow:inset 0 0 0 1px rgba(255,255,255,0.03);
+    }
+    .table-wrap>.scroll{
+      overflow-x:auto;
+      -webkit-overflow-scrolling:touch;
+    }
+    table{
+      width:100%;
+      border-collapse:collapse;
+      min-width:680px; /* allow horizontal scroll on small screens */
+    }
+    thead th{
+      position:sticky; top:0;
+      background:rgba(0,255,200,0.16);
+      color:var(--glow);
+      font-weight:600;
+      letter-spacing:.2px;
+    }
+    th,td{
+      border-bottom:1px solid var(--border);
+      padding:12px 10px;
+      text-align:center;
+      font-size:.98rem;
+      white-space:nowrap;
+    }
+    tbody tr:nth-child(odd){ background:rgba(255,255,255,0.03); }
+
+    /* ===== Goal card ===== */
+    .goal{
+      background:rgba(0,255,200,0.10);
+      border:1px solid rgba(0,255,200,0.25);
+      padding:18px;
+      border-radius:12px;
+      text-align:center;
+      color:var(--glow);
+      font-weight:600;
+      box-shadow:0 0 20px rgba(0,255,200,0.10);
+      margin-top:22px;
+    }
+
+    @media (max-width:700px){
+      th,td{ font-size:.9rem; padding:10px 8px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🎓 MCA Master Study Plan (2025–2027)</h1>
+
+    <!-- Timeline -->
+    <h2>📅 Semester Timeline</h2>
+    <ul class="clean">
+      <li>1 Sep – 31 Dec 2025 (120d) → <strong>SEM 1</strong></li>
+      <li>1 Jan – 30 Apr 2026 (120d) → <strong>SEM 2 + NICE OFFLINE</strong></li>
+      <li>1 May – 31 Aug 2026 (120d) → <strong>Summer Break</strong></li>
+      <li>1 Sep – 31 Dec 2026 (120d) → <strong>SEM 3 🏆 CodeVita + 🚀 TCS NQT 1</strong></li>
+      <li>1 Jan – 30 Apr 2027 (120d) → <strong>SEM 4 🚀 TCS NQT 2</strong></li>
+    </ul>
+    <p class="center">📖 Study intensely during timetable release — 25 study days + 10 exam days + 5 buffer = <strong>~40 days + 10 days project</strong></p>
+
+    <div class="rule"></div>
+
+    <!-- Subjects -->
+    <h2>📚 Semester-Wise Subjects</h2>
+
+    <div class="label">🧩 SEM 1 (Exams: Dec 1–15, 2025)</div>
+    <ul class="clean">
+      <li>Advanced Java</li>
+      <li>Data Communication & Networks</li>
+      <li>PHP Web Programming</li>
+      <li>Advanced DBMS</li>
+      <li>Software Engineering</li>
+    </ul>
+
+    <div class="label">💻 SEM 2 (Exams: May 1–15, 2026)</div>
+    <ul class="clean">
+      <li>C# & ASP.NET</li>
+      <li>Cloud Computing ☁️</li>
+      <li>Computer Graphics</li>
+      <li><strong>Elective (Choose One):</strong></li>
+      <li>– Computer Architecture</li>
+      <li>– Operations Research</li>
+      <li>– Cyber Forensics</li>
+      <li>– Android Programming</li>
+      <li><strong>Special Project – 100 Marks</strong></li>
+    </ul>
+
+    <div class="label">📊 SEM 3 (Exams: Dec 1–15, 2026)</div>
+    <ul class="clean">
+      <li>Big Data Analytics</li>
+      <li>Data Mining</li>
+      <li>Python Programming</li>
+      <li><strong>Elective (Choose One):</strong></li>
+      <li>– Artificial Intelligence</li>
+      <li>– Mobile Computing</li>
+      <li>– Machine Learning</li>
+      <li>– Soft Computing</li>
+    </ul>
+
+    <div class="label">🧠 SEM 4 (Exams: Apr 1–15, 2027)</div>
+    <ul class="clean">
+      <li><strong>Major Project – 600 Marks</strong></li>
+      <li><strong>Seminar – 200 Marks</strong></li>
+    </ul>
+
+    <!-- Practicals -->
+    <h2>🧪 Practicals (Semesters 1, 2 & 3)</h2>
+    <div class="table-wrap">
+      <div class="scroll">
+        <table aria-label="Practicals">
+          <thead>
+            <tr><th>Practical</th><th>Covers</th><th>Marks</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Practical I</td><td>Papers 1, 2, 3</td><td>100</td></tr>
+            <tr><td>Practical II</td><td>Papers 4, 5</td><td>100</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Marks -->
+    <h2 class="mt-24">🧾 Total Marks per Semester</h2>
+    <div class="table-wrap">
+      <div class="scroll">
+        <table aria-label="Total marks per semester">
+          <thead>
+            <tr>
+              <th>Semester</th>
+              <th>Theory + Assignments</th>
+              <th>Practicals</th>
+              <th>Projects & Seminar</th>
+              <th>Total Marks</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>SEM 1</td><td>500</td><td>200</td><td>–</td><td>700</td></tr>
+            <tr><td>SEM 2</td><td>500</td><td>200</td><td>–</td><td>700</td></tr>
+            <tr><td>SEM 3</td><td>500</td><td>200</td><td>–</td><td>700</td></tr>
+            <tr><td>SEM 4</td><td>–</td><td>–</td><td>800</td><td>800</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <p class="center"><strong>🎯 Grand Total = 700 + 700 + 700 + 800 = 3,000 Marks</strong></p>
+
+    <div class="rule"></div>
+
+    <!-- Paper Pattern -->
+    <h2>🧾 MCA Theory Paper Pattern (80 Marks)</h2>
+    <ul class="clean">
+      <li>⏱️ <strong>Duration:</strong> 3 Hours</li>
+      <li>🧮 <strong>Total Questions:</strong> 5</li>
+      <li>🔹 <strong>Q1 – Q4:</strong> 16 Marks Each (Choice-Based)
+        <ul class="clean">
+          <li>A. 8 Marks</li>
+          <li>B. 8 Marks</li>
+          <li><em>OR</em></li>
+          <li>C. 8 Marks</li>
+          <li>D. 8 Marks</li>
+        </ul>
+      </li>
+      <li>✅ Subtotal = 4 × 16 = 64 Marks</li>
+      <li>🔹 <strong>Q5: Short Questions</strong> (16 Marks)
+        <ul class="clean">
+          <li>A. 4 Marks</li>
+          <li>B. 4 Marks</li>
+          <li>C. 4 Marks</li>
+          <li>D. 4 Marks</li>
+        </ul>
+      </li>
+      <li>✅ <strong>Grand Total = 64 + 16 = 80 Marks</strong></li>
+    </ul>
+
+    <div class="goal">
+      🎯 “Plan smart. Study deep. Score consistently.”<br/>
+      Arpit’s MCA Master Plan — Building the Academic Core for Future AI & Data Science Success 💻📚
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>🧭 Data Science Roadmap — 2027–2035 Vision</title>
+
+  <style>
+    /* ===== Theme (consistent with 01 & 02) ===== */
+    :root{
+      --bg: radial-gradient(circle at top left, #0a0a0f, #050505);
+      --panel: rgba(20, 20, 30, 0.7);
+      --border: rgba(255,255,255,0.1);
+      --glow: #00ffe0;
+      --text: #e0e0e0;
+      --muted: #cfcfd4;
+    }
+    *{ box-sizing: border-box; }
+    html, body{ margin:0; padding:0; }
+    body{
+      font-family: 'Poppins', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.65;
+      overflow-x: hidden;
+    }
+
+    /* ===== Layout ===== */
+    .container{
+      width: min(1000px, 92%);
+      margin: 40px auto;
+      background: var(--panel);
+      border-radius: 20px;
+      padding: clamp(20px, 4vw, 32px);
+      box-shadow: 0 0 30px rgba(0,255,200,0.12);
+      backdrop-filter: blur(10px);
+    }
+
+    /* ===== Headings ===== */
+    h1, h2, h3{
+      color: var(--glow);
+      text-shadow: 0 0 10px var(--glow);
+      text-align: center;
+      margin: 0 0 14px;
+      line-height: 1.25;
+    }
+    h1{ font-size: clamp(1.6rem, 2.6vw, 2.1rem); }
+    h2{ font-size: clamp(1.25rem, 2.2vw, 1.6rem); margin-top: 28px; }
+    h3{ font-size: 1.05rem; }
+
+    p, li{ color: var(--muted); font-size: 1rem; }
+    .center{ text-align: center; }
+
+    /* ===== Section rule ===== */
+    .rule{
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border), transparent);
+      margin: 24px 0;
+    }
+
+    /* ===== Label ===== */
+    .label{
+      font-size: 1.02rem;
+      margin: 18px 0 8px;
+      color: #fff;
+      border-left: 4px solid var(--glow);
+      padding-left: 10px;
+      text-shadow: 0 0 10px var(--glow);
+    }
+
+    /* ===== Lists ===== */
+    ul.clean{ list-style: none; padding-left: 0; margin: 8px 0 0; }
+    ul.clean li{
+      padding: 8px 12px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.03);
+      border-radius: 10px;
+      margin: 8px 0;
+    }
+
+    /* ===== Tables (mobile scroll + sticky header) ===== */
+    .table-wrap{
+      margin-top: 14px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      background: rgba(255,255,255,0.04);
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.03);
+    }
+    .table-wrap > .scroll{
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+    table{
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 680px; /* allow horizontal scroll on small screens */
+    }
+    thead th{
+      position: sticky;
+      top: 0;
+      background: rgba(0,255,200,0.16);
+      color: var(--glow);
+      font-weight: 600;
+      letter-spacing: .2px;
+    }
+    th, td{
+      border-bottom: 1px solid var(--border);
+      padding: 12px 10px;
+      text-align: center;
+      font-size: .98rem;
+      white-space: nowrap;
+    }
+    tbody tr:nth-child(odd){ background: rgba(255,255,255,0.03); }
+
+    /* ===== Goal/Note card ===== */
+    .goal{
+      background: rgba(0,255,200,0.10);
+      border: 1px solid rgba(0,255,200,0.25);
+      padding: 18px;
+      border-radius: 12px;
+      text-align: center;
+      color: var(--glow);
+      font-weight: 600;
+      box-shadow: 0 0 20px rgba(0,255,200,0.10);
+      margin-top: 22px;
+    }
+
+    /* ===== Pre (resume block) ===== */
+    pre{
+      background: rgba(255,255,255,0.05);
+      color: var(--text);
+      padding: 16px;
+      border-radius: 12px;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+      border: 1px solid var(--border);
+      margin: 10px 0 0;
+    }
+
+    /* ===== Spacing helpers ===== */
+    .mt-8{ margin-top: 8px; }
+    .mt-16{ margin-top: 16px; }
+    .mt-24{ margin-top: 24px; }
+
+    @media (max-width: 700px){
+      th, td{ font-size: .9rem; padding: 10px 8px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🧭 Your Career Destiny: Data Science (2027–2035 Vision)</h1>
+    <p class="center"><em>“You were born with numbers in your mind, logic in your heart, and curiosity in your soul — that combination belongs to one world: Data Science.” 💻📊</em></p>
+
+    <div class="rule"></div>
+
+    <!-- Fit for Data Science -->
+    <h2>🧩 Why You Are the Perfect Fit for Data Science</h2>
+    <div class="table-wrap">
+      <div class="scroll">
+        <table aria-label="Why you fit data science">
+          <thead>
+            <tr>
+              <th>🎯 Foundation</th>
+              <th>📘 Your Qualification</th>
+              <th>💡 Data Science Relevance</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>🔢 Mathematics</td><td>88% (10th), 83% (12th)</td><td>Backbone of algorithms & ML models</td></tr>
+            <tr><td>📊 Statistics</td><td>B.Sc. Major</td><td>Core of data interpretation & predictive modeling</td></tr>
+            <tr><td>💻 Computer Science</td><td>86% (12th) + MCA (8.5+ CGPA)</td><td>Programming, data pipelines, cloud AI</td></tr>
+            <tr><td>🧠 Analytical Thinking</td><td>Proven academic record</td><td>Ideal mindset for insights & problem-solving</td></tr>
+            <tr><td>🌱 Consistent Growth</td><td>Math → Stats → MCA</td><td>Perfect evolution toward AI/ML</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Market -->
+    <h2 class="mt-24">⚡ Future Market Power (India 2025–2030)</h2>
+    <div class="table-wrap">
+      <div class="scroll">
+        <table aria-label="Market comparison">
+          <thead>
+            <tr>
+              <th>📈 Metric</th>
+              <th>💻 SDE</th>
+              <th>📊 Data Scientist</th>
+              <th>🌟 Winner</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>Job Volume</td><td>100% (many roles)</td><td>25–30% (specialized)</td><td>SDE</td></tr>
+            <tr><td>Skill Uniqueness</td><td>Moderate</td><td>💥 Very High (Math + Code + Stats)</td><td>Data Science</td></tr>
+            <tr><td>Avg. Salary (0–5 yrs)</td><td>₹6–18 LPA</td><td>₹7–25 LPA</td><td>Data Science</td></tr>
+            <tr><td>Growth Ceiling (10+ yrs)</td><td>₹60 LPA</td><td>₹1 Cr+</td><td>Data Science 🚀</td></tr>
+            <tr><td>Global Demand (AI/ML)</td><td>8% YoY</td><td>💹 40% YoY</td><td>Data Science</td></tr>
+            <tr><td>Fit with Your Background</td><td>70%</td><td>💯 100%</td><td>✅ Data Science</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Salary -->
+    <h2 class="mt-24">💰 Salary Projection (2027–2035)</h2>
+    <div class="table-wrap">
+      <div class="scroll">
+        <table aria-label="Salary projection">
+          <thead>
+            <tr>
+              <th>🗓️ Year</th>
+              <th>🎓 Stage</th>
+              <th>🧠 Role</th>
+              <th>💸 Expected Salary</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>2027</td><td>MCA Graduate</td><td>Data Analyst / ML Associate</td><td>₹6–12 LPA</td></tr>
+            <tr><td>2029</td><td>2 yrs Exp</td><td>Data Scientist / ML Engineer</td><td>₹15–25 LPA</td></tr>
+            <tr><td>2032</td><td>5–6 yrs Exp</td><td>Senior DS / MLOps Specialist</td><td>₹25–45 LPA</td></tr>
+            <tr><td>2035</td><td>8–10 yrs Exp</td><td>Lead DS / AI Manager</td><td>₹50 LPA – ₹1 Cr+ 🚀</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- World moving -->
+    <h2 class="mt-24">🌍 Where the World Is Moving</h2>
+    <ul class="clean">
+      <li>🔹 Every app, every company, every decision — runs on data.</li>
+      <li>🔹 The next 10 years belong to AI, ML, and analytics, not just code.</li>
+      <li>🔹 While others build systems, you’ll build intelligence.</li>
+    </ul>
+
+    <!-- Advantage Index -->
+    <h2 class="mt-24">💎 Arpit’s Advantage Index (2025)</h2>
+    <div class="table-wrap">
+      <div class="scroll">
+        <table aria-label="Advantage index">
+          <thead>
+            <tr>
+              <th>Factor</th>
+              <th>Weight</th>
+              <th>Your Score</th>
+              <th>Comment</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>Math Foundation</td><td>20%</td><td>19/20</td><td>Excellent</td></tr>
+            <tr><td>Statistics</td><td>20%</td><td>20/20</td><td>Perfect major</td></tr>
+            <tr><td>Programming</td><td>20%</td><td>17/20</td><td>MCA gives depth</td></tr>
+            <tr><td>Logic & Problem Solving</td><td>20%</td><td>18/20</td><td>Consistently strong</td></tr>
+            <tr><td>Growth Potential</td><td>20%</td><td>19/20</td><td>Aligned with AI future</td></tr>
+            <tr><th>Total</th><th>100%</th><th>93% Fit ✅</th><th>Ideal for Data Science</th></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Motivation -->
+    <h2 class="mt-24">🌟 Final Motivational Conclusion</h2>
+    <p class="center">
+      🧠 You are not just a student of Math and Computers — you are a future architect of intelligence.<br/>
+      The world is shifting from coding apps to coding brains (AI).<br/>
+      With your foundation in Math + Statistics + Programming,<br/>
+      you’re not following the Data Science wave — you’re meant to lead it. 🌍💥<br/>
+      The path won’t be easy, but it’s the one where you’ll be rare, respected, and richly rewarded. 💪💼
+    </p>
+
+    <!-- Resume Preview -->
+    <div class="label">📄 Example Resume (Preview)</div>
+    <pre>
+<b>Arpit Bangre</b>
+📞 +91-9923423527 | 📧 arpit.m.bangre@gmail.com | 🌐 arpitbangre.com
+💻 github.com/arpit-bangre | 🔗 linkedin.com/in/arpitbangre | 📍 Nagpur, MH
+
+<b>PROFILE</b>
+Detail-oriented Data Scientist skilled in Python, SQL, and Power BI. Experienced in data analysis,
+machine learning, and predictive modeling with a passion for data-driven insights.
+
+<b>EDUCATION</b>
+Shri Shivaji Science College, Nagpur, India
+B.Sc. & M.C.A in Computer Science — A Grade        2022 – 2025
+
+<b>SKILLS</b>
+Python, R, SQL, C++ | Pandas, NumPy, Scikit-learn, TensorFlow, Power BI, Tableau
+MySQL, MongoDB | EDA, Feature Engineering, Model Evaluation, Data Cleaning
+
+<b>EXPERIENCE</b>
+Data Science Intern — Alyx (Remote)                 May 2026 – Oct 2026
+• Built ML models & Power BI dashboards improving efficiency by 40%.
+• Automated predictive analytics workflows with Scikit-learn.
+
+<b>PROJECTS</b>
+• Sales Forecasting — 92% accuracy (Random Forest)
+• Sentiment Analysis — NLP with NLTK & WordCloud
+• Customer Churn Prediction — Logistic Regression + XGBoost
+
+<b>RESEARCH & CERTIFICATIONS</b>
+• “Machine Learning Approaches for Predictive Analytics”, IJDSR Journal — May 2026
+• Skillians Data Science Bootcamp — Oct 2026
+
+<b>ACHIEVEMENTS</b>
+🥇 LeetCode Badge: Solved 500+ DSA problems
+    </pre>
+
+    <div class="goal">
+      🎯 Vision 2035 — Lead the world of AI & Data Science with wisdom, integrity, and impact. 🚀
+    </div>
+  </div>
+</body>
+</html>
