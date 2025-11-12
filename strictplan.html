@@ -8,7 +8,7 @@
   <meta name="theme-color" content="#64ffda" />
 
   <!-- Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
 
   <style>
     :root{
@@ -30,7 +30,7 @@
       --radius:18px;
 
       /* Typography */
-      --font: Inter, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji","Segoe UI Emoji";
+      --font: 'Plus Jakarta Sans', Inter, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji","Segoe UI Emoji";
       --display: "Space Grotesk", var(--font);
     }
     /* ===== Light mode (auto via toggle) ===== */
@@ -48,6 +48,7 @@
     /* ===== Global ===== */
     *{box-sizing:border-box}
     html,body{height:100%}
+    html{scroll-behavior:smooth}
     body{
       margin:0; background:
         radial-gradient(1200px 600px at 10% 0%, color-mix(in oklab, var(--neon) 18%, transparent) 0%, transparent 60%),
@@ -56,6 +57,7 @@
         linear-gradient(180deg, var(--bg) 0%, var(--bg-2) 100%);
       color:var(--txt); font:400 16px/1.6 var(--font);
       overflow-x:hidden;
+      -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
     }
     @media (prefers-reduced-motion: reduce){ *{animation-duration:.001ms !important; animation-iteration-count:1 !important; transition:none !important; scroll-behavior:auto !important} }
 
@@ -100,12 +102,30 @@
     .card{background:linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.01)); border:1px solid var(--stroke); box-shadow:var(--shadow); border-radius:var(--radius); padding:18px; position:relative; overflow:hidden}
     .card h2 .ping{display:inline-block; width:8px; height:8px; background:var(--neon); border-radius:50%; box-shadow:0 0 18px var(--neon); margin-left:8px}
 
-    /* Table */
-    .table{width:100%; border-collapse:separate; border-spacing:0; overflow:hidden; border-radius:12px; border:1px solid var(--stroke)}
+    /* ===== Table (desktop default) ===== */
+    .table-wrap{width:100%; overflow:auto; -webkit-overflow-scrolling:touch; scrollbar-gutter: stable both-edges}
+    .table{width:100%; border-collapse:separate; border-spacing:0; overflow:hidden; border-radius:12px; border:1px solid var(--stroke); min-width:520px}
     .table th, .table td{padding:12px 14px; text-align:left}
-    .table thead th{font-size:.9rem; color:color-mix(in oklab, var(--txt) 92%, white 8%); background:color-mix(in oklab, var(--neon-2) 14%, transparent)}
+    .table thead th{font-size:.9rem; color:color-mix(in oklab, var(--txt) 92%, white 8%); background:color-mix(in oklab, var(--neon-2) 14%, transparent); position:sticky; top:0; z-index:1}
     .table tbody tr{background:rgba(255,255,255,.02); position:relative; transition:transform .25s ease, box-shadow .25s ease, background .25s ease}
     .table tbody tr:nth-child(odd){background:rgba(255,255,255,.04)}
+    .table td:first-child, .table th:first-child{position:sticky; left:0; background:inherit; backdrop-filter:blur(2px)}
+
+    /* ===== Stack mode (mobile) ===== */
+    @media (max-width: 720px){
+      /* turn table into card-list */
+      .table{border:none; min-width:0}
+      .table thead{display:none}
+      .table tbody{display:grid; gap:12px}
+      .table tr{display:grid; grid-template-columns:1fr; border:1px solid var(--stroke); border-radius:12px; overflow:hidden}
+      .table td{display:grid; grid-template-columns:120px 1fr; gap:10px; align-items:center; padding:10px 12px; border-bottom:1px dashed color-mix(in oklab, var(--stroke) 60%, transparent)}
+      .table td:last-child{border-bottom:none}
+      .table td::before{content:attr(data-th); font-weight:700; color:var(--muted)}
+      /* specific widths for time/status labels */
+      #routineTable td:nth-child(1)::before{content:'Time'}
+      #routineTable td:nth-child(2)::before{content:'Routine'}
+      #routineTable td:nth-child(3)::before{content:'Status'}
+    }
 
     /* Multi-highlight styles */
     .now{--glow:0 0 0 0 rgba(0,0,0,0)}
@@ -173,6 +193,13 @@
 
     /* Clock */
     .clock{font-feature-settings:"tnum" 1, "ss01" 1; font-variant-numeric:tabular-nums; font-family:var(--display); font-weight:800}
+
+    /* Nice mobile scrollbars */
+    @supports (scrollbar-color: auto) {
+      .table-wrap{scrollbar-width:thin; scrollbar-color: color-mix(in oklab, var(--neon) 40%, transparent) transparent}
+    }
+    .table-wrap::-webkit-scrollbar{height:10px}
+    .table-wrap::-webkit-scrollbar-thumb{background:linear-gradient(90deg, var(--neon), var(--neon-2)); border-radius:999px}
   </style>
 </head>
 <body>
@@ -208,7 +235,7 @@
     <!-- Routine -->
     <section id="routine" class="card reveal">
       <h2>🕗 Daily Routine Table</h2>
-      <p class="subtitle">Highlights current blocks by local time. The most specific window glows stronger.</p>
+      <p class="subtitle">Mobile-friendly cards below 720px. Current blocks glow stronger.</p>
       <div class="table-wrap">
         <table class="table" id="routineTable" aria-label="Daily routine table">
           <thead>
@@ -236,7 +263,7 @@
         <button class="btn" id="addRow">➕ Add Row</button>
         <button class="btn" id="saveRoutine">💾 Save Routine</button>
         <button class="btn" id="resetRoutine">↩️ Reset</button>
-        <small>Drag to reorder (Alt+↑/↓), edit cell text inline.</small>
+        <small>Drag to reorder (Alt+↑/↓), tap cells to edit.</small>
       </div>
     </section>
 
@@ -404,7 +431,7 @@
     },{threshold:.12});
     $$('.reveal').forEach(el=>io.observe(el));
 
-    /* ========= Smooth anchor scroll ========= */
+    /* ========= Smooth anchor scroll (plus native scroll-behavior) ========= */
     $$('a[href^="#"]').forEach(a=>{
       a.addEventListener('click', e=>{
         const id=a.getAttribute('href');
@@ -467,7 +494,7 @@
       if(!saved) return;
       routineTable.innerHTML = saved;
     }
-    function saveRoutine(){ storage.set(routineKey, routineTable.innerHTML); toast('✅ Routine saved'); highlightNow(); bindRowEvents(); }
+    function saveRoutine(){ storage.set(routineKey, routineTable.innerHTML); toast('✅ Routine saved'); highlightNow(); bindRowEvents(); addThLabels('#routineTable'); }
     function resetRoutine(){ localStorage.removeItem(routineKey); location.reload(); }
 
     function makeEditable(td){ td.contentEditable = 'true'; td.spellcheck=false; td.addEventListener('blur', saveRoutine, {once:false}); }
@@ -513,6 +540,18 @@
     $('#resetRoutine').addEventListener('click', resetRoutine);
 
     loadRoutine(); bindRowEvents();
+
+    /* ========= Add data-th labels for mobile stack tables ========= */
+    function addThLabels(selector){
+      const table = document.querySelector(selector);
+      if(!table) return;
+      const heads = [...table.querySelectorAll('thead th')].map(th=>th.textContent.trim());
+      table.querySelectorAll('tbody tr').forEach(tr=>{
+        [...tr.children].forEach((td,i)=> td.setAttribute('data-th', heads[i] || ''));
+      });
+    }
+    addThLabels('#routineTable');
+    addThLabels('#hydrationTable');
 
     /* ========= Multi‑row highlight of current routine ========= */
     function toMinutes(h,m,ampm){ h = (h%12) + (ampm==='PM'?12:0); return h*60 + m }
@@ -595,7 +634,7 @@
         if(data.checks) { storage.set(checkKey, data.checks); loadChecks(); }
         if(data.prefs){ setTheme(data.prefs.theme||'dark'); if(data.prefs.accent) applyAccent(data.prefs.accent); }
         if(data.streak) storage.set('life20_streak', data.streak);
-        saveRoutine(); saveWater(); toast('✅ Data imported');
+        saveRoutine(); saveWater(); addThLabels('#routineTable'); addThLabels('#hydrationTable'); toast('✅ Data imported');
       }catch(err){ toast('⚠️ Import failed'); console.error(err); }
     });
 
@@ -604,7 +643,7 @@
     const hydrationTable = $('#hydrationTable tbody');
 
     function loadWater(){ const saved = storage.get(waterKey); if(saved) hydrationTable.innerHTML = saved; }
-    function saveWater(){ storage.set(waterKey, hydrationTable.innerHTML); toast('💧 Hydration saved'); bindHydrationEvents(); }
+    function saveWater(){ storage.set(waterKey, hydrationTable.innerHTML); toast('💧 Hydration saved'); bindHydrationEvents(); addThLabels('#hydrationTable'); }
     function resetWater(){ localStorage.removeItem(waterKey); location.reload(); }
     function bindHydrationEvents(){ $$('#hydrationTable tbody tr').forEach(tr=>{ [...tr.children].forEach(td=>{ if(td.cellIndex<2){ td.contentEditable='true'; td.spellcheck=false; td.addEventListener('blur', saveWater); } }); }); }
 

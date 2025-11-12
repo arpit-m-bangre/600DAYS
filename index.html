@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>🌅 LIFE 2.0 — Discipline Blueprint · 600 Days</title>
 
   <!-- SEO / Social -->
@@ -15,16 +15,10 @@
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Orbitron:wght@600&display=swap" rel="stylesheet">
 
-  <!-- Optional folder CSS (kept for your structure) -->
-  <link rel="preload" href="css/style.css" as="style" />
-  <link rel="stylesheet" href="css/style.css">
-  <link rel="stylesheet" href="css/animations.css">
-  <link rel="stylesheet" href="css/responsive.css">
-
   <style>
-    /* =============================
-       THEME TOKENS
-       ============================= */
+    /* =========================================================
+       PERFORMANCE-FIRST THEME (mobile-friendly, buttery smooth)
+       ========================================================= */
     :root{
       --bg-1: #06080d;
       --bg-2: #0a0f1a;
@@ -36,86 +30,94 @@
       --brand-2: #2ab3ff;
       --border: rgba(0,255,224,.22);
       --ring: rgba(0,255,224,.45);
-      --card-shadow: 0 12px 32px rgba(0,0,0,.45), 0 0 40px rgba(0,255,224,.12);
+      --card-shadow: 0 8px 22px rgba(0,0,0,.45), 0 0 30px rgba(0,255,224,.10);
       --danger: #ff7b7b;
     }
 
     *{box-sizing:border-box}
     html,body{height:100%}
+
+    /* Smooth page scrolling */
+    html { scroll-behavior: smooth; }
+
     body{
-      margin:0; font-family:'Poppins',system-ui,Segoe UI,Roboto,Arial,sans-serif; color:var(--text);
+      margin:0;
+      font-family:'Poppins',system-ui,Segoe UI,Roboto,Arial,sans-serif;
+      color:var(--text);
       background: var(--bg-1);
       overflow-x:hidden;
-      transition: background 1s ease, color .3s ease;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      -webkit-overflow-scrolling: touch; /* iOS smooth */
+      transition: background .6s ease, color .3s ease;
     }
 
-    /* Subtle noise layer (always-on for depth) */
+    /* Subtle static noise layer (no animation = zero jank) */
     body::before{
       content:""; position:fixed; inset:0; pointer-events:none; z-index:0;
       background-image: radial-gradient(rgba(255,255,255,.05) 1px, transparent 1px);
-      background-size: 3px 3px; opacity:.25; mix-blend-mode:soft-light;
+      background-size: 3px 3px; opacity:.22; mix-blend-mode:soft-light;
     }
 
     /* =============================
-       REACTIVE NEON BACKGROUND STACK
-       (pure CSS + a lightweight canvas starfield)
+       LIGHT BACKGROUND STACK
        ============================= */
-    #bg { position: fixed; inset: 0; z-index: -2; overflow: clip; }
+    #bg { position: fixed; inset: 0; z-index: -2; overflow: clip; contain: strict; }
 
-    /* Animated gradient wash */
     .bg-gradient {
-      position:absolute; inset:-10%; filter: blur(30px);
+      position:absolute; inset:-10%;
+      filter: blur(26px);
       background:
         radial-gradient(1200px 800px at 20% 10%, #0d1626 0%, transparent 60%),
         radial-gradient(900px 600px at 80% 20%, #071421 0%, transparent 60%),
-        radial-gradient(700px 500px at 40% 90%, #0b0f16 0%, transparent 60%),
-        conic-gradient(from 0deg at 50% 50%, rgba(0,255,224,.16), rgba(42,179,255,.10), rgba(0,255,224,.14), rgba(42,179,255,.10));
-      animation: hueShift 20s linear infinite;
+        radial-gradient(700px 500px at 40% 90%, #0b0f16 0%, transparent 60%);
+      will-change: opacity, transform;
+      animation: bgBreathe 16s ease-in-out infinite;
+    }
+    @keyframes bgBreathe {
+      0%,100% { opacity:.9; transform: translate3d(0,0,0) scale(1) }
+      50% { opacity:.8; transform: translate3d(0,-2%,0) scale(1.02) }
     }
 
-    @keyframes hueShift {
-      0% { filter: blur(30px) hue-rotate(0deg) saturate(110%); }
-      50%{ filter: blur(30px) hue-rotate(25deg) saturate(125%); }
-      100%{ filter: blur(30px) hue-rotate(0deg) saturate(110%); }
-    }
-
-    /* Neon grid for subtle techno look */
     .bg-grid {
-      position:absolute; inset:0; opacity:.09; mask-image: radial-gradient(55% 60% at 50% 30%, black 55%, transparent 100%);
+      position:absolute; inset:0; opacity:.07;
+      mask-image: radial-gradient(55% 60% at 50% 30%, black 55%, transparent 100%);
       background:
-        linear-gradient(transparent 31px, rgba(0,255,224,.35) 32px),
-        linear-gradient(90deg, transparent 31px, rgba(0,255,224,.35) 32px);
+        linear-gradient(transparent 31px, rgba(0,255,224,.30) 32px),
+        linear-gradient(90deg, transparent 31px, rgba(0,255,224,.30) 32px);
       background-size: 32px 32px;
-      transform: perspective(900px) rotateX(65deg) translateY(25%);
+      transform: perspective(900px) rotateX(55deg) translateY(22%);
       transform-origin: 50% 0%;
-      filter: drop-shadow(0 0 6px rgba(0,255,224,.35));
+      filter: drop-shadow(0 0 6px rgba(0,255,224,.25));
+      will-change: transform;
     }
 
-    /* Soft aurora glow moving behind content */
     .bg-aurora {
-      position:absolute; inset:-20%; filter: blur(60px) saturate(120%);
+      position:absolute; inset:-20%; filter: blur(52px) saturate(120%);
       background:
-        radial-gradient(50% 45% at 20% 30%, rgba(0,255,224,.25), transparent 60%),
-        radial-gradient(50% 45% at 80% 20%, rgba(42,179,255,.22), transparent 60%),
-        radial-gradient(60% 55% at 50% 80%, rgba(0,255,224,.18), transparent 60%);
-      animation: auroraDrift 22s ease-in-out infinite;
+        radial-gradient(50% 45% at 20% 30%, rgba(0,255,224,.22), transparent 60%),
+        radial-gradient(50% 45% at 80% 20%, rgba(42,179,255,.20), transparent 60%),
+        radial-gradient(60% 55% at 50% 80%, rgba(0,255,224,.16), transparent 60%);
+      animation: auroraDrift 18s ease-in-out infinite;
+      will-change: transform, opacity;
     }
     @keyframes auroraDrift {
-      0%,100% { transform: translate3d(0,0,0) scale(1); }
-      50% { transform: translate3d(0,-3%,0) scale(1.04); }
+      0%,100% { transform: translate3d(0,0,0) scale(1); opacity:.95 }
+      50% { transform: translate3d(0,-3%,0) scale(1.03); opacity:.9 }
     }
 
-    /* Floating orbs (blurred circles) for depth */
-    .orb { position:absolute; width:38vmin; aspect-ratio:1; border-radius:50%; filter: blur(30px);
-      background: radial-gradient(circle at 35% 35%, rgba(0,255,224,.22), rgba(0,255,224,0) 65%);
-      mix-blend-mode: screen; animation: float 16s ease-in-out infinite; opacity:.8; }
+    /* Blur orbs disabled on mobile for perf (see media query) */
+    .orb { position:absolute; width:38vmin; aspect-ratio:1; border-radius:50%;
+      filter: blur(28px);
+      background: radial-gradient(circle at 35% 35%, rgba(0,255,224,.20), rgba(0,255,224,0) 65%);
+      mix-blend-mode: screen; animation: float 14s ease-in-out infinite; opacity:.75; will-change: transform; }
     .orb.o1 { left:-8vmin; top:10vmin; }
     .orb.o2 { right:-10vmin; top:18vmin; animation-delay: -6s; }
     .orb.o3 { left:15vmin; bottom:-6vmin; animation-delay: -3s; }
-    @keyframes float { 0%,100%{ transform: translateY(0) } 50%{ transform: translateY(-6%) } }
+    @keyframes float { 0%,100%{ transform: translateY(0) } 50%{ transform: translateY(-5%) } }
 
-    /* Starfield canvas (drawn by JS) */
-    #stars { position:absolute; inset:0; opacity:.35; }
+    /* Starfield canvas (adaptive in JS) */
+    #stars { position:absolute; inset:0; opacity:.32; }
 
     /* =============================
        APP UI
@@ -125,35 +127,38 @@
     #login{
       position:fixed; inset:0; z-index:2000;
       display:flex; align-items:center; justify-content:center;
-      /* fallback solid for safety */
       background: transparent;
-      transition: opacity .6s ease, visibility .6s ease;
+      transition: opacity .5s ease, visibility .5s ease;
+      will-change: opacity;
     }
     #login.hidden{ opacity:0; visibility:hidden; pointer-events:none; }
 
     .login-card{
-      width:min(360px,92%); padding:28px 24px;
-      border-radius:18px; border:1px solid var(--border);
+      width:min(360px,92%); padding:24px 20px;
+      border-radius:16px; border:1px solid var(--border);
       background: linear-gradient(0deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
-      backdrop-filter: blur(14px);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
       box-shadow: var(--card-shadow); text-align:center;
     }
-    .login-title{
-      font-family:'Orbitron',sans-serif; color:var(--brand); margin:4px 0 10px;
-      text-shadow:0 0 18px rgba(0,255,224,.6);
+    /* Fallback if backdrop-filter is not supported (many Androids) */
+    @supports not ((backdrop-filter: blur(12px)) or (-webkit-backdrop-filter: blur(12px))) {
+      .login-card { background: rgba(18,24,34,.8) }
     }
-    .login-sub{ color:var(--muted); margin-bottom:16px; }
+
+    .login-title{
+      font-family:'Orbitron',sans-serif; color:var(--brand); margin:2px 0 8px;
+      text-shadow:0 0 14px rgba(0,255,224,.55);
+    }
+    .login-sub{ color:var(--muted); margin-bottom:12px; }
     .login-input{
-      width:100%; padding:12px 14px; margin:6px 0 10px; border-radius:12px;
+      width:100%; padding:12px 14px; margin:6px 0 8px; border-radius:12px;
       border:1px solid rgba(255,255,255,.08);
       background: rgba(255,255,255,.05); color:var(--text);
       outline:none; box-shadow: inset 0 0 0 1px rgba(255,255,255,.04);
       text-align:center; font-size:1rem;
     }
-    .login-row{
-      display:flex; align-items:center; justify-content:space-between; gap:10px; margin:6px 0 2px;
-      color:var(--muted); font-size:.92rem;
-    }
+    .login-row{ display:flex; align-items:center; justify-content:space-between; gap:10px; margin:6px 0 2px; color:var(--muted); font-size:.92rem; }
     .login-btn{
       width:100%; padding:12px; border-radius:12px; border:1px solid transparent;
       background:
@@ -161,7 +166,8 @@
         linear-gradient(135deg, rgba(0,255,224,.28), rgba(0,180,255,.18)) border-box;
       color:var(--brand); font-weight:600; letter-spacing:.3px; cursor:pointer;
       box-shadow: var(--card-shadow); backdrop-filter: blur(10px);
-      transition: transform .22s cubic-bezier(.2,.8,.2,1), box-shadow .22s ease;
+      -webkit-backdrop-filter: blur(10px);
+      transition: transform .18s cubic-bezier(.2,.8,.2,1), box-shadow .18s ease;
       font-family:'Orbitron',sans-serif;
     }
     .login-btn:hover{ transform: translateY(-2px); }
@@ -170,13 +176,15 @@
     /* Top nav */
     nav{
       position:fixed; top:0; left:0; right:0; z-index:1000;
-      display:flex; align-items:center; justify-content:center; gap:36px;
-      padding:14px 18px; backdrop-filter: blur(12px);
-      background: linear-gradient(180deg, rgba(10,14,22,.7), rgba(10,14,22,.45));
+      display:flex; align-items:center; justify-content:center; gap:28px;
+      padding:12px 16px; backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      background: linear-gradient(180deg, rgba(10,14,22,.66), rgba(10,14,22,.44));
       border-bottom: 1px solid rgba(255,255,255,.06);
-      transition: transform .4s ease, background .4s ease, padding .2s ease;
+      transition: transform .35s ease, background .35s ease, padding .18s ease;
+      will-change: transform;
     }
-    .nav-wrap{display:flex; gap:28px; align-items:center}
+    .nav-wrap{display:flex; gap:24px; align-items:center}
     nav a{
       color:var(--brand); text-decoration:none; font-family:'Orbitron',sans-serif; font-size:.92rem; letter-spacing:.8px;
       position:relative; text-transform:uppercase; padding:6px 2px; outline:none;
@@ -184,50 +192,51 @@
     nav a::after{
       content:""; position:absolute; left:0; right:0; bottom:-6px; height:2px; width:0%; margin:auto;
       background:linear-gradient(90deg, var(--brand), var(--brand-2)); box-shadow:0 0 12px var(--brand);
-      transition: width .25s ease;
+      transition: width .22s ease;
     }
     nav a:focus-visible, nav a:hover{color:#affff6}
     nav a:hover::after, nav a:focus-visible::after{width:100%}
-    .nav-shrink{padding:8px 18px; background:rgba(10,14,22,.7)}
+    .nav-shrink{padding:8px 16px; background:rgba(10,14,22,.70)}
 
     /* Hero */
-    header{
-      text-align:center; padding:140px 20px 24px; position:relative;
-    }
+    header{ text-align:center; padding:120px 20px 20px; position:relative; }
     header h1{
       font-family:'Orbitron',sans-serif; font-size: clamp(1.9rem, 3.6vw, 2.8rem);
-      color:var(--brand); text-shadow: 0 0 22px rgba(0,255,224,.75);
-      letter-spacing:.4px; margin: 0 0 8px;
-      animation: glow 3s ease-in-out infinite alternate;
+      color:var(--brand); text-shadow: 0 0 18px rgba(0,255,224,.7);
+      letter-spacing:.4px; margin: 0 0 6px;
+      animation: glow 2.6s ease-in-out infinite alternate;
+      will-change: filter;
     }
-    @keyframes glow{from{ text-shadow:0 0 16px rgba(0,255,224,.6)} to{ text-shadow:0 0 40px rgba(0,255,224,1)} }
-    header p{ color:var(--muted); font-size:clamp(1rem, 2.2vw, 1.15rem); margin:0 0 10px }
+    @keyframes glow{from{ text-shadow:0 0 12px rgba(0,255,224,.55)} to{ text-shadow:0 0 30px rgba(0,255,224,1)} }
+    header p{ color:var(--muted); font-size:clamp(1rem, 2.2vw, 1.15rem); margin:0 0 8px }
     .tagline{ color:var(--brand); font-style:italic; opacity:.9 }
 
     /* Primary CTA */
-    .strict-cta-wrap{ display:flex; justify-content:center; padding: 14px 20px 36px }
+    .strict-cta-wrap{ display:flex; justify-content:center; padding: 12px 20px 30px }
     .strict-cta{
-      display:inline-flex; align-items:center; gap:10px; padding: 14px 18px; border-radius: 14px;
+      display:inline-flex; align-items:center; gap:10px; padding: 12px 16px; border-radius: 14px;
       color: var(--brand); text-decoration:none; font-weight:600; letter-spacing:.3px;
       background:
         linear-gradient(0deg, rgba(255,255,255,.06), rgba(255,255,255,.03)) padding-box,
         linear-gradient(135deg, rgba(0,255,224,.28), rgba(0,180,255,.18)) border-box;
       border: 1px solid transparent; box-shadow: var(--card-shadow); backdrop-filter: blur(10px);
-      transition: transform .22s cubic-bezier(.2,.8,.2,1), box-shadow .22s ease;
+      -webkit-backdrop-filter: blur(10px);
+      transition: transform .16s cubic-bezier(.2,.8,.2,1), box-shadow .16s ease;
       position:relative; isolation:isolate;
       animation: ctaPulse 2.8s ease-in-out infinite;
+      will-change: transform;
     }
-    .strict-cta span{ font-size: clamp(.95rem, 2.2vw, 1.05rem); text-shadow:0 0 8px rgba(0,255,224,.6) }
+    .strict-cta span{ font-size: clamp(.95rem, 2.2vw, 1.05rem); text-shadow:0 0 8px rgba(0,255,224,.55) }
     .strict-cta::after{
       content:""; position:absolute; inset:-2px; border-radius:16px; pointer-events:none;
-      background: radial-gradient(80% 60% at 50% 50%, rgba(0,255,224,.12), transparent 70%);
+      background: radial-gradient(80% 60% at 50% 50%, rgba(0,255,224,.10), transparent 70%);
       opacity:.7; filter: blur(8px); z-index:-1;
     }
     @keyframes ctaPulse{0%,100%{ transform:translateY(0)} 50%{ transform:translateY(-2px)}}
-    @media (hover:hover) and (pointer:fine){ .strict-cta:hover{ transform: translateY(-3px) scale(1.02) } }
+    @media (hover:hover) and (pointer:fine){ .strict-cta:hover{ transform: translateY(-3px) scale(1.015) } }
 
     /* Search / filter */
-    .toolbar{ display:flex; gap:12px; justify-content:center; padding: 4px 20px 22px }
+    .toolbar{ display:flex; gap:12px; justify-content:center; padding: 2px 20px 18px }
     .input{
       width:min(720px, 92%); padding:12px 14px; border-radius:12px; border:1px solid rgba(255,255,255,.08);
       background: var(--glass); color:var(--text); outline:none; box-shadow: inset 0 0 0 1px rgba(255,255,255,.04);
@@ -235,56 +244,59 @@
     .input::placeholder{ color:#9fb9b6 }
 
     /* Cards grid */
-    .container{ display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; padding: 10px 8% 56px }
+    .container{ display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; padding: 8px 8% 44px }
     .card{
-      background: var(--glass); border:1px solid var(--border); border-radius:16px; padding:28px 20px; text-align:center;
-      box-shadow: var(--card-shadow); backdrop-filter: blur(12px); transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
-      cursor:pointer; position:relative; overflow:hidden; outline:none;
+      background: var(--glass); border:1px solid var(--border); border-radius:16px; padding:24px 18px; text-align:center;
+      box-shadow: var(--card-shadow); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+      transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+      cursor:pointer; position:relative; overflow:hidden; outline:none; contain: paint;
     }
     .card h2{color:var(--brand); margin:6px 0 8px; font-size:1.06rem}
     .card p{color:var(--muted); margin:0}
     .card::before{
-      content:""; position:absolute; inset:0; background: radial-gradient(350px 120px at var(--x, 50%) var(--y, 0%), rgba(0,255,224,.15), transparent 60%);
-      transition: opacity .2s ease; opacity:0; pointer-events:none;
+      content:""; position:absolute; inset:0;
+      background: radial-gradient(300px 110px at var(--x, 50%) var(--y, 0%), rgba(0,255,224,.14), transparent 60%);
+      transition: opacity .15s ease; opacity:0; pointer-events:none;
     }
-    .card:hover{ transform: translateY(-8px); box-shadow: 0 16px 42px rgba(0,0,0,.5), 0 0 44px rgba(0,255,224,.2) }
+    .card:hover{ transform: translateY(-6px); box-shadow: 0 14px 36px rgba(0,0,0,.5), 0 0 34px rgba(0,255,224,.18) }
     .card:hover::before{opacity:1}
     .card:focus-visible{ box-shadow: 0 0 0 3px var(--ring) }
 
     /* Doc view */
-    #doc-content{ display:none; padding: 84px 10% 64px; animation: fadeIn .8s ease both }
+    #doc-content{ display:none; padding: 74px 10% 56px; animation: fadeIn .6s ease both }
     #doc-inner{ max-width: 980px; margin: 0 auto }
-    @keyframes fadeIn{ from{ opacity:0; transform: translateY(30px) } to{ opacity:1; transform: translateY(0) } }
+    @keyframes fadeIn{ from{ opacity:0; transform: translateY(24px) } to{ opacity:1; transform: translateY(0) } }
 
     /* Back btn */
     #back-btn{
-      display:inline-flex; align-items:center; gap:8px; margin-bottom:22px; color:var(--brand);
+      display:inline-flex; align-items:center; gap:8px; margin-bottom:18px; color:var(--brand);
       border:1px solid var(--border); padding:9px 16px; border-radius:20px; text-transform:uppercase; font-size:.9rem; cursor:pointer;
-      background: linear-gradient(0deg, rgba(255,255,255,.02), rgba(255,255,255,.01)); transition: .25s ease; outline:none;
+      background: linear-gradient(0deg, rgba(255,255,255,.02), rgba(255,255,255,.01)); transition: .18s ease; outline:none;
     }
-    #back-btn:hover{ box-shadow:0 0 16px rgba(0,255,224,.25) }
+    #back-btn:hover{ box-shadow:0 0 14px rgba(0,255,224,.22) }
     #back-btn:focus-visible{ box-shadow: 0 0 0 3px var(--ring) }
 
     /* About + Footer */
-    #about{ padding: 64px 8%; max-width: 980px; margin: 0 auto }
-    #about h2{ color:var(--brand); margin:20px 0 }
+    #about{ padding: 56px 8%; max-width: 980px; margin: 0 auto }
+    #about h2{ color:var(--brand); margin:16px 0 }
     #about p{ color:#c9e3e0; line-height:1.75 }
-    footer{ text-align:center; padding: 32px 0 40px; color:#9fcac6; font-size:.95rem; border-top:1px solid rgba(255,255,255,.08) }
+    footer{ text-align:center; padding: 28px 0 36px; color:#9fcac6; font-size:.95rem; border-top:1px solid rgba(255,255,255,.08) }
     .logout{ color:#9fcac6; text-decoration:underline; cursor:pointer; }
 
-    /* Mobile tweaks */
-    @media (max-width: 768px){ header{padding-top:120px} .container{padding: 6px 6% 48px} nav .nav-wrap{gap:18px} }
+    /* MOBILE PERF TWEAKS: remove the heavy layers + effects */
+    @media (max-width: 768px){
+      .bg-grid, .orb { display:none !important; }     /* biggest win */
+      .bg-aurora { animation-duration: 14s; filter: blur(44px); }
+      header{padding-top:110px}
+      .container{padding: 6px 6% 40px}
+      nav .nav-wrap{gap:16px}
+      .card:hover{ transform:none }                    /* no hover jumps on touch */
+    }
 
-    /* Reduced motion */
+    /* Reduced motion/data: turn off background animations entirely */
     @media (prefers-reduced-motion: reduce){
       .bg-gradient, .bg-aurora, .orb, header h1, .strict-cta { animation: none !important; }
       .bg-grid{ transform: none; }
-    }
-
-    /* Noscript notice */
-    noscript{
-      position:fixed; inset:auto 0 0 0; background:#1a1f2b; color:#fff; padding:10px 14px; text-align:center; z-index:3000;
-      border-top:1px solid rgba(255,255,255,.1);
     }
   </style>
 </head>
@@ -317,7 +329,7 @@
     </div>
   </section>
 
-  <!-- APP WRAPPER (hidden until auth) -->
+  <!-- APP WRAPPER -->
   <div id="app">
     <!-- NAV -->
     <nav id="topnav" aria-label="Primary">
@@ -406,19 +418,36 @@
     </footer>
   </div>
 
-  <!-- External JS files (kept) -->
-  <script src="js/Esmooth-scroll.js" defer></script>
-  <script src="js/ui-effects.js" defer></script>
-  <script src="js/main.js" defer></script>
-
-  <!-- Inline logic (auth + app init + background starfield) -->
+  <!-- Single, optimized JS (no external files needed) -->
   <script>
-    // ---------- STARFIELD BACKGROUND (lightweight) ----------
+    /* =========================
+       PASSIVE EVENT LISTENERS
+       ========================= */
+    const addPassive = (el, evt, fn) => {
+      try { el.addEventListener(evt, fn, { passive: true }); }
+      catch { el.addEventListener(evt, fn); }
+    };
+
+    /* =========================
+       STARFIELD (adaptive FPS & count)
+       ========================= */
     (function(){
       const canvas = document.getElementById('stars');
-      const ctx = canvas.getContext('2d');
-      let w=0,h=0, stars=[]; let rafId=null; let dpr= Math.min(window.devicePixelRatio || 1, 2);
-      const STAR_COUNT = 140; // tuned for perf
+      const ctx = canvas.getContext('2d', { alpha: true });
+      let w=0,h=0, stars=[]; let rafId=null; let dpr=Math.min(window.devicePixelRatio||1,2);
+
+      const smallScreen = matchMedia('(max-width: 768px)').matches;
+      const saveData = (navigator.connection && navigator.connection.saveData) ? true : false;
+      const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      // Fewer stars on mobile / save-data
+      const BASE_COUNT = reduceMotion ? 0 : (saveData ? 40 : (smallScreen ? 60 : 130));
+      let STAR_COUNT = BASE_COUNT;
+
+      // Target ~30fps on mobile to avoid jank
+      const targetFPS = smallScreen || saveData ? 30 : 60;
+      const frameInterval = 1000 / targetFPS;
+      let lastTime = 0;
 
       function resize(){
         w = canvas.clientWidth = window.innerWidth;
@@ -426,42 +455,49 @@
         canvas.width = Math.floor(w * dpr);
         canvas.height = Math.floor(h * dpr);
         ctx.setTransform(dpr,0,0,dpr,0,0);
-        // regenerate stars to fit space
         stars = Array.from({length: STAR_COUNT}, () => ({
           x: Math.random()*w,
           y: Math.random()*h,
-          r: Math.random()*1.2 + 0.2,
-          s: Math.random()*0.6 + 0.1,
+          r: Math.random()*1.1 + 0.25,
+          s: Math.random()*0.5 + 0.1,
           a: Math.random()*Math.PI*2
         }));
       }
 
-      function draw(){
+      function draw(now){
+        if (now - lastTime < frameInterval) { rafId = requestAnimationFrame(draw); return; }
+        lastTime = now;
+
         ctx.clearRect(0,0,w,h);
         for(const st of stars){
-          st.a += st.s * 0.01; // twinkle angle
-          const tw = 0.6 + Math.sin(st.a)*0.4;
+          st.a += st.s * 0.012; // twinkle
+          const tw = 0.55 + Math.sin(st.a)*0.45;
           ctx.globalAlpha = 0.5 + tw*0.5;
           ctx.beginPath();
-          ctx.arc(st.x, st.y, st.r*(0.8+tw*0.2), 0, Math.PI*2);
+          ctx.arc(st.x, st.y, st.r*(0.85+tw*0.15), 0, Math.PI*2);
           ctx.fillStyle = 'white';
           ctx.fill();
         }
         rafId = requestAnimationFrame(draw);
       }
 
-      const start = () => { if(!rafId) rafId = requestAnimationFrame(draw); };
-      const stop  = () => { if(rafId){ cancelAnimationFrame(rafId); rafId=null; } };
+      function start(){ if(!rafId && STAR_COUNT>0) rafId = requestAnimationFrame(draw); }
+      function stop(){ if(rafId){ cancelAnimationFrame(rafId); rafId=null; } }
 
       resize(); start();
-      window.addEventListener('resize', resize);
-      document.addEventListener('visibilitychange', () => document.hidden ? stop() : start());
-      const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
-      mq.addEventListener?.('change', () => mq.matches ? stop() : start());
-      if(mq.matches) stop();
+      addPassive(window,'resize', resize);
+      document.addEventListener('visibilitychange', () => document.hidden ? stop() : start(), { passive: true });
+
+      // Respect user motion settings dynamically
+      matchMedia('(prefers-reduced-motion: reduce)').addEventListener?.('change', (e)=>{
+        if(e.matches){ stop(); STAR_COUNT = 0; resize(); }
+        else { STAR_COUNT = BASE_COUNT; resize(); start(); }
+      });
     })();
 
-    // ---------- AUTH ----------
+    /* =========================
+       AUTH
+       ========================= */
     const AUTH_KEY = 'life20_auth_v1';
     const loginEl = document.getElementById('login');
     const rememberEl = document.getElementById('remember');
@@ -477,7 +513,7 @@
       try {
         if(on) localStorage.setItem(AUTH_KEY, 'ok');
         else localStorage.removeItem(AUTH_KEY);
-      } catch(e) { /* ignore private mode */ }
+      } catch(e) {}
     }
     function showApp(){
       loginEl.classList.add('hidden');
@@ -498,17 +534,13 @@
     btnEl.addEventListener('click', tryLogin);
     document.addEventListener('keydown', (e)=>{
       if(!loginEl.classList.contains('hidden') && e.key === 'Enter'){ tryLogin(); }
-    });
+    }, { passive: true });
 
-    // Auto-unlock if remembered
-    if(isAuthed()){
-      showApp();
-    } else {
-      // Keep body locked, focus username
-      userEl.focus();
-    }
+    if(isAuthed()){ showApp(); } else { userEl.focus(); }
 
-    // ---------- APP (runs after auth) ----------
+    /* =========================
+       APP INIT (post-auth)
+       ========================= */
     function initApp(){
       const cards = document.querySelectorAll('.card');
       const docsContainer = document.getElementById('docs');
@@ -523,10 +555,7 @@
       const logout = document.getElementById('logout');
 
       // Logout handler
-      function doLogout(){
-        setAuthed(false);
-        location.reload();
-      }
+      function doLogout(){ setAuthed(false); location.reload(); }
       logout?.addEventListener('click', doLogout);
       logout?.addEventListener('keydown', (e)=>{ if(e.key==='Enter' || e.key===' '){ e.preventDefault(); doLogout(); } });
 
@@ -544,41 +573,41 @@
         });
         docsContainer.setAttribute('aria-busy','false');
         docsContainer.setAttribute('aria-live','polite');
-        if(!anyVisible){
-          docsContainer.dataset.empty = 'true';
-        } else {
-          delete docsContainer.dataset.empty;
-        }
+        if(!anyVisible){ docsContainer.dataset.empty = 'true'; } else { delete docsContainer.dataset.empty; }
       }
 
-      filterInput?.addEventListener('input', (e) => filterCards(e.target.value));
+      filterInput?.addEventListener('input', (e) => filterCards(e.target.value), { passive: true });
 
-      // Fancy hover spotlight
-      cards.forEach(card => {
-        card.addEventListener('pointermove', (e) => {
-          const rect = card.getBoundingClientRect();
-          card.style.setProperty('--x', (e.clientX - rect.left) + 'px');
-          card.style.setProperty('--y', (e.clientY - rect.top) + 'px');
+      // Lightweight hover spotlight (desktop only)
+      const finePointer = matchMedia('(hover:hover) and (pointer:fine)').matches;
+      if (finePointer) {
+        cards.forEach(card => {
+          card.addEventListener('pointermove', (e) => {
+            const rect = card.getBoundingClientRect();
+            card.style.setProperty('--x', (e.clientX - rect.left) + 'px');
+            card.style.setProperty('--y', (e.clientY - rect.top) + 'px');
+          }, { passive: true });
         });
-      });
+      }
 
       async function fetchWithFallback(path) {
-        try {
-          const res = await fetch(path);
+        const tryFetch = async (p) => {
+          const res = await fetch(p);
           if (res.ok) return await res.text();
-          if (res.status === 404) {
-            if (path.endsWith('.htm')) {
-              const alt = path + 'l';
-              const resAlt = await fetch(alt);
-              if (resAlt.ok) return await resAlt.text();
-            } else if (path.endsWith('.html')) {
-              const alt = path.slice(0, -1);
-              const resAlt = await fetch(alt);
-              if (resAlt.ok) return await resAlt.text();
-            }
-          }
           throw new Error(res.status + ' ' + res.statusText);
+        };
+        try {
+          return await tryFetch(path);
         } catch (e) {
+          if (path.endsWith('.htm')) {
+            const alt = path + 'l';
+            const resAlt = await fetch(alt);
+            if (resAlt.ok) return await resAlt.text();
+          } else if (path.endsWith('.html')) {
+            const alt = path.slice(0, -1);
+            const resAlt = await fetch(alt);
+            if (resAlt.ok) return await resAlt.text();
+          }
           throw e;
         }
       }
@@ -628,20 +657,27 @@
 
       navHome.addEventListener('click', (e) => { e.preventDefault(); backBtn.click(); });
 
-      // Smooth page fade-in
+      // Smooth page fade-in (tiny and cheap)
       document.body.style.opacity = '0';
-      setTimeout(() => {
-        document.body.style.transition = 'opacity 1.2s ease';
+      requestAnimationFrame(() => {
+        document.body.style.transition = 'opacity 800ms ease';
         document.body.style.opacity = '1';
-      }, 80);
+      });
 
-      // Shrink nav on scroll
+      // NAV SHRINK — rAF throttle to keep scroll silky
+      let ticking = false;
       let lastY = 0;
-      window.addEventListener('scroll', () => {
-        const y = window.scrollY;
-        if(y > 60 && y > lastY){ topnav.classList.add('nav-shrink'); }
-        else if(y < 30){ topnav.classList.remove('nav-shrink'); }
-        lastY = y;
+      addPassive(window, 'scroll', () => {
+        if (!ticking) {
+          requestAnimationFrame(() => {
+            const y = window.scrollY;
+            if (y > 60 && y > lastY) { topnav.classList.add('nav-shrink'); }
+            else if (y < 30) { topnav.classList.remove('nav-shrink'); }
+            lastY = y;
+            ticking = false;
+          });
+          ticking = true;
+        }
       });
     }
   </script>
