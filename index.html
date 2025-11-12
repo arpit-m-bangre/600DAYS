@@ -42,7 +42,7 @@
     }
     nav a:hover::after { width: 100%; }
 
-    header { text-align: center; padding: 120px 20px 40px; }
+    header { text-align: center; padding: 120px 20px 20px; }
     header h1 {
       font-family: 'Orbitron', sans-serif; font-size: 2.4rem; color: #00ffe0;
       text-shadow: 0 0 20px #00ffe0; animation: glow 3s infinite alternate;
@@ -51,9 +51,62 @@
     header p { color: #aaa; font-size: 1.1rem; }
     .tagline { margin-top: 20px; font-style: italic; color: #00ffe0; }
 
+    /* 🌟 Strict Plan CTA (separate glowing option) */
+    .strict-cta-wrap{
+      display:flex; justify-content:center; padding: 10px 20px 30px;
+    }
+    .strict-cta {
+      --glow: #00ffe0;
+      display:inline-flex; align-items:center; justify-content:center; gap:10px;
+      padding: 14px 18px;
+      border-radius: 14px;
+      text-decoration: none;
+      color: #00ffe0;
+      font-weight: 600;
+      letter-spacing: .3px;
+      background:
+        linear-gradient(0deg, rgba(255,255,255,.06), rgba(255,255,255,.03)) padding-box,
+        linear-gradient(135deg, rgba(0,255,224,.28), rgba(0,180,255,.18)) border-box;
+      border: 1px solid transparent;
+      box-shadow:
+        0 0 0 1px rgba(255,255,255,.04) inset,
+        0 10px 28px rgba(0,0,0,.35),
+        0 0 22px rgba(0,255,224,.18);
+      backdrop-filter: blur(10px);
+      position: relative;
+      transition: transform .22s cubic-bezier(.2,.8,.2,1), box-shadow .22s ease;
+      animation: ctaPulse 2.8s ease-in-out infinite;
+      text-align: center;
+    }
+    .strict-cta span{
+      text-transform: none;
+      font-size: clamp(0.95rem, 2.2vw, 1.05rem);
+      text-shadow: 0 0 8px rgba(0,255,224,.6);
+    }
+    .strict-cta::after{
+      content:"";
+      position:absolute; inset:-2px;
+      border-radius: 16px;
+      pointer-events:none;
+      background: radial-gradient(80% 60% at 50% 50%, rgba(0,255,224,.12), transparent 70%);
+      opacity:.7;
+      filter: blur(8px);
+      z-index:-1;
+    }
+    @keyframes ctaPulse {
+      0%,100% { transform: translateY(0); box-shadow: 0 0 22px rgba(0,255,224,.18), 0 10px 28px rgba(0,0,0,.35); }
+      50%     { transform: translateY(-2px); box-shadow: 0 0 30px rgba(0,255,224,.28), 0 14px 34px rgba(0,0,0,.45); }
+    }
+    @media (hover:hover) and (pointer:fine){
+      .strict-cta:hover{
+        transform: translateY(-3px) scale(1.02);
+        box-shadow: 0 0 36px rgba(0,255,224,.35), 0 16px 36px rgba(0,0,0,.46);
+      }
+    }
+
     .container {
       display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 25px; padding: 50px 8%;
+      gap: 25px; padding: 30px 8% 50px;
     }
     .card {
       background: rgba(30, 30, 45, 0.6);
@@ -79,7 +132,7 @@
 
     @media (max-width: 768px) {
       header h1 { font-size: 1.9rem; }
-      .container { padding: 40px 6%; }
+      .container { padding: 24px 6% 40px; }
     }
   </style>
 </head>
@@ -97,16 +150,21 @@
     <div class="tagline">Rebuild stronger. Calmer. Laser-focused. ⚡</div>
   </header>
 
+  <!-- 🔥 Strict Plan CTA (separate, glowing option) -->
+  <div id="strict-cta" class="strict-cta-wrap">
+    <a class="strict-cta" href="strictplan.html">
+      <span>click here for strict daily routin plan</span>
+    </a>
+  </div>
+
   <!-- DOC CARDS -->
   <section id="docs" class="container">
-    <!-- Now pointing to /docs/ files -->
     <div class="card" data-file="docs/01-planner.html"><h2>📘 01 — Growth Planner</h2><p>Your roadmap, goals, and mindset foundation.</p></div>
     <div class="card" data-file="docs/02-structured-routine.html"><h2>🕗 02 — Structured Routine</h2><p>Daily discipline system — simple, powerful, unstoppable.</p></div>
     <div class="card" data-file="docs/03-data-science-roadmap.html"><h2>💻 03 — Data Science Roadmap</h2><p>Learn, grow, and dominate your AI + data future.</p></div>
     <div class="card" data-file="docs/04-govt-opportunities.html"><h2>🏛️ 04 — Govt IT Opportunities</h2><p>India’s top national tech careers — choose your mission.</p></div>
     <div class="card" data-file="docs/05-financial-goals.html"><h2>💰 05 — Financial Goals</h2><p>Plan, save, and grow your wealth strategically.</p></div>
     <div class="card" data-file="docs/06-habit-tracker.html"><h2>🧭 06 — Habit Tracker</h2><p>Daily accountability system for 10x consistency.</p></div>
-    <!-- 07 might be .htm in your folder; we'll set .htm and also try .html in JS if needed -->
     <div class="card" data-file="docs/07-mca-curriculum.htm"><h2>🎓 07 — MCA Curriculum</h2><p>Master your MCA journey with clarity and purpose.</p></div>
   </section>
 
@@ -134,7 +192,7 @@
   <script src="js/ui-effects.js" defer></script>
   <script src="js/main.js" defer></script>
 
-  <!-- Existing inline logic, with robust .htm/.html fallback + error handling -->
+  <!-- Inline logic with robust .htm/.html fallback + CTA hide/show -->
   <script>
     const cards = document.querySelectorAll('.card');
     const docsContainer = document.getElementById('docs');
@@ -143,13 +201,12 @@
     const backBtn = document.getElementById('back-btn');
     const header = document.getElementById('main-header');
     const navHome = document.getElementById('nav-home');
+    const strictCTA = document.getElementById('strict-cta');
 
     async function fetchWithFallback(path) {
-      // Try the given path first
       try {
         const res = await fetch(path);
         if (res.ok) return await res.text();
-        // If 404 and ends with .htm/.html, try the alternate extension
         if (res.status === 404) {
           if (path.endsWith('.htm')) {
             const alt = path + 'l'; // .htm -> .html
@@ -178,6 +235,7 @@
           // Hide main grid, show doc
           docsContainer.style.display = 'none';
           header.style.display = 'none';
+          if (strictCTA) strictCTA.style.display = 'none';
           docContent.style.display = 'block';
           window.scrollTo({ top: 0, behavior: 'smooth' });
         } catch (err) {
@@ -191,6 +249,7 @@
             </div>`;
           docsContainer.style.display = 'none';
           header.style.display = 'none';
+          if (strictCTA) strictCTA.style.display = 'none';
           docContent.style.display = 'block';
           console.error('Fetch error:', err);
         }
@@ -202,6 +261,7 @@
       docContent.style.display = 'none';
       docsContainer.style.display = 'grid';
       header.style.display = 'block';
+      if (strictCTA) strictCTA.style.display = 'flex';
       window.scrollTo({ top: 0, behavior: 'smooth' });
     });
 
