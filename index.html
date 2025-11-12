@@ -164,7 +164,7 @@
       background:
         linear-gradient(0deg, rgba(255,255,255,.06), rgba(255,255,255,.03)) padding-box,
         linear-gradient(135deg, rgba(0,255,224,.28), rgba(0,180,255,.18)) border-box;
-      color:var(--brand); font-weight:600; letter-spacing:.3px; cursor:pointer;
+      color: var(--brand); font-weight:600; letter-spacing:.3px; cursor:pointer;
       box-shadow: var(--card-shadow); backdrop-filter: blur(10px);
       -webkit-backdrop-filter: blur(10px);
       transition: transform .18s cubic-bezier(.2,.8,.2,1), box-shadow .18s ease;
@@ -210,6 +210,34 @@
     @keyframes glow{from{ text-shadow:0 0 12px rgba(0,255,224,.55)} to{ text-shadow:0 0 30px rgba(0,255,224,1)} }
     header p{ color:var(--muted); font-size:clamp(1rem, 2.2vw, 1.15rem); margin:0 0 8px }
     .tagline{ color:var(--brand); font-style:italic; opacity:.9 }
+
+    /* === COUNTDOWN (between tagline and CTA) === */
+    .countdown-wrap{ display:flex; flex-direction:column; align-items:center; gap:10px; padding: 14px 16px 6px; }
+    .timer{
+      display:flex; flex-wrap:wrap; justify-content:center; gap:12px;
+    }
+    .tile{
+      min-width:92px; padding:12px 14px; border-radius:16px; text-align:center;
+      border:1px solid var(--border);
+      background:
+        linear-gradient(0deg, rgba(255,255,255,.06), rgba(255,255,255,.03)) padding-box,
+        linear-gradient(135deg, rgba(0,255,224,.22), rgba(0,180,255,.12)) border-box;
+      box-shadow: var(--card-shadow);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      transition: transform .2s ease, box-shadow .2s ease;
+    }
+    .tile:focus-visible{ outline:none; box-shadow:0 0 0 3px var(--ring) }
+    .tile:hover{ transform: translateY(-2px) }
+    .num{
+      font-family:'Orbitron',sans-serif; font-weight:600;
+      font-size: clamp(1.3rem, 4.2vw, 2.4rem);
+      color:var(--brand);
+      text-shadow:0 0 14px rgba(0,255,224,.55);
+      letter-spacing:.5px;
+    }
+    .label{ color:var(--muted); font-size:.9rem; letter-spacing:.3px; text-transform:uppercase }
+    .cd-sub{ color:#9fdad5; font-size:.95rem; opacity:.9 }
 
     /* Primary CTA */
     .strict-cta-wrap{ display:flex; justify-content:center; padding: 12px 20px 30px }
@@ -345,6 +373,30 @@
       <h1>🌅 LIFE 2.0 — Discipline Blueprint 600 DAYS</h1>
       <p>“Simple. Focused. Unstoppable.” — Arpit’s Roadmap to Mastery</p>
       <div class="tagline">Rebuild stronger. Calmer. Laser-focused. ⚡</div>
+
+      <!-- COUNTDOWN INSERTED HERE -->
+      <section id="countdown" class="countdown-wrap" aria-label="Countdown to July 11, 2027" role="timer" aria-live="polite">
+        <div class="timer" aria-hidden="false">
+          <div class="tile" tabindex="0" aria-label="Days">
+            <div class="num" id="cd-days">000</div>
+            <div class="label">Days</div>
+          </div>
+          <div class="tile" tabindex="0" aria-label="Hours">
+            <div class="num" id="cd-hours">00</div>
+            <div class="label">Hours</div>
+          </div>
+          <div class="tile" tabindex="0" aria-label="Minutes">
+            <div class="num" id="cd-mins">00</div>
+            <div class="label">Minutes</div>
+          </div>
+          <div class="tile" tabindex="0" aria-label="Seconds">
+            <div class="num" id="cd-secs">00</div>
+            <div class="label">Seconds</div>
+          </div>
+        </div>
+        <div class="cd-sub" id="cd-sub">Until July 11, 2027</div>
+      </section>
+      <!-- /COUNTDOWN -->
     </header>
 
     <!-- CTA -->
@@ -539,6 +591,50 @@
     if(isAuthed()){ showApp(); } else { userEl.focus(); }
 
     /* =========================
+       COUNTDOWN LOGIC
+       ========================= */
+    function startCountdown(){
+      const daysEl  = document.getElementById('cd-days');
+      const hoursEl = document.getElementById('cd-hours');
+      const minsEl  = document.getElementById('cd-mins');
+      const secsEl  = document.getElementById('cd-secs');
+      const subEl   = document.getElementById('cd-sub');
+
+      // Target: 11 July 2027 00:00:00 local time
+      const target = new Date('2027-07-11T00:00:00');
+
+      function pad(n){ return n.toString().padStart(2,'0'); }
+
+      function tick(){
+        const now = new Date();
+        let diff = target - now;
+
+        if (diff <= 0){
+          daysEl.textContent = '000';
+          hoursEl.textContent = '00';
+          minsEl.textContent = '00';
+          secsEl.textContent = '00';
+          subEl.textContent = 'Goal day has arrived!';
+          return; // stop ticking
+        }
+
+        const d = Math.floor(diff / (1000*60*60*24)); diff -= d*(1000*60*60*24);
+        const h = Math.floor(diff / (1000*60*60));    diff -= h*(1000*60*60);
+        const m = Math.floor(diff / (1000*60));       diff -= m*(1000*60);
+        const s = Math.floor(diff / 1000);
+
+        daysEl.textContent  = d.toString().padStart(3,'0');
+        hoursEl.textContent = pad(h);
+        minsEl.textContent  = pad(m);
+        secsEl.textContent  = pad(s);
+        requestAnimationFrame(()=>{}); // micro-yield for smoother paints
+      }
+
+      tick();
+      setInterval(tick, 1000);
+    }
+
+    /* =========================
        APP INIT (post-auth)
        ========================= */
     function initApp(){
@@ -553,6 +649,9 @@
       const filterInput = document.getElementById('filter');
       const topnav = document.getElementById('topnav');
       const logout = document.getElementById('logout');
+
+      // Start countdown once the app is visible
+      startCountdown();
 
       // Logout handler
       function doLogout(){ setAuthed(false); location.reload(); }
