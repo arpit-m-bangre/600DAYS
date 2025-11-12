@@ -3,282 +3,649 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>🌅 LIFE 2.0 — Discipline Blueprint</title>
+  <title>🌅 LIFE 2.0 — Discipline Blueprint · 600 Days</title>
+
+  <!-- SEO / Social -->
+  <meta name="description" content="LIFE 2.0 is Arpit Bangre’s focused operating system for discipline, learning, and mastery — plans, routines, roadmaps, and trackers in one place." />
+  <meta property="og:title" content="LIFE 2.0 — Discipline Blueprint · 600 Days" />
+  <meta property="og:description" content="Simple. Focused. Unstoppable. Rebuild stronger, calmer, laser-focused." />
+  <meta property="og:type" content="website" />
+  <meta name="theme-color" content="#00ffe0" />
 
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Orbitron:wght@600&display=swap" rel="stylesheet">
 
-  <!-- Folder-structured css-->
+  <!-- Optional folder CSS (kept for your structure) -->
+  <link rel="preload" href="css/style.css" as="style" />
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/animations.css">
   <link rel="stylesheet" href="css/responsive.css">
 
   <style>
-    /* Keeping your existing inline styles so visuals don’t change */
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      font-family: 'Poppins', sans-serif;
-      background: radial-gradient(circle at 20% 20%, #0a0f1a, #000);
-      color: #e0e0e0;
-      overflow-x: hidden;
-      transition: background 1s ease;
+    /* =============================
+       THEME TOKENS
+       ============================= */
+    :root{
+      --bg-1: #06080d;
+      --bg-2: #0a0f1a;
+      --glass: rgba(20,26,36,.6);
+      --glass-2: rgba(32,40,56,.45);
+      --text: #e6f7f6;
+      --muted: #a9c9c6;
+      --brand: #00ffe0;
+      --brand-2: #2ab3ff;
+      --border: rgba(0,255,224,.22);
+      --ring: rgba(0,255,224,.45);
+      --card-shadow: 0 12px 32px rgba(0,0,0,.45), 0 0 40px rgba(0,255,224,.12);
+      --danger: #ff7b7b;
     }
-    nav {
-      position: fixed; top: 0; width: 100%;
-      background: rgba(15, 15, 25, 0.7);
-      border-bottom: 1px solid rgba(0, 255, 200, 0.15);
-      backdrop-filter: blur(10px);
-      display: flex; justify-content: center; gap: 40px;
-      padding: 15px 0; z-index: 1000; transition: 0.3s ease;
-    }
-    nav a {
-      color: #00ffe0; font-family: 'Orbitron', sans-serif;
-      text-transform: uppercase; letter-spacing: 1px;
-      text-decoration: none; font-size: 0.9rem; position: relative;
-    }
-    nav a::after {
-      content: ''; position: absolute; bottom: -5px; left: 0; width: 0%; height: 2px;
-      background: #00ffe0; box-shadow: 0 0 10px #00ffe0; transition: width 0.3s ease;
-    }
-    nav a:hover::after { width: 100%; }
 
-    header { text-align: center; padding: 120px 20px 20px; }
-    header h1 {
-      font-family: 'Orbitron', sans-serif; font-size: 2.4rem; color: #00ffe0;
-      text-shadow: 0 0 20px #00ffe0; animation: glow 3s infinite alternate;
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0; font-family:'Poppins',system-ui,Segoe UI,Roboto,Arial,sans-serif; color:var(--text);
+      background: var(--bg-1);
+      overflow-x:hidden;
+      transition: background 1s ease, color .3s ease;
     }
-    @keyframes glow { from { text-shadow: 0 0 15px #00ffe0; } to { text-shadow: 0 0 40px #00ffe0; } }
-    header p { color: #aaa; font-size: 1.1rem; }
-    .tagline { margin-top: 20px; font-style: italic; color: #00ffe0; }
 
-    /* 🌟 Strict Plan CTA (separate glowing option) */
-    .strict-cta-wrap{
-      display:flex; justify-content:center; padding: 10px 20px 30px;
+    /* Subtle noise layer (always-on for depth) */
+    body::before{
+      content:""; position:fixed; inset:0; pointer-events:none; z-index:0;
+      background-image: radial-gradient(rgba(255,255,255,.05) 1px, transparent 1px);
+      background-size: 3px 3px; opacity:.25; mix-blend-mode:soft-light;
     }
-    .strict-cta {
-      --glow: #00ffe0;
-      display:inline-flex; align-items:center; justify-content:center; gap:10px;
-      padding: 14px 18px;
-      border-radius: 14px;
-      text-decoration: none;
-      color: #00ffe0;
-      font-weight: 600;
-      letter-spacing: .3px;
+
+    /* =============================
+       REACTIVE NEON BACKGROUND STACK
+       (pure CSS + a lightweight canvas starfield)
+       ============================= */
+    #bg { position: fixed; inset: 0; z-index: -2; overflow: clip; }
+
+    /* Animated gradient wash */
+    .bg-gradient {
+      position:absolute; inset:-10%; filter: blur(30px);
+      background:
+        radial-gradient(1200px 800px at 20% 10%, #0d1626 0%, transparent 60%),
+        radial-gradient(900px 600px at 80% 20%, #071421 0%, transparent 60%),
+        radial-gradient(700px 500px at 40% 90%, #0b0f16 0%, transparent 60%),
+        conic-gradient(from 0deg at 50% 50%, rgba(0,255,224,.16), rgba(42,179,255,.10), rgba(0,255,224,.14), rgba(42,179,255,.10));
+      animation: hueShift 20s linear infinite;
+    }
+
+    @keyframes hueShift {
+      0% { filter: blur(30px) hue-rotate(0deg) saturate(110%); }
+      50%{ filter: blur(30px) hue-rotate(25deg) saturate(125%); }
+      100%{ filter: blur(30px) hue-rotate(0deg) saturate(110%); }
+    }
+
+    /* Neon grid for subtle techno look */
+    .bg-grid {
+      position:absolute; inset:0; opacity:.09; mask-image: radial-gradient(55% 60% at 50% 30%, black 55%, transparent 100%);
+      background:
+        linear-gradient(transparent 31px, rgba(0,255,224,.35) 32px),
+        linear-gradient(90deg, transparent 31px, rgba(0,255,224,.35) 32px);
+      background-size: 32px 32px;
+      transform: perspective(900px) rotateX(65deg) translateY(25%);
+      transform-origin: 50% 0%;
+      filter: drop-shadow(0 0 6px rgba(0,255,224,.35));
+    }
+
+    /* Soft aurora glow moving behind content */
+    .bg-aurora {
+      position:absolute; inset:-20%; filter: blur(60px) saturate(120%);
+      background:
+        radial-gradient(50% 45% at 20% 30%, rgba(0,255,224,.25), transparent 60%),
+        radial-gradient(50% 45% at 80% 20%, rgba(42,179,255,.22), transparent 60%),
+        radial-gradient(60% 55% at 50% 80%, rgba(0,255,224,.18), transparent 60%);
+      animation: auroraDrift 22s ease-in-out infinite;
+    }
+    @keyframes auroraDrift {
+      0%,100% { transform: translate3d(0,0,0) scale(1); }
+      50% { transform: translate3d(0,-3%,0) scale(1.04); }
+    }
+
+    /* Floating orbs (blurred circles) for depth */
+    .orb { position:absolute; width:38vmin; aspect-ratio:1; border-radius:50%; filter: blur(30px);
+      background: radial-gradient(circle at 35% 35%, rgba(0,255,224,.22), rgba(0,255,224,0) 65%);
+      mix-blend-mode: screen; animation: float 16s ease-in-out infinite; opacity:.8; }
+    .orb.o1 { left:-8vmin; top:10vmin; }
+    .orb.o2 { right:-10vmin; top:18vmin; animation-delay: -6s; }
+    .orb.o3 { left:15vmin; bottom:-6vmin; animation-delay: -3s; }
+    @keyframes float { 0%,100%{ transform: translateY(0) } 50%{ transform: translateY(-6%) } }
+
+    /* Starfield canvas (drawn by JS) */
+    #stars { position:absolute; inset:0; opacity:.35; }
+
+    /* =============================
+       APP UI
+       ============================= */
+    body.locked > #app{ display:none !important; }
+
+    #login{
+      position:fixed; inset:0; z-index:2000;
+      display:flex; align-items:center; justify-content:center;
+      /* fallback solid for safety */
+      background: transparent;
+      transition: opacity .6s ease, visibility .6s ease;
+    }
+    #login.hidden{ opacity:0; visibility:hidden; pointer-events:none; }
+
+    .login-card{
+      width:min(360px,92%); padding:28px 24px;
+      border-radius:18px; border:1px solid var(--border);
+      background: linear-gradient(0deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+      backdrop-filter: blur(14px);
+      box-shadow: var(--card-shadow); text-align:center;
+    }
+    .login-title{
+      font-family:'Orbitron',sans-serif; color:var(--brand); margin:4px 0 10px;
+      text-shadow:0 0 18px rgba(0,255,224,.6);
+    }
+    .login-sub{ color:var(--muted); margin-bottom:16px; }
+    .login-input{
+      width:100%; padding:12px 14px; margin:6px 0 10px; border-radius:12px;
+      border:1px solid rgba(255,255,255,.08);
+      background: rgba(255,255,255,.05); color:var(--text);
+      outline:none; box-shadow: inset 0 0 0 1px rgba(255,255,255,.04);
+      text-align:center; font-size:1rem;
+    }
+    .login-row{
+      display:flex; align-items:center; justify-content:space-between; gap:10px; margin:6px 0 2px;
+      color:var(--muted); font-size:.92rem;
+    }
+    .login-btn{
+      width:100%; padding:12px; border-radius:12px; border:1px solid transparent;
       background:
         linear-gradient(0deg, rgba(255,255,255,.06), rgba(255,255,255,.03)) padding-box,
         linear-gradient(135deg, rgba(0,255,224,.28), rgba(0,180,255,.18)) border-box;
-      border: 1px solid transparent;
-      box-shadow:
-        0 0 0 1px rgba(255,255,255,.04) inset,
-        0 10px 28px rgba(0,0,0,.35),
-        0 0 22px rgba(0,255,224,.18);
-      backdrop-filter: blur(10px);
-      position: relative;
+      color:var(--brand); font-weight:600; letter-spacing:.3px; cursor:pointer;
+      box-shadow: var(--card-shadow); backdrop-filter: blur(10px);
       transition: transform .22s cubic-bezier(.2,.8,.2,1), box-shadow .22s ease;
+      font-family:'Orbitron',sans-serif;
+    }
+    .login-btn:hover{ transform: translateY(-2px); }
+    .login-err{ color:var(--danger); min-height:18px; margin-top:8px; font-size:.92rem; }
+
+    /* Top nav */
+    nav{
+      position:fixed; top:0; left:0; right:0; z-index:1000;
+      display:flex; align-items:center; justify-content:center; gap:36px;
+      padding:14px 18px; backdrop-filter: blur(12px);
+      background: linear-gradient(180deg, rgba(10,14,22,.7), rgba(10,14,22,.45));
+      border-bottom: 1px solid rgba(255,255,255,.06);
+      transition: transform .4s ease, background .4s ease, padding .2s ease;
+    }
+    .nav-wrap{display:flex; gap:28px; align-items:center}
+    nav a{
+      color:var(--brand); text-decoration:none; font-family:'Orbitron',sans-serif; font-size:.92rem; letter-spacing:.8px;
+      position:relative; text-transform:uppercase; padding:6px 2px; outline:none;
+    }
+    nav a::after{
+      content:""; position:absolute; left:0; right:0; bottom:-6px; height:2px; width:0%; margin:auto;
+      background:linear-gradient(90deg, var(--brand), var(--brand-2)); box-shadow:0 0 12px var(--brand);
+      transition: width .25s ease;
+    }
+    nav a:focus-visible, nav a:hover{color:#affff6}
+    nav a:hover::after, nav a:focus-visible::after{width:100%}
+    .nav-shrink{padding:8px 18px; background:rgba(10,14,22,.7)}
+
+    /* Hero */
+    header{
+      text-align:center; padding:140px 20px 24px; position:relative;
+    }
+    header h1{
+      font-family:'Orbitron',sans-serif; font-size: clamp(1.9rem, 3.6vw, 2.8rem);
+      color:var(--brand); text-shadow: 0 0 22px rgba(0,255,224,.75);
+      letter-spacing:.4px; margin: 0 0 8px;
+      animation: glow 3s ease-in-out infinite alternate;
+    }
+    @keyframes glow{from{ text-shadow:0 0 16px rgba(0,255,224,.6)} to{ text-shadow:0 0 40px rgba(0,255,224,1)} }
+    header p{ color:var(--muted); font-size:clamp(1rem, 2.2vw, 1.15rem); margin:0 0 10px }
+    .tagline{ color:var(--brand); font-style:italic; opacity:.9 }
+
+    /* Primary CTA */
+    .strict-cta-wrap{ display:flex; justify-content:center; padding: 14px 20px 36px }
+    .strict-cta{
+      display:inline-flex; align-items:center; gap:10px; padding: 14px 18px; border-radius: 14px;
+      color: var(--brand); text-decoration:none; font-weight:600; letter-spacing:.3px;
+      background:
+        linear-gradient(0deg, rgba(255,255,255,.06), rgba(255,255,255,.03)) padding-box,
+        linear-gradient(135deg, rgba(0,255,224,.28), rgba(0,180,255,.18)) border-box;
+      border: 1px solid transparent; box-shadow: var(--card-shadow); backdrop-filter: blur(10px);
+      transition: transform .22s cubic-bezier(.2,.8,.2,1), box-shadow .22s ease;
+      position:relative; isolation:isolate;
       animation: ctaPulse 2.8s ease-in-out infinite;
-      text-align: center;
     }
-    .strict-cta span{
-      text-transform: none;
-      font-size: clamp(0.95rem, 2.2vw, 1.05rem);
-      text-shadow: 0 0 8px rgba(0,255,224,.6);
-    }
+    .strict-cta span{ font-size: clamp(.95rem, 2.2vw, 1.05rem); text-shadow:0 0 8px rgba(0,255,224,.6) }
     .strict-cta::after{
-      content:"";
-      position:absolute; inset:-2px;
-      border-radius: 16px;
-      pointer-events:none;
+      content:""; position:absolute; inset:-2px; border-radius:16px; pointer-events:none;
       background: radial-gradient(80% 60% at 50% 50%, rgba(0,255,224,.12), transparent 70%);
-      opacity:.7;
-      filter: blur(8px);
-      z-index:-1;
+      opacity:.7; filter: blur(8px); z-index:-1;
     }
-    @keyframes ctaPulse {
-      0%,100% { transform: translateY(0); box-shadow: 0 0 22px rgba(0,255,224,.18), 0 10px 28px rgba(0,0,0,.35); }
-      50%     { transform: translateY(-2px); box-shadow: 0 0 30px rgba(0,255,224,.28), 0 14px 34px rgba(0,0,0,.45); }
+    @keyframes ctaPulse{0%,100%{ transform:translateY(0)} 50%{ transform:translateY(-2px)}}
+    @media (hover:hover) and (pointer:fine){ .strict-cta:hover{ transform: translateY(-3px) scale(1.02) } }
+
+    /* Search / filter */
+    .toolbar{ display:flex; gap:12px; justify-content:center; padding: 4px 20px 22px }
+    .input{
+      width:min(720px, 92%); padding:12px 14px; border-radius:12px; border:1px solid rgba(255,255,255,.08);
+      background: var(--glass); color:var(--text); outline:none; box-shadow: inset 0 0 0 1px rgba(255,255,255,.04);
     }
-    @media (hover:hover) and (pointer:fine){
-      .strict-cta:hover{
-        transform: translateY(-3px) scale(1.02);
-        box-shadow: 0 0 36px rgba(0,255,224,.35), 0 16px 36px rgba(0,0,0,.46);
-      }
+    .input::placeholder{ color:#9fb9b6 }
+
+    /* Cards grid */
+    .container{ display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; padding: 10px 8% 56px }
+    .card{
+      background: var(--glass); border:1px solid var(--border); border-radius:16px; padding:28px 20px; text-align:center;
+      box-shadow: var(--card-shadow); backdrop-filter: blur(12px); transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+      cursor:pointer; position:relative; overflow:hidden; outline:none;
+    }
+    .card h2{color:var(--brand); margin:6px 0 8px; font-size:1.06rem}
+    .card p{color:var(--muted); margin:0}
+    .card::before{
+      content:""; position:absolute; inset:0; background: radial-gradient(350px 120px at var(--x, 50%) var(--y, 0%), rgba(0,255,224,.15), transparent 60%);
+      transition: opacity .2s ease; opacity:0; pointer-events:none;
+    }
+    .card:hover{ transform: translateY(-8px); box-shadow: 0 16px 42px rgba(0,0,0,.5), 0 0 44px rgba(0,255,224,.2) }
+    .card:hover::before{opacity:1}
+    .card:focus-visible{ box-shadow: 0 0 0 3px var(--ring) }
+
+    /* Doc view */
+    #doc-content{ display:none; padding: 84px 10% 64px; animation: fadeIn .8s ease both }
+    #doc-inner{ max-width: 980px; margin: 0 auto }
+    @keyframes fadeIn{ from{ opacity:0; transform: translateY(30px) } to{ opacity:1; transform: translateY(0) } }
+
+    /* Back btn */
+    #back-btn{
+      display:inline-flex; align-items:center; gap:8px; margin-bottom:22px; color:var(--brand);
+      border:1px solid var(--border); padding:9px 16px; border-radius:20px; text-transform:uppercase; font-size:.9rem; cursor:pointer;
+      background: linear-gradient(0deg, rgba(255,255,255,.02), rgba(255,255,255,.01)); transition: .25s ease; outline:none;
+    }
+    #back-btn:hover{ box-shadow:0 0 16px rgba(0,255,224,.25) }
+    #back-btn:focus-visible{ box-shadow: 0 0 0 3px var(--ring) }
+
+    /* About + Footer */
+    #about{ padding: 64px 8%; max-width: 980px; margin: 0 auto }
+    #about h2{ color:var(--brand); margin:20px 0 }
+    #about p{ color:#c9e3e0; line-height:1.75 }
+    footer{ text-align:center; padding: 32px 0 40px; color:#9fcac6; font-size:.95rem; border-top:1px solid rgba(255,255,255,.08) }
+    .logout{ color:#9fcac6; text-decoration:underline; cursor:pointer; }
+
+    /* Mobile tweaks */
+    @media (max-width: 768px){ header{padding-top:120px} .container{padding: 6px 6% 48px} nav .nav-wrap{gap:18px} }
+
+    /* Reduced motion */
+    @media (prefers-reduced-motion: reduce){
+      .bg-gradient, .bg-aurora, .orb, header h1, .strict-cta { animation: none !important; }
+      .bg-grid{ transform: none; }
     }
 
-    .container {
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 25px; padding: 30px 8% 50px;
-    }
-    .card {
-      background: rgba(30, 30, 45, 0.6);
-      border: 1px solid rgba(0, 255, 200, 0.15);
-      border-radius: 16px; padding: 35px 20px; text-align: center;
-      box-shadow: 0 0 25px rgba(0, 255, 200, 0.15); backdrop-filter: blur(12px);
-      transition: all 0.3s ease; cursor: pointer;
-    }
-    .card:hover { transform: translateY(-10px) scale(1.02); box-shadow: 0 0 35px rgba(0, 255, 200, 0.4); }
-    .card h2 { color: #00ffe0; margin-bottom: 10px; }
-
-    #doc-content { display: none; padding: 80px 10% 60px; animation: fadeIn 0.8s ease; }
-    @keyframes fadeIn { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
-
-    #back-btn {
-      display: inline-block; margin-bottom: 30px; color: #00ffe0; border: 1px solid #00ffe0;
-      padding: 8px 20px; border-radius: 20px; text-transform: uppercase; font-size: 0.9rem; cursor: pointer;
-      background: transparent; transition: 0.3s ease;
-    }
-    #back-btn:hover { background: rgba(0,255,200,0.1); box-shadow: 0 0 10px rgba(0,255,200,0.4); }
-
-    footer { text-align: center; padding: 30px 0; color: #999; font-size: 0.9rem; border-top: 1px solid rgba(255, 255, 255, 0.1); }
-
-    @media (max-width: 768px) {
-      header h1 { font-size: 1.9rem; }
-      .container { padding: 24px 6% 40px; }
+    /* Noscript notice */
+    noscript{
+      position:fixed; inset:auto 0 0 0; background:#1a1f2b; color:#fff; padding:10px 14px; text-align:center; z-index:3000;
+      border-top:1px solid rgba(255,255,255,.1);
     }
   </style>
 </head>
-
-<body>
-  <nav>
-    <a href="#" id="nav-home">Home</a>
-    <a href="#docs">Docs</a>
-    <a href="#about">About</a>
-  </nav>
-
-  <header id="main-header">
-    <h1>🌅 LIFE 2.0 — Discipline Blueprint</h1>
-    <p>“Simple. Focused. Unstoppable.” — Arpit’s Roadmap to Mastery</p>
-    <div class="tagline">Rebuild stronger. Calmer. Laser-focused. ⚡</div>
-  </header>
-
-  <!-- 🔥 Strict Plan CTA (separate, glowing option) -->
-  <div id="strict-cta" class="strict-cta-wrap">
-    <a class="strict-cta" href="strictplan.html">
-      <span>click here for strict daily routin plan</span>
-    </a>
+<body class="locked">
+  <!-- DYNAMIC BACKGROUND -->
+  <div id="bg" aria-hidden="true">
+    <canvas id="stars"></canvas>
+    <div class="bg-gradient"></div>
+    <div class="bg-aurora"></div>
+    <div class="bg-grid"></div>
+    <div class="orb o1"></div>
+    <div class="orb o2"></div>
+    <div class="orb o3"></div>
   </div>
 
-  <!-- DOC CARDS -->
-  <section id="docs" class="container">
-    <div class="card" data-file="docs/01-planner.html"><h2>📘 01 — Growth Planner</h2><p>Your roadmap, goals, and mindset foundation.</p></div>
-    <div class="card" data-file="docs/02-structured-routine.html"><h2>🕗 02 — Structured Routine</h2><p>Daily discipline system — simple, powerful, unstoppable.</p></div>
-    <div class="card" data-file="docs/03-data-science-roadmap.html"><h2>💻 03 — Data Science Roadmap</h2><p>Learn, grow, and dominate your AI + data future.</p></div>
-    <div class="card" data-file="docs/04-govt-opportunities.html"><h2>🏛️ 04 — Govt IT Opportunities</h2><p>India’s top national tech careers — choose your mission.</p></div>
-    <div class="card" data-file="docs/05-financial-goals.html"><h2>💰 05 — Financial Goals</h2><p>Plan, save, and grow your wealth strategically.</p></div>
-    <div class="card" data-file="docs/06-habit-tracker.html"><h2>🧭 06 — Habit Tracker</h2><p>Daily accountability system for 10x consistency.</p></div>
-    <div class="card" data-file="docs/07-mca-curriculum.htm"><h2>🎓 07 — MCA Curriculum</h2><p>Master your MCA journey with clarity and purpose.</p></div>
+  <!-- LOGIN OVERLAY -->
+  <section id="login" aria-labelledby="login-title" role="dialog" aria-modal="true">
+    <div class="login-card">
+      <h2 id="login-title" class="login-title">🔐 LIFE 2.0 — Login</h2>
+      <div class="login-sub">Enter your credentials to continue</div>
+      <input id="login-user" class="login-input" type="text" placeholder="Username" autocomplete="username" />
+      <input id="login-pass" class="login-input" type="password" placeholder="Password" autocomplete="current-password" />
+      <div class="login-row">
+        <label style="display:flex;align-items:center;gap:8px;cursor:pointer">
+          <input id="remember" type="checkbox" /> Remember me
+        </label>
+        <button id="login-btn" class="login-btn" aria-label="Login">ENTER</button>
+      </div>
+      <div id="login-err" class="login-err" aria-live="polite"></div>
+    </div>
   </section>
 
-  <!-- DYNAMIC DOC DISPLAY AREA -->
-  <section id="doc-content">
-    <button id="back-btn">← Back</button>
-    <div id="doc-inner"></div>
-  </section>
+  <!-- APP WRAPPER (hidden until auth) -->
+  <div id="app">
+    <!-- NAV -->
+    <nav id="topnav" aria-label="Primary">
+      <div class="nav-wrap">
+        <a href="#" id="nav-home">Home</a>
+        <a href="#docs">Docs</a>
+        <a href="#about">About</a>
+      </div>
+    </nav>
 
-  <!-- Simple About anchor so navbar link works -->
-  <section id="about" style="padding: 60px 8%; max-width: 900px; margin: 0 auto;">
-    <h2 style="color:#00ffe0; margin: 20px 0;">About</h2>
-    <p style="color:#bbb; line-height:1.7;">
-      LIFE 2.0 is a focused personal operating system designed by Arpit Bangre. This site is a hub for plans,
-      routines, learning roadmaps, and trackers—all in one place.
-    </p>
-  </section>
+    <!-- HERO -->
+    <header id="main-header">
+      <h1>🌅 LIFE 2.0 — Discipline Blueprint 600 DAYS</h1>
+      <p>“Simple. Focused. Unstoppable.” — Arpit’s Roadmap to Mastery</p>
+      <div class="tagline">Rebuild stronger. Calmer. Laser-focused. ⚡</div>
+    </header>
 
-  <footer>
-    💡 Designed & Built by <strong>Arpit Bangre</strong> | LIFE 2.0 Framework © 2025
-  </footer>
+    <!-- CTA -->
+    <div id="strict-cta" class="strict-cta-wrap">
+      <a class="strict-cta" href="strictplan.html" aria-label="Open strict daily routine plan">
+        <span>Open the strict daily routine plan</span>
+      </a>
+    </div>
 
-  <!-- Folder-structured JS -->
+    <!-- Tools / Search -->
+    <div class="toolbar" role="search">
+      <input id="filter" class="input" type="search" placeholder="Filter docs by title or description… (e.g., data science, routine, finance)" aria-label="Filter documents" />
+    </div>
+
+    <!-- DOC CARDS -->
+    <section id="docs" class="container" aria-live="polite">
+      <button class="card" data-file="docs/01-planner.html" aria-label="Open 01 — Career by 23">
+        <h2>🌟 01 — CAREER BY AGE 23</h2>
+        <p>Build your career foundation before 23.</p>
+      </button>
+
+      <button class="card" data-file="docs/02-structured-routine.html" aria-label="Open 02 — Strict lifestyle by 23">
+        <h2>🙏🏻 02 — STRICT LIFESTYLE BY AGE 23</h2>
+        <p>Discipline, routine, and unbreakable focus.</p>
+      </button>
+
+      <button class="card" data-file="docs/03-data-science-roadmap.html" aria-label="Open 03 — Data Science as a Career">
+        <h2>🔒 03 — DATA SCIENCE AS A CAREER LOCKED</h2>
+        <p>Master your AI + data science journey.</p>
+      </button>
+
+      <button class="card" data-file="docs/04-govt-opportunities.html" aria-label="Open 04 — Government opportunities after 23">
+        <h2>🏛️ 04 — GOV OPPORTUNITIES AFTER AGE 23</h2>
+        <p>Top national tech and IT government roles.</p>
+      </button>
+
+      <button class="card" data-file="docs/05-financial-goals.html" aria-label="Open 05 — Financial condition by 27">
+        <h2>💵 05 — FINANCIAL CONDITION BY AGE 27</h2>
+        <p>Plan your income and savings for long-term success.</p>
+      </button>
+
+      <button class="card" data-file="docs/06-habit-tracker.html" aria-label="Open 06 — Daily habits">
+        <h2>🕖 06 — DAILY HABIT</h2>
+        <p>Daily actions that define your future.</p>
+      </button>
+
+      <button class="card" data-file="docs/07-mca-curriculum.html" aria-label="Open 07 — MCA">
+        <h2>📖 07 — MCA</h2>
+        <p>Master your MCA journey with clarity and purpose.</p>
+      </button>
+    </section>
+
+    <!-- DOCUMENT VIEW -->
+    <section id="doc-content">
+      <button id="back-btn" aria-label="Go back to documents">← Back</button>
+      <div id="doc-inner" role="region" aria-label="Document content"></div>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about">
+      <h2>About</h2>
+      <p>
+        LIFE 2.0 is a focused personal operating system designed by <strong>Arpit Bangre</strong>. This site is a hub for plans,
+        routines, learning roadmaps, and trackers — all in one place.
+      </p>
+      <p><span id="logout" class="logout" role="button" tabindex="0">Log out</span></p>
+    </section>
+
+    <footer>
+      💡 Designed & Built by <strong>Arpit Bangre</strong> · LIFE 2.0 Framework © 2025
+    </footer>
+  </div>
+
+  <!-- External JS files (kept) -->
   <script src="js/Esmooth-scroll.js" defer></script>
   <script src="js/ui-effects.js" defer></script>
   <script src="js/main.js" defer></script>
 
-  <!-- Inline logic with robust .htm/.html fallback + CTA hide/show -->
+  <!-- Inline logic (auth + app init + background starfield) -->
   <script>
-    const cards = document.querySelectorAll('.card');
-    const docsContainer = document.getElementById('docs');
-    const docContent = document.getElementById('doc-content');
-    const docInner = document.getElementById('doc-inner');
-    const backBtn = document.getElementById('back-btn');
-    const header = document.getElementById('main-header');
-    const navHome = document.getElementById('nav-home');
-    const strictCTA = document.getElementById('strict-cta');
+    // ---------- STARFIELD BACKGROUND (lightweight) ----------
+    (function(){
+      const canvas = document.getElementById('stars');
+      const ctx = canvas.getContext('2d');
+      let w=0,h=0, stars=[]; let rafId=null; let dpr= Math.min(window.devicePixelRatio || 1, 2);
+      const STAR_COUNT = 140; // tuned for perf
 
-    async function fetchWithFallback(path) {
-      try {
-        const res = await fetch(path);
-        if (res.ok) return await res.text();
-        if (res.status === 404) {
-          if (path.endsWith('.htm')) {
-            const alt = path + 'l'; // .htm -> .html
-            const resAlt = await fetch(alt);
-            if (resAlt.ok) return await resAlt.text();
-          } else if (path.endsWith('.html')) {
-            const alt = path.slice(0, -1); // .html -> .htm
-            const resAlt = await fetch(alt);
-            if (resAlt.ok) return await resAlt.text();
-          }
+      function resize(){
+        w = canvas.clientWidth = window.innerWidth;
+        h = canvas.clientHeight = window.innerHeight;
+        canvas.width = Math.floor(w * dpr);
+        canvas.height = Math.floor(h * dpr);
+        ctx.setTransform(dpr,0,0,dpr,0,0);
+        // regenerate stars to fit space
+        stars = Array.from({length: STAR_COUNT}, () => ({
+          x: Math.random()*w,
+          y: Math.random()*h,
+          r: Math.random()*1.2 + 0.2,
+          s: Math.random()*0.6 + 0.1,
+          a: Math.random()*Math.PI*2
+        }));
+      }
+
+      function draw(){
+        ctx.clearRect(0,0,w,h);
+        for(const st of stars){
+          st.a += st.s * 0.01; // twinkle angle
+          const tw = 0.6 + Math.sin(st.a)*0.4;
+          ctx.globalAlpha = 0.5 + tw*0.5;
+          ctx.beginPath();
+          ctx.arc(st.x, st.y, st.r*(0.8+tw*0.2), 0, Math.PI*2);
+          ctx.fillStyle = 'white';
+          ctx.fill();
         }
-        throw new Error(res.status + ' ' + res.statusText);
-      } catch (e) {
-        throw e;
+        rafId = requestAnimationFrame(draw);
+      }
+
+      const start = () => { if(!rafId) rafId = requestAnimationFrame(draw); };
+      const stop  = () => { if(rafId){ cancelAnimationFrame(rafId); rafId=null; } };
+
+      resize(); start();
+      window.addEventListener('resize', resize);
+      document.addEventListener('visibilitychange', () => document.hidden ? stop() : start());
+      const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
+      mq.addEventListener?.('change', () => mq.matches ? stop() : start());
+      if(mq.matches) stop();
+    })();
+
+    // ---------- AUTH ----------
+    const AUTH_KEY = 'life20_auth_v1';
+    const loginEl = document.getElementById('login');
+    const rememberEl = document.getElementById('remember');
+    const userEl = document.getElementById('login-user');
+    const passEl = document.getElementById('login-pass');
+    const btnEl  = document.getElementById('login-btn');
+    const errEl  = document.getElementById('login-err');
+
+    function isAuthed(){
+      try { return localStorage.getItem(AUTH_KEY) === 'ok'; } catch { return false; }
+    }
+    function setAuthed(on){
+      try {
+        if(on) localStorage.setItem(AUTH_KEY, 'ok');
+        else localStorage.removeItem(AUTH_KEY);
+      } catch(e) { /* ignore private mode */ }
+    }
+    function showApp(){
+      loginEl.classList.add('hidden');
+      document.body.classList.remove('locked');
+      initApp();
+    }
+    function tryLogin(){
+      const u = (userEl.value || '').trim();
+      const p = (passEl.value || '').trim();
+      if(u === 'arpit' && p === '2004'){
+        if(rememberEl.checked) setAuthed(true);
+        showApp();
+      } else {
+        errEl.textContent = '❌ Incorrect username or password.';
       }
     }
 
-    // Load doc into same window dynamically
-    cards.forEach(card => {
-      card.addEventListener('click', async () => {
-        const file = card.getAttribute('data-file');
-        try {
-          const html = await fetchWithFallback(file);
-          docInner.innerHTML = html;
+    btnEl.addEventListener('click', tryLogin);
+    document.addEventListener('keydown', (e)=>{
+      if(!loginEl.classList.contains('hidden') && e.key === 'Enter'){ tryLogin(); }
+    });
 
-          // Hide main grid, show doc
-          docsContainer.style.display = 'none';
-          header.style.display = 'none';
-          if (strictCTA) strictCTA.style.display = 'none';
-          docContent.style.display = 'block';
-          window.scrollTo({ top: 0, behavior: 'smooth' });
-        } catch (err) {
-          docInner.innerHTML = `
-            <div style="padding:16px;border:1px solid rgba(255,255,255,0.15);border-radius:12px;background:rgba(255,255,255,0.03)">
-              <h3 style="color:#ff7b7b;margin-bottom:8px;">Couldn’t load this document.</h3>
-              <p style="color:#bbb;line-height:1.6">
-                Tried: <code>${file}</code> and its alternate extension.<br/>
-                Please check that the file exists inside <code>/docs</code> and the name/extension is correct.
-              </p>
-            </div>`;
-          docsContainer.style.display = 'none';
-          header.style.display = 'none';
-          if (strictCTA) strictCTA.style.display = 'none';
-          docContent.style.display = 'block';
-          console.error('Fetch error:', err);
+    // Auto-unlock if remembered
+    if(isAuthed()){
+      showApp();
+    } else {
+      // Keep body locked, focus username
+      userEl.focus();
+    }
+
+    // ---------- APP (runs after auth) ----------
+    function initApp(){
+      const cards = document.querySelectorAll('.card');
+      const docsContainer = document.getElementById('docs');
+      const docContent = document.getElementById('doc-content');
+      const docInner = document.getElementById('doc-inner');
+      const backBtn = document.getElementById('back-btn');
+      const header = document.getElementById('main-header');
+      const navHome = document.getElementById('nav-home');
+      const strictCTA = document.getElementById('strict-cta');
+      const filterInput = document.getElementById('filter');
+      const topnav = document.getElementById('topnav');
+      const logout = document.getElementById('logout');
+
+      // Logout handler
+      function doLogout(){
+        setAuthed(false);
+        location.reload();
+      }
+      logout?.addEventListener('click', doLogout);
+      logout?.addEventListener('keydown', (e)=>{ if(e.key==='Enter' || e.key===' '){ e.preventDefault(); doLogout(); } });
+
+      // Accessibility: make cards behave like links
+      cards.forEach((card) => card.setAttribute('role','button'));
+
+      function filterCards(query){
+        const q = query.trim().toLowerCase();
+        let anyVisible = false;
+        cards.forEach(card => {
+          const text = card.innerText.toLowerCase();
+          const match = !q || text.includes(q);
+          card.style.display = match ? '' : 'none';
+          if(match) anyVisible = true;
+        });
+        docsContainer.setAttribute('aria-busy','false');
+        docsContainer.setAttribute('aria-live','polite');
+        if(!anyVisible){
+          docsContainer.dataset.empty = 'true';
+        } else {
+          delete docsContainer.dataset.empty;
         }
+      }
+
+      filterInput?.addEventListener('input', (e) => filterCards(e.target.value));
+
+      // Fancy hover spotlight
+      cards.forEach(card => {
+        card.addEventListener('pointermove', (e) => {
+          const rect = card.getBoundingClientRect();
+          card.style.setProperty('--x', (e.clientX - rect.left) + 'px');
+          card.style.setProperty('--y', (e.clientY - rect.top) + 'px');
+        });
       });
-    });
 
-    // Back button
-    backBtn.addEventListener('click', () => {
-      docContent.style.display = 'none';
-      docsContainer.style.display = 'grid';
-      header.style.display = 'block';
-      if (strictCTA) strictCTA.style.display = 'flex';
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    });
+      async function fetchWithFallback(path) {
+        try {
+          const res = await fetch(path);
+          if (res.ok) return await res.text();
+          if (res.status === 404) {
+            if (path.endsWith('.htm')) {
+              const alt = path + 'l';
+              const resAlt = await fetch(alt);
+              if (resAlt.ok) return await resAlt.text();
+            } else if (path.endsWith('.html')) {
+              const alt = path.slice(0, -1);
+              const resAlt = await fetch(alt);
+              if (resAlt.ok) return await resAlt.text();
+            }
+          }
+          throw new Error(res.status + ' ' + res.statusText);
+        } catch (e) {
+          throw e;
+        }
+      }
 
-    // Navbar home reset
-    navHome.addEventListener('click', (e) => {
-      e.preventDefault();
-      backBtn.click();
-    });
+      cards.forEach(card => {
+        card.addEventListener('click', async () => {
+          const file = card.getAttribute('data-file');
+          try {
+            const html = await fetchWithFallback(file);
+            docInner.innerHTML = html;
+            docsContainer.style.display = 'none';
+            header.style.display = 'none';
+            if (strictCTA) strictCTA.style.display = 'none';
+            docContent.style.display = 'block';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          } catch (err) {
+            docInner.innerHTML = `
+              <div style="padding:16px;border:1px solid rgba(255,255,255,0.15);border-radius:12px;background:rgba(255,255,255,0.03)">
+                <h3 style="color:#ff7b7b;margin-bottom:8px;">Couldn’t load this document.</h3>
+                <p style="color:#bbb;line-height:1.6">
+                  Tried: <code>${file}</code> and its alternate extension.<br/>
+                  Please check that the file exists inside <code>/docs</code> and the name/extension is correct.
+                </p>
+              </div>`;
+            docsContainer.style.display = 'none';
+            header.style.display = 'none';
+            if (strictCTA) strictCTA.style.display = 'none';
+            docContent.style.display = 'block';
+            console.error('Fetch error:', err);
+          }
+        });
+        // Keyboard access
+        card.addEventListener('keydown', (e) => {
+          if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); card.click(); }
+        });
+        card.tabIndex = 0;
+      });
 
-    // Initial fade-in
-    document.body.style.opacity = '0';
-    window.addEventListener('DOMContentLoaded', () => {
+      backBtn.addEventListener('click', () => {
+        docContent.style.display = 'none';
+        docsContainer.style.display = 'grid';
+        header.style.display = 'block';
+        if (strictCTA) strictCTA.style.display = 'flex';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        filterInput?.focus();
+      });
+
+      navHome.addEventListener('click', (e) => { e.preventDefault(); backBtn.click(); });
+
+      // Smooth page fade-in
+      document.body.style.opacity = '0';
       setTimeout(() => {
-        document.body.style.transition = 'opacity 1.5s ease';
+        document.body.style.transition = 'opacity 1.2s ease';
         document.body.style.opacity = '1';
-      }, 100);
-    });
+      }, 80);
+
+      // Shrink nav on scroll
+      let lastY = 0;
+      window.addEventListener('scroll', () => {
+        const y = window.scrollY;
+        if(y > 60 && y > lastY){ topnav.classList.add('nav-shrink'); }
+        else if(y < 30){ topnav.classList.remove('nav-shrink'); }
+        lastY = y;
+      });
+    }
   </script>
+
+  <noscript>JavaScript is required for LIFE 2.0 to function. Please enable it.</noscript>
 </body>
 </html>

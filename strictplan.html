@@ -3,153 +3,221 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>🌅 LIFE 2.0 — Discipline Blueprint</title>
+  <title>💪 STRICT PROTOCOL: LIFE 2.0 — Enhanced</title>
+  <meta name="description" content="A focused, elegant operating system for discipline, routines, hydration, and daily mastery." />
+  <meta name="theme-color" content="#64ffda" />
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+
   <style>
     :root{
-      --bg:#0a0b10;          /* deep space */
-      --bg-2:#0f1020;        /* panel */
-      --txt:#d7e1ff;         /* soft ice */
-      --muted:#9aa4bf;       /* muted */
-      --neon:#64ffda;        /* teal neon */
-      --neon-2:#7c5cff;      /* violet neon */
+      /* Base palette */
+      --bg:#06080f;
+      --bg-2:#0b0f1a;
+      --txt:#e5f2ff;
+      --muted:#9fb2c7;
+      --neon:#64ffda;
+      --neon-2:#7c5cff;
       --danger:#ff6b6b;
       --ok:#19db8a;
-      --card:rgba(16,18,28,.66);
+      --warning:#f6c744;
+
+      --card:rgba(16,18,28,.58);
+      --glass:rgba(255,255,255,.05);
       --stroke:rgba(127,149,255,.28);
-      --glass:rgba(255,255,255,.04);
       --shadow:0 10px 30px rgba(0,0,0,.45), inset 0 0 0 1px var(--stroke);
       --radius:18px;
+
+      /* Typography */
+      --font: Inter, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji","Segoe UI Emoji";
+      --display: "Space Grotesk", var(--font);
+    }
+    /* ===== Light mode (auto via toggle) ===== */
+    .light{
+      --bg:#f7fbff;
+      --bg-2:#ffffff;
+      --txt:#0f1a2b;
+      --muted:#51627a;
+      --card:rgba(255,255,255,.85);
+      --glass:rgba(10,14,22,.05);
+      --stroke:rgba(20,30,60,.15);
+      --shadow:0 10px 30px rgba(15,26,43,.08), inset 0 0 0 1px var(--stroke);
     }
 
     /* ===== Global ===== */
     *{box-sizing:border-box}
     html,body{height:100%}
     body{
-      margin:0; background:radial-gradient(1200px 600px at 10% 10%, rgba(100,255,218,.08), transparent 60%),
-      radial-gradient(900px 500px at 90% 20%, rgba(124,92,255,.09), transparent 60%),
-      radial-gradient(700px 500px at 50% 110%, rgba(124,92,255,.07), transparent 60%),
-      linear-gradient(180deg, #0a0b10 0%, #080a12 100%);
-      color:var(--txt); font:400 16px/1.6 system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji","Segoe UI Emoji";
+      margin:0; background:
+        radial-gradient(1200px 600px at 10% 0%, color-mix(in oklab, var(--neon) 18%, transparent) 0%, transparent 60%),
+        radial-gradient(900px 500px at 92% 10%, color-mix(in oklab, var(--neon-2) 18%, transparent) 0%, transparent 58%),
+        radial-gradient(700px 500px at 50% 110%, color-mix(in oklab, var(--neon-2) 10%, transparent) 0%, transparent 52%),
+        linear-gradient(180deg, var(--bg) 0%, var(--bg-2) 100%);
+      color:var(--txt); font:400 16px/1.6 var(--font);
       overflow-x:hidden;
     }
-    a{color:var(--neon)}
-    h1,h2,h3{line-height:1.15; margin:0 0 .6rem}
-    h1{font-weight:800; font-size:clamp(28px, 5vw, 46px); letter-spacing:.4px}
-    h2{font-weight:700; font-size:clamp(20px, 3.2vw, 28px)}
+    @media (prefers-reduced-motion: reduce){ *{animation-duration:.001ms !important; animation-iteration-count:1 !important; transition:none !important; scroll-behavior:auto !important} }
+
+    a{color:var(--neon); text-decoration:none}
+    a:hover{text-decoration:underline}
+    h1,h2,h3{line-height:1.12; margin:0 0 .6rem}
+    h1{font-family:var(--display); font-weight:800; font-size:clamp(30px, 5.4vw, 52px); letter-spacing:.2px}
+    h2{font-weight:800; font-size:clamp(20px, 3vw, 28px)}
+    h3{font-weight:700; font-size:clamp(18px, 2.2vw, 22px)}
     p{margin:.5rem 0 1rem}
+    small{color:var(--muted)}
 
-    /* floating stars */
-    .stars{position:fixed; inset:0; pointer-events:none; z-index:0;}
-    .stars span{position:absolute; width:2px; height:2px; background:rgba(255,255,255,.5); border-radius:50%; filter:drop-shadow(0 0 6px rgba(124,92,255,.9)); animation:twinkle var(--d) linear infinite; opacity:.8}
-    @keyframes twinkle{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-10px) scale(1.6); opacity:.6}}
+    /* Floating stars / orbs */
+    .stars{position:fixed; inset:0; pointer-events:none; z-index:0}
+    .stars span{position:absolute; width:2px; height:2px; background:rgba(255,255,255,.55); border-radius:50%; filter:drop-shadow(0 0 6px var(--neon-2)); animation:twinkle var(--d) linear infinite; opacity:.85}
+    @keyframes twinkle{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-8px) scale(1.5); opacity:.6}}
 
-    /* header */
-    header{
-      position:relative; z-index:1; padding:28px 18px 10px; backdrop-filter:saturate(140%) blur(6px);
-    }
-    .mast{
-      max-width:1150px; margin:0 auto; padding:18px; border-radius:var(--radius);
-      background:linear-gradient(120deg, rgba(124,92,255,.14), rgba(100,255,218,.06)); box-shadow:var(--shadow);
-    }
+    /* Header */
+    header{ position:relative; z-index:1; padding:28px 18px 10px; backdrop-filter:saturate(140%) blur(6px) }
+    .mast{ max-width:1200px; margin:0 auto; padding:22px; border-radius:var(--radius);
+      background:linear-gradient(120deg, color-mix(in oklab, var(--neon-2) 16%, transparent), color-mix(in oklab, var(--neon) 8%, transparent)); box-shadow:var(--shadow) }
     .subtitle{color:var(--muted); font-size:clamp(14px,2.2vw,18px)}
-    .motto{display:inline-block; margin-top:8px; padding:6px 12px; border-radius:999px; background:linear-gradient(90deg, rgba(100,255,218,.14), rgba(124,92,255,.14)); border:1px solid var(--stroke); color:#cfe; font-weight:600; text-transform:uppercase; letter-spacing:.6px}
+    .motto{display:inline-flex; gap:8px; align-items:center; margin-top:10px; padding:8px 12px; border-radius:999px; background:linear-gradient(90deg, color-mix(in oklab, var(--neon) 14%, transparent), color-mix(in oklab, var(--neon-2) 14%, transparent)); border:1px solid var(--stroke); color:color-mix(in oklab, var(--txt) 90%, white 10%); font-weight:700; text-transform:uppercase; letter-spacing:.6px}
 
-    /* nav */
-    .nav{
-      position:sticky; top:0; z-index:10; padding:10px 16px; background:rgba(8,10,18,.65); backdrop-filter:blur(8px) saturate(140%);
-      border-bottom:1px solid var(--stroke);
-    }
-    .nav .wrap{max-width:1150px; margin:0 auto; display:flex; gap:10px; flex-wrap:wrap; align-items:center}
+    /* Nav */
+    .nav{ position:sticky; top:0; z-index:10; padding:10px 16px; background:color-mix(in oklab, var(--bg-2) 84%, transparent); backdrop-filter:blur(8px) saturate(140%);
+      border-bottom:1px solid var(--stroke) }
+    .nav .wrap{max-width:1200px; margin:0 auto; display:flex; gap:10px; flex-wrap:wrap; align-items:center}
     .nav a{display:inline-flex; gap:8px; align-items:center; padding:10px 14px; border-radius:12px; text-decoration:none; color:var(--txt); border:1px solid transparent}
     .nav a:hover{border-color:var(--stroke); background:var(--glass)}
-    .nav .right{margin-left:auto; display:flex; gap:8px}
-    .btn{cursor:pointer; border:1px solid var(--stroke); background:linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02)); border-radius:12px; padding:10px 14px; color:var(--txt)}
+    .nav .right{margin-left:auto; display:flex; gap:8px; align-items:center}
 
-    /* layout */
-    .container{max-width:1150px; margin:18px auto 100px; padding:0 18px; position:relative; z-index:1}
+    .btn{cursor:pointer; border:1px solid var(--stroke); background:linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02)); border-radius:12px; padding:10px 14px; color:var(--txt)}
+    .btn[aria-pressed="true"]{outline:2px solid var(--neon)}
+
+    /* Layout */
+    .container{max-width:1200px; margin:18px auto 120px; padding:0 18px; position:relative; z-index:1}
     .grid{display:grid; gap:18px}
     @media (min-width: 900px){ .grid-2{grid-template-columns:1.2fr .8fr} }
 
-    /* cards */
-    .card{background:linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.01)); border:1px solid var(--stroke); box-shadow:var(--shadow); border-radius:var(--radius); padding:18px}
+    /* Cards */
+    .card{background:linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.01)); border:1px solid var(--stroke); box-shadow:var(--shadow); border-radius:var(--radius); padding:18px; position:relative; overflow:hidden}
     .card h2 .ping{display:inline-block; width:8px; height:8px; background:var(--neon); border-radius:50%; box-shadow:0 0 18px var(--neon); margin-left:8px}
 
-    /* table */
+    /* Table */
     .table{width:100%; border-collapse:separate; border-spacing:0; overflow:hidden; border-radius:12px; border:1px solid var(--stroke)}
     .table th, .table td{padding:12px 14px; text-align:left}
-    .table thead th{font-size:.9rem; color:#cfe; background:rgba(124,92,255,.14)}
-    .table tbody tr{background:rgba(255,255,255,.02)}
+    .table thead th{font-size:.9rem; color:color-mix(in oklab, var(--txt) 92%, white 8%); background:color-mix(in oklab, var(--neon-2) 14%, transparent)}
+    .table tbody tr{background:rgba(255,255,255,.02); position:relative; transition:transform .25s ease, box-shadow .25s ease, background .25s ease}
     .table tbody tr:nth-child(odd){background:rgba(255,255,255,.04)}
-    .now{position:relative; outline:2px solid var(--neon); box-shadow:0 0 0 2px rgba(100,255,218,.15) inset}
-    .badge{display:inline-flex; align-items:center; gap:8px; padding:4px 10px; border-radius:999px; font-size:.78rem; border:1px solid var(--stroke); background:rgba(100,255,218,.1)}
 
-    /* accordion */
+    /* Multi-highlight styles */
+    .now{--glow:0 0 0 0 rgba(0,0,0,0)}
+    .now::before{
+      content:""; position:absolute; left:0; top:0; bottom:0; width:6px; border-radius:0 8px 8px 0;
+      background:linear-gradient(180deg, var(--neon), var(--neon-2)); filter:drop-shadow(0 0 10px color-mix(in oklab, var(--neon) 60%, transparent));
+      opacity:.95
+    }
+    .now .badge{position:relative; z-index:1}
+    .now--primary{
+      background:linear-gradient(180deg, color-mix(in oklab, var(--neon) 10%, transparent), color-mix(in oklab, var(--neon-2) 12%, transparent));
+      box-shadow:0 10px 30px color-mix(in oklab, var(--neon) 18%, transparent), inset 0 0 0 1px color-mix(in oklab, var(--neon) 48%, transparent);
+      transform:translateZ(0); animation:shine 2.2s linear infinite
+    }
+    .now--primary::after{
+      content:""; position:absolute; inset:0; border-radius:12px; padding:1px;
+      background:linear-gradient(90deg, var(--neon), var(--neon-2), var(--neon)); -webkit-mask:
+      linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite:xor; mask-composite: exclude; opacity:.9;
+      animation:border-run 3.5s linear infinite
+    }
+    .now--overlap{ background:linear-gradient(180deg, color-mix(in oklab, var(--neon-2) 12%, transparent), color-mix(in oklab, var(--neon) 6%, transparent)); box-shadow:0 8px 22px color-mix(in oklab, var(--neon-2) 16%, transparent), inset 0 0 0 1px color-mix(in oklab, var(--neon-2) 44%, transparent) }
+    @keyframes border-run{0%{filter:hue-rotate(0deg)}100%{filter:hue-rotate(360deg)}}
+    @keyframes shine{0%{--glow:0 0 0 0 rgba(100,255,218,0)}50%{--glow:0 0 24px 4px rgba(100,255,218,.25)}100%{--glow:0 0 0 0 rgba(100,255,218,0)}}
+
+    .badge{display:inline-flex; align-items:center; gap:8px; padding:4px 10px; border-radius:999px; font-size:.78rem; border:1px solid var(--stroke); background:color-mix(in oklab, var(--neon) 12%, transparent)}
+    .badge[data-variant="primary"]{border-color:color-mix(in oklab, var(--neon) 55%, transparent); background:color-mix(in oklab, var(--neon) 22%, transparent)}
+    .badge[data-variant="overlap"]{border-color:color-mix(in oklab, var(--neon-2) 55%, transparent); background:color-mix(in oklab, var(--neon-2) 22%, transparent)}
+
+    /* Accordion */
     details{background:linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.01)); border:1px solid var(--stroke); border-radius:12px; padding:14px 16px}
     details+details{margin-top:10px}
     summary{cursor:pointer; list-style:none; display:flex; align-items:center; justify-content:space-between; font-weight:700}
     summary::-webkit-details-marker{display:none}
 
-    /* checklist */
+    /* Checklist */
     .checklist{display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:10px}
     .item{display:flex; align-items:center; gap:12px; padding:12px; border:1px solid var(--stroke); border-radius:12px; background:rgba(255,255,255,.03)}
     .item input{accent-color:var(--neon); width:18px; height:18px}
     .status{margin-left:auto; font-weight:700; color:var(--ok)}
 
-    /* progress */
+    /* Progress */
     .progress{height:10px; background:rgba(255,255,255,.05); border:1px solid var(--stroke); border-radius:999px; overflow:hidden}
-    .progress > i{display:block; height:100%; width:0%; background:linear-gradient(90deg, var(--neon), var(--neon-2)); box-shadow:0 0 18px rgba(100,255,218,.35) inset}
+    .progress > i{display:block; height:100%; width:0%; background:linear-gradient(90deg, var(--neon), var(--neon-2)); box-shadow:0 0 18px color-mix(in oklab, var(--neon) 35%, transparent) inset}
 
-    /* footer */
+    /* Footer */
     footer{padding:40px 16px 80px; text-align:center; color:var(--muted)}
 
-    /* floating to-top */
+    /* Floating widgets */
     .to-top{position:fixed; right:18px; bottom:18px; z-index:11; opacity:.9}
 
-    /* subtle in-view animation */
+    /* Subtle in-view animation */
     .reveal{transform:translateY(16px); opacity:0; transition:all .6s ease}
     .reveal.show{transform:none; opacity:1}
+
+    /* Utility chips & controls */
+    .controls{display:flex; flex-wrap:wrap; gap:8px}
+    .chip{display:inline-flex; align-items:center; gap:8px; padding:8px 12px; border:1px solid var(--stroke); border-radius:999px; background:var(--glass)}
+    .chip input[type="color"]{inline-size:26px; block-size:26px; border:none; background:transparent; padding:0; border-radius:6px}
+
+    /* Pomodoro */
+    .pomo{display:grid; grid-template-columns:1fr auto; align-items:center; gap:12px; margin-top:8px}
+    .pomo-time{font-family:var(--display); font-weight:800; font-size:clamp(28px,4.6vw,42px)}
+    .ring{--size:86px; inline-size:var(--size); block-size:var(--size); border-radius:50%; border:6px solid var(--stroke); position:relative}
+    .ring>i{position:absolute; inset:0; border-radius:50%; mask:radial-gradient(closest-side, transparent 66%, #000 67%); background:conic-gradient(var(--neon) var(--deg,0deg), transparent 0)}
+
+    /* Clock */
+    .clock{font-feature-settings:"tnum" 1, "ss01" 1; font-variant-numeric:tabular-nums; font-family:var(--display); font-weight:800}
   </style>
 </head>
 <body>
-  <!-- starfield -->
+  <!-- Starfield -->
   <div class="stars" aria-hidden="true"></div>
 
   <header>
     <div class="mast">
-      <h1>🌅 LIFE 2.0 — DISCIPLINE BLUEPRINT <span class="ping" aria-hidden="true"></span></h1>
-      <p class="subtitle">Theme: You’re not restarting your life — you’re rebuilding it stronger, calmer, and laser-focused.</p>
-      <span class="motto">Motto: “Simple. Focused. Unstoppable.”</span>
+      <h1>💪 STRICT PROTOCOL: LIFE 2.0 <span class="ping" aria-hidden="true"></span></h1>
+      <p class="subtitle">You’re not restarting your life — you’re rebuilding it stronger, calmer, and laser‑focused.</p>
+      <span class="motto" title="Core mantra">Motto: Simple · Focused · Unstoppable</span>
     </div>
   </header>
 
-  <nav class="nav">
+  <nav class="nav" aria-label="Primary">
     <div class="wrap">
       <a href="#routine">🕗 Routine</a>
-      <a href="#energizer">💥 Morning Energizer</a>
+      <a href="#energizer">💥 Energizer</a>
       <a href="#hydration">💧 Hydration</a>
-      <a href="#rules">💪 Discipline Rules</a>
+      <a href="#rules">📜 Rules</a>
       <a href="#dashboard">⚙️ Dashboard</a>
       <a href="#narrative">📖 Narrative</a>
-      <div class="right">
-        <button class="btn" id="focusToggle">🧠 Focus Mode</button>
-        <button class="btn" id="markAll">✅ Mark All Done</button>
+      <div class="right controls">
+        <button class="btn" id="focusToggle" aria-pressed="false" title="Reduce distractions">🧠 Focus</button>
+        <button class="btn" id="themeToggle" aria-pressed="false" title="Toggle light/dark">🌓 Theme</button>
+        <span class="chip" title="Pick accent color">🎨 Accent <input id="accentPicker" type="color" value="#64ffda" aria-label="Pick accent color"></span>
+        <span class="chip clock" id="liveClock" aria-live="polite">--:--</span>
       </div>
     </div>
   </nav>
 
   <main class="container">
+    <!-- Routine -->
     <section id="routine" class="card reveal">
       <h2>🕗 Daily Routine Table</h2>
-      <p class="subtitle">Automatically highlights the current block based on your local time.</p>
+      <p class="subtitle">Highlights current blocks by local time. The most specific window glows stronger.</p>
       <div class="table-wrap">
         <table class="table" id="routineTable" aria-label="Daily routine table">
           <thead>
-            <tr><th style="width:32%">Time</th><th>Routine</th><th style="width:20%">Status</th></tr>
+            <tr><th style="width:32%">Time</th><th>Routine</th><th style="width:26%">Status</th></tr>
           </thead>
           <tbody>
             <tr><td>8:30 AM</td><td>🌞 Wake Up</td><td></td></tr>
             <tr><td>8:30–8:35 AM</td><td>💧 Hydrate</td><td></td></tr>
-            <tr><td>8:35–9:30 AM</td><td>🏋️ Morning Energizer Routine</td><td></td></tr>
+            <tr><td>8:35–9:30 AM</td><td>🏋️ Morning Energizer</td><td></td></tr>
             <tr><td>9:30–10:30 AM</td><td>🧼 Grooming & Prep</td><td></td></tr>
             <tr><td>10:30 AM</td><td>🍳 Breakfast</td><td></td></tr>
             <tr><td>11:00 AM – 8:00 PM</td><td>💼 Deep Work Zone</td><td></td></tr>
@@ -164,22 +232,29 @@
           </tbody>
         </table>
       </div>
+      <div class="controls" style="margin-top:10px">
+        <button class="btn" id="addRow">➕ Add Row</button>
+        <button class="btn" id="saveRoutine">💾 Save Routine</button>
+        <button class="btn" id="resetRoutine">↩️ Reset</button>
+        <small>Drag to reorder (Alt+↑/↓), edit cell text inline.</small>
+      </div>
     </section>
 
+    <!-- Energizer -->
     <section id="energizer" class="grid grid-2 reveal">
       <div class="card">
-        <h2>🌞 Morning Energizer Routine <small style="color:var(--muted); font-weight:500">(30–40 min total)</small></h2>
+        <h2>🌞 Morning Energizer <small style="color:var(--muted); font-weight:600">(30–40 min)</small></h2>
         <details open>
           <summary>1. Warm-Up (5 min)</summary>
-          <p>Light movements — neck rolls, arm circles, leg swings, and 1-min jog.</p>
+          <p>Light movements — neck rolls, arm circles, leg swings, and 1‑min jog.</p>
         </details>
         <details>
           <summary>2. Skipping / Cardio (5–7 min)</summary>
-          <p>300–500 skips or fast jumping in place. Builds stamina and focus.</p>
+          <p>300–500 skips or fast jumping in place. Build stamina and focus.</p>
         </details>
         <details>
           <summary>3. Strength Set (15–20 min)</summary>
-          <p>Push-ups, squats, planks, and mountain climbers — 3 rounds each. Rest briefly between sets.</p>
+          <p>Push‑ups, squats, planks, mountain climbers — 3 rounds. Form > speed.</p>
         </details>
         <details>
           <summary>4. Stretch & Breath (5–10 min)</summary>
@@ -187,58 +262,87 @@
         </details>
         <details>
           <summary>5. Meditation (5 min)</summary>
-          <p>“I am calm, strong, and grateful.”<br>💧 Finish with warm water and a few moments of gratitude.</p>
+          <p>Mantra: “I am calm, strong, and grateful.” Finish with warm water.</p>
         </details>
       </div>
       <div class="card">
-        <h2>✨ Tips</h2>
-        <ul>
-          <li>Prep your mat and bottle at night. Reduce friction.</li>
-          <li>Keep reps clean, form-first. Consistency over intensity.</li>
-          <li>Track sets with the dashboard below.</li>
-        </ul>
+        <h2>⏱️ Focus Pod (Pomodoro)</h2>
+        <div class="pomo">
+          <div>
+            <div class="pomo-time" id="pomoTime">25:00</div>
+            <div class="controls" style="margin-top:6px">
+              <button class="btn" id="pomoStart">▶️ Start</button>
+              <button class="btn" id="pomoPause">⏸️ Pause</button>
+              <button class="btn" id="pomoReset">🔁 Reset</button>
+              <button class="btn" id="pomoMode">🍅 25/5</button>
+            </div>
+            <small id="pomoStatus" style="display:block; margin-top:6px">Work: 25 min • Break: 5 min</small>
+          </div>
+          <div class="ring" aria-hidden="true"><i id="pomoRing"></i></div>
+        </div>
+        <small>Tip: Use <kbd>Space</kbd> to start/pause, <kbd>R</kbd> to reset.</small>
       </div>
     </section>
 
+    <!-- Hydration -->
     <section id="hydration" class="card reveal">
       <h2>💧 Hydration Schedule</h2>
       <div class="table-wrap">
-        <table class="table" aria-label="Hydration schedule">
-          <thead><tr><th>Time</th><th>Amount</th></tr></thead>
+        <table class="table" id="hydrationTable" aria-label="Hydration schedule">
+          <thead><tr><th>Time</th><th>Amount</th><th></th></tr></thead>
           <tbody>
-            <tr><td>8:30 AM</td><td>500 ml</td></tr>
-            <tr><td>10:00 AM</td><td>500 ml</td></tr>
-            <tr><td>11:30 AM</td><td>500 ml</td></tr>
-            <tr><td>2:30 PM</td><td>500 ml</td></tr>
-            <tr><td>6:00 PM</td><td>500 ml</td></tr>
-            <tr><td>9:30 PM</td><td>500 ml</td></tr>
-            <tr><td><strong>Total</strong></td><td>~3 Liters/day</td></tr>
+            <tr><td>8:30 AM</td><td>500 ml</td><td></td></tr>
+            <tr><td>10:00 AM</td><td>500 ml</td><td></td></tr>
+            <tr><td>11:30 AM</td><td>500 ml</td><td></td></tr>
+            <tr><td>2:30 PM</td><td>500 ml</td><td></td></tr>
+            <tr><td>6:00 PM</td><td>500 ml</td><td></td></tr>
+            <tr><td>9:30 PM</td><td>500 ml</td><td></td></tr>
+            <tr><td><strong>Total</strong></td><td>~3 Liters/day</td><td></td></tr>
           </tbody>
         </table>
       </div>
+      <div class="controls" style="margin-top:10px">
+        <button class="btn" id="addWater">➕ Add Slot</button>
+        <button class="btn" id="saveWater">💾 Save</button>
+        <button class="btn" id="resetWater">↩️ Reset</button>
+        <small>Click a cell to edit. Add reminders below.</small>
+      </div>
+      <div class="controls" style="margin-top:10px">
+        <label class="chip">🔔 Hydrate every
+          <select id="hydrateInterval" style="background:transparent; color:inherit; border:none">
+            <option value="0">(off)</option>
+            <option value="45">45 min</option>
+            <option value="60" selected>60 min</option>
+            <option value="90">90 min</option>
+          </select>
+        </label>
+        <small>Reminders use browser notifications (grant permission when asked).</small>
+      </div>
     </section>
 
+    <!-- Rules -->
     <section id="rules" class="card reveal">
-      <h2>💪 Discipline Rules (Mindset 101)</h2>
+      <h2>📜 Discipline Rules</h2>
       <ul>
-        <li>One day = one victory. Win today, forget tomorrow.</li>
-        <li>Don’t chase motivation — build discipline.</li>
-        <li>Cut noise: no unnecessary scrolling or gossip.</li>
-        <li>Trust God’s timing — move with faith, not fear.</li>
-        <li>Stay well-groomed, humble, and consistent.</li>
-        <li>Keep your circle small, loyal, and positive.</li>
+        <li>One day = one victory. Win today, reset tomorrow.</li>
+        <li>Don’t chase motivation — manufacture discipline.</li>
+        <li>Cut noise: no pointless scrolling or gossip.</li>
+        <li>Trust timing — move with faith, not fear.</li>
+        <li>Stay well‑groomed, humble, consistent.</li>
+        <li>Keep your circle small, loyal, positive.</li>
         <li>When tired, rest — don’t quit.</li>
-        <li>Stick to the plan — no thinking, only doing.</li>
-        <li>No adult content or masturbation — protect your energy and focus.</li>
+        <li>Stick to the plan — less thinking, more doing.</li>
+        <li>No adult content — protect energy & focus.</li>
       </ul>
     </section>
 
+    <!-- Dashboard -->
     <section id="dashboard" class="card reveal">
       <h2>⚙️ Daily Summary Dashboard</h2>
-      <div style="margin:.4rem 0 .8rem; color:var(--muted)">Tick items as you complete them. Progress auto-updates & saves locally.</div>
+      <div style="margin:.4rem 0 .8rem; color:var(--muted)">Tick items as you complete them. Progress auto‑updates & saves locally.</div>
       <div class="progress" aria-label="Completion progress"><i id="progressBar"></i></div>
       <div class="checklist" id="checks">
-        <label class="item"><input type="checkbox" data-key="wake"><span>⏰ Wake Up — <em style="color:var(--muted)">8:30 AM</em></span><span class="status">✅</span></label>
+        <label class="item"><input type="checkbox" data-key="wake"><span>⏰ Wake — <em style="color:var(--muted)">8:30 AM</em></span><span class="status">✅</span></label>
         <label class="item"><input type="checkbox" data-key="sleep"><span>😴 Sleep — <em>12:00–12:30 AM</em></span><span class="status">✅</span></label>
         <label class="item"><input type="checkbox" data-key="water"><span>💧 Water — <em>6 × 500 ml</em></span><span class="status">✅</span></label>
         <label class="item"><input type="checkbox" data-key="meals"><span>🍽️ Meals — <em>3 clean + green tea</em></span><span class="status">✅</span></label>
@@ -249,10 +353,18 @@
         <label class="item"><input type="checkbox" data-key="groom"><span>👕 Grooming — <em>Daily</em></span><span class="status">✅</span></label>
         <label class="item"><input type="checkbox" data-key="circle"><span>🧑‍🤝‍🧑 Circle — <em>Small & Positive</em></span><span class="status">✅</span></label>
       </div>
+      <div class="controls" style="margin-top:10px">
+        <button class="btn" id="markAll">✅ Toggle All</button>
+        <button class="btn" id="exportData">📤 Export</button>
+        <button class="btn" id="importData">📥 Import</button>
+        <input type="file" id="importFile" accept="application/json" style="display:none" />
+        <small id="streakInfo">🔥 Streak: <strong id="streakCount">0</strong> days</small>
+      </div>
     </section>
 
+    <!-- Narrative -->
     <section id="narrative" class="card reveal">
-      <h2>📖 Narrative Summary</h2>
+      <h2>📖 Narrative</h2>
       <p>Each morning begins with silence — the calm before greatness. You rise with the sun, body awake, mind grounded. The world moves in chaos, but you walk with clarity. Every meal is fuel, every workout a promise, every task a brick in your foundation. By night, you’ve moved closer to mastery — quietly, consistently, faithfully. You close your eyes, not tired, but satisfied — ready to repeat and rise again.</p>
     </section>
 
@@ -265,10 +377,18 @@
   <a href="#top" class="btn to-top" title="Back to Top">⬆️</a>
 
   <script>
-    /* === Starfield generation === */
-    (function(){
-      const s=document.querySelector('.stars');
-      for(let i=0;i<80;i++){
+    /* ========= Helpers ========= */
+    const $ = (q, s=document) => s.querySelector(q);
+    const $$ = (q, s=document) => Array.from(s.querySelectorAll(q));
+    const storage = {
+      set:(k,v)=>localStorage.setItem(k, JSON.stringify(v)),
+      get:(k,d=null)=>{ try{ return JSON.parse(localStorage.getItem(k)) ?? d }catch{ return d } }
+    }
+
+    /* ========= Starfield ========= */
+    ;(function(){
+      const s=$('.stars');
+      for(let i=0;i<90;i++){
         const sp=document.createElement('span');
         sp.style.left=Math.random()*100+'%';
         sp.style.top=Math.random()*100+'%';
@@ -278,108 +398,282 @@
       }
     })();
 
-    /* === In-view reveal === */
+    /* ========= In‑view reveal ========= */
     const io=new IntersectionObserver(entries=>{
       entries.forEach(e=> e.target.classList.toggle('show', e.isIntersecting));
     },{threshold:.12});
-    document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+    $$('.reveal').forEach(el=>io.observe(el));
 
-    /* === Smooth scroll for anchor links === */
-    document.querySelectorAll('a[href^="#"]').forEach(a=>{
+    /* ========= Smooth anchor scroll ========= */
+    $$('a[href^="#"]').forEach(a=>{
       a.addEventListener('click', e=>{
         const id=a.getAttribute('href');
-        const target=document.querySelector(id);
+        const target=$(id);
         if(target){ e.preventDefault(); target.scrollIntoView({behavior:'smooth', block:'start'}); }
       });
     });
 
-    /* === Focus Mode === */
-    const focusBtn=document.getElementById('focusToggle');
+    /* ========= Theme & Accent ========= */
+    const themeToggle = $('#themeToggle');
+    const accentPicker = $('#accentPicker');
+
+    function applyAccent(hex){
+      document.documentElement.style.setProperty('--neon', hex);
+      storage.set('life20_accent', hex);
+    }
+    function setTheme(mode){
+      document.body.classList.toggle('light', mode==='light');
+      storage.set('life20_theme', mode);
+      themeToggle.setAttribute('aria-pressed', mode==='light');
+    }
+    themeToggle.addEventListener('click',()=>{
+      const light = !document.body.classList.contains('light');
+      setTheme(light? 'light':'dark');
+    });
+    accentPicker.addEventListener('input', e=>applyAccent(e.target.value));
+    // load prefs
+    (function(){
+      const savedTheme=storage.get('life20_theme');
+      if(savedTheme) setTheme(savedTheme);
+      const savedAccent=storage.get('life20_accent');
+      if(savedAccent) applyAccent(savedAccent);
+    })();
+
+    /* ========= Live Clock ========= */
+    const liveClock = $('#liveClock');
+    function upClock(){
+      const d=new Date();
+      liveClock.textContent = d.toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'});
+    }
+    upClock(); setInterval(upClock, 1000*15);
+
+    /* ========= Focus Mode ========= */
+    const focusBtn=$('#focusToggle');
     let focus=false;
     focusBtn.addEventListener('click',()=>{
       focus=!focus;
       document.body.style.filter=focus? 'grayscale(.08) contrast(1.06)' : '';
-      document.querySelectorAll('section').forEach(sec=>sec.style.opacity=focus? .92 : 1);
-      focusBtn.textContent= focus? '🧠 Focus Mode On' : '🧠 Focus Mode';
+      $$('section').forEach(sec=>sec.style.opacity=focus? .92 : 1);
+      focusBtn.textContent= focus? '🧠 Focus On' : '🧠 Focus';
+      focusBtn.setAttribute('aria-pressed', String(focus));
     });
 
-    /* === Dashboard persistence & progress === */
-    const checks=document.getElementById('checks');
-    const boxes=[...checks.querySelectorAll('input[type="checkbox"]')];
-    const bar=document.getElementById('progressBar');
-    const save=()=>{
-      const data=Object.fromEntries(boxes.map(b=>[b.dataset.key, b.checked]));
-      localStorage.setItem('life20_checks', JSON.stringify(data));
-      update();
-    };
-    const load=()=>{
-      try{ const data=JSON.parse(localStorage.getItem('life20_checks')||'{}');
-        boxes.forEach(b=> b.checked= !!data[b.dataset.key]);
-      }catch(_){/* noop */}
-      update();
-    };
-    const update=()=>{
-      const done=boxes.filter(b=>b.checked).length; const pct=Math.round(done/boxes.length*100);
-      bar.style.width=pct+'%'; bar.setAttribute('aria-valuenow', pct);
-      bar.title=pct+'% completed';
-    };
-    boxes.forEach(b=> b.addEventListener('change', save));
-    load();
+    /* ========= Routine: inline edit, drag, save ========= */
+    const routineKey='life20_routine_v2';
+    const routineTable = $('#routineTable tbody');
 
-    document.getElementById('markAll').addEventListener('click',()=>{
-      const allChecked = boxes.every(b=>b.checked);
-      boxes.forEach(b=> b.checked=!allChecked);
-      save();
-    });
-
-    /* === Highlight current routine row === */
-    function toMinutes(h,m,ampm){
-      h = (h%12) + (ampm==='PM'?12:0);
-      return h*60 + m;
+    function loadRoutine(){
+      const saved = storage.get(routineKey);
+      if(!saved) return;
+      routineTable.innerHTML = saved;
     }
+    function saveRoutine(){ storage.set(routineKey, routineTable.innerHTML); toast('✅ Routine saved'); highlightNow(); bindRowEvents(); }
+    function resetRoutine(){ localStorage.removeItem(routineKey); location.reload(); }
+
+    function makeEditable(td){ td.contentEditable = 'true'; td.spellcheck=false; td.addEventListener('blur', saveRoutine, {once:false}); }
+    function bindRowEvents(){
+      $$('#routineTable tbody tr').forEach((tr)=>{
+        [...tr.children].forEach((td,i)=>{ if(i<2) makeEditable(td); });
+        tr.draggable=true;
+        tr.addEventListener('dragstart', e=>{ tr.classList.add('dragging'); e.dataTransfer.setData('text/plain','drag'); });
+        tr.addEventListener('dragend', ()=>{ tr.classList.remove('dragging'); saveRoutine(); });
+      });
+      routineTable.addEventListener('dragover', e=>{
+        e.preventDefault();
+        const after = getDragAfter(routineTable, e.clientY);
+        const dragging = $('.dragging');
+        if(!dragging) return;
+        if(after == null){ routineTable.appendChild(dragging); }
+        else { routineTable.insertBefore(dragging, after); }
+      });
+      // keyboard reorder
+      routineTable.addEventListener('keydown', e=>{
+        if(!(e.altKey && (e.key==='ArrowUp' || e.key==='ArrowDown'))) return;
+        const tr = e.target.closest('tr'); if(!tr) return;
+        e.preventDefault();
+        if(e.key==='ArrowUp' && tr.previousElementSibling){ routineTable.insertBefore(tr, tr.previousElementSibling); saveRoutine(); }
+        if(e.key==='ArrowDown' && tr.nextElementSibling){ routineTable.insertBefore(tr.nextElementSibling, tr); saveRoutine(); }
+      });
+    }
+    function getDragAfter(container, y){
+      const els=[...container.querySelectorAll('tr:not(.dragging)')];
+      return els.reduce((closest, child)=>{
+        const box = child.getBoundingClientRect();
+        const offset = y - box.top - box.height/2;
+        if(offset < 0 && offset > closest.offset){ return {offset, element:child} } else return closest;
+      }, {offset: Number.NEGATIVE_INFINITY}).element;
+    }
+
+    $('#addRow').addEventListener('click',()=>{
+      const tr=document.createElement('tr');
+      tr.innerHTML=`<td>--:-- --</td><td>🆕 New</td><td></td>`;
+      routineTable.appendChild(tr); bindRowEvents(); saveRoutine();
+    });
+    $('#saveRoutine').addEventListener('click', saveRoutine);
+    $('#resetRoutine').addEventListener('click', resetRoutine);
+
+    loadRoutine(); bindRowEvents();
+
+    /* ========= Multi‑row highlight of current routine ========= */
+    function toMinutes(h,m,ampm){ h = (h%12) + (ampm==='PM'?12:0); return h*60 + m }
     function parseRange(label){
-      // supports "8:30 AM", "8:30–8:35 AM", "11:00 AM – 8:00 PM", "11:30–12:00 AM"
-      const clean = label.replace(/\s+/g,' ').replace(/–/g,'-').replace(/\s?-\s?/,'-').trim();
+      const clean = label.replace(/\s+/g,' ').replace(/–/g,'-').replace(/\s?-\s?/, '-').trim();
       if(clean.includes('-')){
-        // like 8:30-8:35 AM or 11:00 AM-8:00 PM
         const [a,b] = clean.split('-');
         const tail = (b.match(/AM|PM/i)||[''])[0].toUpperCase();
-        const headHas = /AM|PM/i.test(a);
-        const apA = (a.match(/AM|PM/i)||[tail])[0].toUpperCase();
-        const apB = tail;
+        const apA = (a.match(/AM|PM/i)||[tail||'AM'])[0].toUpperCase();
+        const apB = (b.match(/AM|PM/i)||[apA||'AM'])[0].toUpperCase();
         const [h1,m1] = (a.match(/(\d{1,2}):(\d{2})/)||[]).slice(1).map(Number);
         const [h2,m2] = (b.match(/(\d{1,2}):(\d{2})/)||[]).slice(1).map(Number);
         const start = toMinutes(h1||0,m1||0, apA||'AM');
         const end = toMinutes(h2||0,m2||0, apB||'AM');
-        return {start,end};
+        return {start,end,label:clean};
       } else {
-        // single time -> treat as point event lasting 15 min
         const m = clean.match(/(\d{1,2}):(\d{2})\s?(AM|PM)/i);
         if(!m) return null;
         const start = toMinutes(+m[1], +m[2], m[3].toUpperCase());
-        return {start, end:start+15};
+        return {start, end:start+15, label:clean};
       }
     }
-    (function highlightNow(){
-      const rows=[...document.querySelectorAll('#routineTable tbody tr')];
+
+    function highlightNow(){
+      const rows=[...$('#routineTable tbody').querySelectorAll('tr')];
       const now=new Date();
-      const mins=now.getHours()*60 + now.getMinutes();
-      let applied=false;
+      const minsLocal=now.getHours()*60 + now.getMinutes();
+      rows.forEach(r=>{ r.classList.remove('now','now--primary','now--overlap'); const cell=r.children[2]; if(cell) cell.innerHTML=''; });
+      const matches=[];
       rows.forEach(r=>{
         const str=r.children[0].textContent.trim();
-        const range=parseRange(str);
-        if(!range) return;
-        // handle wrap past midnight
-        let {start,end}=range;
-        if(end < start) end += 24*60;
-        let cur=mins;
-        if(mins < 240 && start > 20*60) cur += 24*60; // if after midnight but comparing previous evening ranges
-        if(cur>=start && cur<=end && !applied){
-          r.classList.add('now'); applied=true;
-          r.children[2].innerHTML='<span class="badge">NOW</span>';
-        }
+        const range=parseRange(str); if(!range) return;
+        let {start,end}=range; if(end < start) end += 24*60; // wrap midnight
+        let cur=minsLocal; if(minsLocal < 240 && start > 20*60) cur += 24*60;
+        if(cur>=start && cur<=end){ matches.push({row:r, start, end, dur:end-start}); }
       });
-    })();
+      if(matches.length){
+        let primaryIndex=0; matches.forEach((m,i)=>{ if(m.dur < matches[primaryIndex].dur) primaryIndex=i; });
+        matches.forEach((m,i)=>{
+          m.row.classList.add('now');
+          if(i===primaryIndex){ m.row.classList.add('now--primary'); m.row.children[2].innerHTML='<span class="badge" data-variant="primary">NOW • primary</span>'; }
+          else { m.row.classList.add('now--overlap'); m.row.children[2].innerHTML='<span class="badge" data-variant="overlap">NOW • overlap</span>'; }
+        });
+      }
+    }
+    highlightNow(); setInterval(highlightNow, 60*1000);
+
+    /* ========= Dashboard persistence & progress ========= */
+    const checks=$('#checks');
+    const boxes=[...checks.querySelectorAll('input[type="checkbox"]')];
+    const bar=$('#progressBar');
+    const checkKey='life20_checks';
+
+    function saveChecks(){ const data=Object.fromEntries(boxes.map(b=>[b.dataset.key, b.checked])); storage.set(checkKey, data); updateProgress(); }
+    function loadChecks(){ const data=storage.get(checkKey, {}); boxes.forEach(b=> b.checked= !!data[b.dataset.key]); updateProgress(); }
+    function updateProgress(){ const done=boxes.filter(b=>b.checked).length; const pct=Math.round(done/boxes.length*100); bar.style.width=pct+'%'; bar.setAttribute('aria-valuenow', pct); bar.title=pct+'% completed'; }
+    boxes.forEach(b=> b.addEventListener('change', ()=>{ saveChecks(); maybeStreak(); }));
+    $('#markAll').addEventListener('click',()=>{ const all=boxes.every(b=>b.checked); boxes.forEach(b=> b.checked=!all); saveChecks(); });
+    loadChecks();
+
+    /* ========= Export / Import ========= */
+    $('#exportData').addEventListener('click',()=>{
+      const blob=new Blob([JSON.stringify({
+        routine: $('#routineTable tbody').innerHTML,
+        checks: storage.get(checkKey, {}),
+        hydration: $('#hydrationTable tbody').innerHTML,
+        prefs: { theme: storage.get('life20_theme','dark'), accent: storage.get('life20_accent','#64ffda') },
+        streak: storage.get('life20_streak', {count:0, last:''})
+      }, null, 2)], {type:'application/json'});
+      const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='life20-backup.json'; a.click(); URL.revokeObjectURL(a.href);
+    });
+    $('#importData').addEventListener('click',()=>$('#importFile').click());
+    $('#importFile').addEventListener('change', async (e)=>{
+      const file=e.target.files?.[0]; if(!file) return;
+      const text=await file.text();
+      try{
+        const data=JSON.parse(text);
+        if(data.routine) { $('#routineTable tbody').innerHTML=data.routine; bindRowEvents(); }
+        if(data.hydration) { $('#hydrationTable tbody').innerHTML=data.hydration; bindHydrationEvents(); }
+        if(data.checks) { storage.set(checkKey, data.checks); loadChecks(); }
+        if(data.prefs){ setTheme(data.prefs.theme||'dark'); if(data.prefs.accent) applyAccent(data.prefs.accent); }
+        if(data.streak) storage.set('life20_streak', data.streak);
+        saveRoutine(); saveWater(); toast('✅ Data imported');
+      }catch(err){ toast('⚠️ Import failed'); console.error(err); }
+    });
+
+    /* ========= Hydration editable & reminders ========= */
+    const waterKey='life20_water_v2';
+    const hydrationTable = $('#hydrationTable tbody');
+
+    function loadWater(){ const saved = storage.get(waterKey); if(saved) hydrationTable.innerHTML = saved; }
+    function saveWater(){ storage.set(waterKey, hydrationTable.innerHTML); toast('💧 Hydration saved'); bindHydrationEvents(); }
+    function resetWater(){ localStorage.removeItem(waterKey); location.reload(); }
+    function bindHydrationEvents(){ $$('#hydrationTable tbody tr').forEach(tr=>{ [...tr.children].forEach(td=>{ if(td.cellIndex<2){ td.contentEditable='true'; td.spellcheck=false; td.addEventListener('blur', saveWater); } }); }); }
+
+    $('#addWater').addEventListener('click',()=>{ const tr=document.createElement('tr'); tr.innerHTML='<td>--:-- --</td><td>250 ml</td><td></td>'; hydrationTable.appendChild(tr); bindHydrationEvents(); saveWater(); });
+    $('#saveWater').addEventListener('click', saveWater);
+    $('#resetWater').addEventListener('click', resetWater);
+
+    loadWater(); bindHydrationEvents();
+
+    // Notifications
+    const intervalSel = $('#hydrateInterval');
+    let hydrateTimer=null; let hydrateMinutes = +intervalSel.value;
+    intervalSel.addEventListener('change',()=>{ hydrateMinutes=+intervalSel.value; scheduleHydrate(); storage.set('life20_hydrate_every', hydrateMinutes); });
+    (function(){ const saved=storage.get('life20_hydrate_every'); if(saved!=null){ intervalSel.value=saved; hydrateMinutes=+saved; } scheduleHydrate(); })();
+
+    async function scheduleHydrate(){
+      if(hydrateTimer) clearInterval(hydrateTimer);
+      if(!('Notification' in window)) return;
+      if(hydrateMinutes===0) return;
+      if(Notification.permission!=='granted'){
+        try{ await Notification.requestPermission(); }catch{ /* ignore */ }
+      }
+      if(Notification.permission==='granted'){
+        hydrateTimer = setInterval(()=> new Notification('💧 Hydration', {body:'Time to drink water!', silent:true}), hydrateMinutes*60*1000);
+      }
+    }
+
+    /* ========= Pomodoro ========= */
+    const pomoTime=$('#pomoTime');
+    const pomoRing=$('#pomoRing');
+    const statusEl=$('#pomoStatus');
+    let work=25, rest=5, mode='work', secs=work*60, tick=null, running=false;
+
+    function setRing(){ const total=(mode==='work'? work:rest)*60; const deg=(secs/total)*360; pomoRing.style.setProperty('--deg', deg+'deg'); }
+    function view(){ const mm=String(Math.floor(secs/60)).padStart(2,'0'); const ss=String(secs%60).padStart(2,'0'); pomoTime.textContent=`${mm}:${ss}`; setRing(); }
+    function start(){ if(running) return; running=true; tick=setInterval(()=>{ secs--; if(secs<0){ next(); } view(); }, 1000); }
+    function pause(){ running=false; clearInterval(tick); }
+    function reset(){ pause(); mode='work'; secs=work*60; view(); statusEl.textContent=`Work: ${work} min • Break: ${rest} min`; }
+    function next(){ if(mode==='work'){ mode='rest'; secs=rest*60; toast('🍵 Break time'); } else { mode='work'; secs=work*60; toast('🚀 Back to work'); } }
+
+    $('#pomoStart').addEventListener('click', start);
+    $('#pomoPause').addEventListener('click', pause);
+    $('#pomoReset').addEventListener('click', reset);
+    $('#pomoMode').addEventListener('click',()=>{ [work,rest]=[25,5]; reset(); toast('🍅 Classic 25/5 set'); });
+    document.addEventListener('keydown', e=>{ if(e.target.closest('input,textarea,[contenteditable="true"]')) return; if(e.code==='Space'){ e.preventDefault(); running? pause(): start(); } if(e.key.toLowerCase()==='r'){ reset(); } });
+    reset();
+
+    /* ========= Streak counter ========= */
+    const streakKey='life20_streak';
+    const streakCountEl=$('#streakCount');
+    function todayStr(){ return new Date().toDateString(); }
+    function maybeStreak(){
+      const data=storage.get(streakKey, {count:0, last:''});
+      const done=boxes.filter(b=>b.checked).length===boxes.length; // all complete
+      const today=todayStr();
+      if(done && data.last!==today){ data.count = (data.last && (new Date(today) - new Date(data.last) === 86400000)) ? data.count+1 : 1; data.last=today; storage.set(streakKey, data); toast(`🔥 New streak: ${data.count}`); }
+      streakCountEl.textContent = (storage.get(streakKey, {count:0}).count)||0;
+    }
+    // on load
+    streakCountEl.textContent = (storage.get(streakKey, {count:0}).count)||0;
+
+    /* ========= Toasts ========= */
+    const toaster = document.createElement('div');
+    toaster.style.position='fixed'; toaster.style.left='50%'; toaster.style.bottom='20px'; toaster.style.transform='translateX(-50%)'; toaster.style.zIndex='9999';
+    document.body.appendChild(toaster);
+    function toast(txt){ const el=document.createElement('div'); el.textContent=txt; el.style.cssText='margin:6px 0; padding:10px 14px; border-radius:12px; border:1px solid var(--stroke); background:var(--card); box-shadow:var(--shadow);'; toaster.appendChild(el); setTimeout(()=>el.remove(), 2500); }
+
+    /* ========= Back to top ========= */
+    const toTop=$('.to-top'); toTop.addEventListener('click', e=>{ e.preventDefault(); window.scrollTo({top:0, behavior:'smooth'}); });
   </script>
 </body>
 </html>

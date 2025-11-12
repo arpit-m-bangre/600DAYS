@@ -25,16 +25,18 @@
       overflow-x: hidden;
     }
 
-    /* ===== Layout ===== */
+    /* ===== Layout (force single-column everywhere) ===== */
     .container{
-      width: min(1000px, 92%);
+      width: min(900px, 92%);
       margin: 40px auto;
       background: var(--panel);
       border-radius: 20px;
       padding: clamp(20px, 4vw, 32px);
       box-shadow: 0 0 30px rgba(0,255,200,0.12);
       backdrop-filter: blur(10px);
+      display: block; /* ensure block, not grid/flex */
     }
+    .container > *{ display:block; width:100%; } /* one below another */
 
     /* ===== Headings ===== */
     h1, h2, h3{
@@ -76,9 +78,11 @@
       background: rgba(255,255,255,0.03);
       border-radius: 10px;
       margin: 8px 0;
+      display:block; /* stack items */
+      width:100%;
     }
 
-    /* ===== Tables (mobile scroll + sticky header) ===== */
+    /* ===== Tables converted to ALWAYS-STACKED cards ===== */
     .table-wrap{
       margin-top: 14px;
       border: 1px solid var(--border);
@@ -87,31 +91,34 @@
       background: rgba(255,255,255,0.04);
       box-shadow: inset 0 0 0 1px rgba(255,255,255,0.03);
     }
-    .table-wrap > .scroll{
-      overflow-x: auto;
-      -webkit-overflow-scrolling: touch;
+    .table-wrap > .scroll{ /* we won't scroll horizontally anymore */
+      overflow: visible;
     }
-    table{
-      width: 100%;
-      border-collapse: collapse;
-      min-width: 680px; /* allow horizontal scroll on small screens */
+    table{ width:100%; border-collapse: collapse; }
+
+    /* Stacked table layout — applies at ALL sizes */
+    .stacked-table thead{ display:none; }
+    .stacked-table, .stacked-table tbody, .stacked-table tr, .stacked-table td{
+      display:block;
+      width:100%;
     }
-    thead th{
-      position: sticky;
-      top: 0;
-      background: rgba(0,255,200,0.16);
-      color: var(--glow);
+    .stacked-table tr{ border-bottom: 1px solid var(--border); padding: 8px 10px; }
+    .stacked-table tr:last-child{ border-bottom: 0; }
+    .stacked-table td{
+      padding: 8px 0;
+      border: 0;
+      text-align: left;
+      white-space: normal;
+      font-size: .98rem;
+    }
+    .stacked-table td::before{
+      content: attr(data-label);
+      display:block;
       font-weight: 600;
+      color: var(--glow);
+      margin-bottom: 4px;
       letter-spacing: .2px;
     }
-    th, td{
-      border-bottom: 1px solid var(--border);
-      padding: 12px 10px;
-      text-align: center;
-      font-size: .98rem;
-      white-space: nowrap;
-    }
-    tbody tr:nth-child(odd){ background: rgba(255,255,255,0.03); }
 
     /* ===== Goal/Note card ===== */
     .goal{
@@ -142,10 +149,6 @@
     .mt-8{ margin-top: 8px; }
     .mt-16{ margin-top: 16px; }
     .mt-24{ margin-top: 24px; }
-
-    @media (max-width: 700px){
-      th, td{ font-size: .9rem; padding: 10px 8px; }
-    }
   </style>
 </head>
 <body>
@@ -159,7 +162,7 @@
     <h2>🧩 Why You Are the Perfect Fit for Data Science</h2>
     <div class="table-wrap">
       <div class="scroll">
-        <table aria-label="Why you fit data science">
+        <table class="stacked-table" aria-label="Why you fit data science">
           <thead>
             <tr>
               <th>🎯 Foundation</th>
@@ -168,11 +171,31 @@
             </tr>
           </thead>
           <tbody>
-            <tr><td>🔢 Mathematics</td><td>88% (10th), 83% (12th)</td><td>Backbone of algorithms & ML models</td></tr>
-            <tr><td>📊 Statistics</td><td>B.Sc. Major</td><td>Core of data interpretation & predictive modeling</td></tr>
-            <tr><td>💻 Computer Science</td><td>86% (12th) + MCA (8.5+ CGPA)</td><td>Programming, data pipelines, cloud AI</td></tr>
-            <tr><td>🧠 Analytical Thinking</td><td>Proven academic record</td><td>Ideal mindset for insights & problem-solving</td></tr>
-            <tr><td>🌱 Consistent Growth</td><td>Math → Stats → MCA</td><td>Perfect evolution toward AI/ML</td></tr>
+            <tr>
+              <td data-label="🎯 Foundation">🔢 Mathematics</td>
+              <td data-label="📘 Your Qualification">88% (10th), 83% (12th)</td>
+              <td data-label="💡 Data Science Relevance">Backbone of algorithms & ML models</td>
+            </tr>
+            <tr>
+              <td data-label="🎯 Foundation">📊 Statistics</td>
+              <td data-label="📘 Your Qualification">B.Sc. Major</td>
+              <td data-label="💡 Data Science Relevance">Core of data interpretation & predictive modeling</td>
+            </tr>
+            <tr>
+              <td data-label="🎯 Foundation">💻 Computer Science</td>
+              <td data-label="📘 Your Qualification">86% (12th) + MCA (8.5+ CGPA)</td>
+              <td data-label="💡 Data Science Relevance">Programming, data pipelines, cloud AI</td>
+            </tr>
+            <tr>
+              <td data-label="🎯 Foundation">🧠 Analytical Thinking</td>
+              <td data-label="📘 Your Qualification">Proven academic record</td>
+              <td data-label="💡 Data Science Relevance">Ideal mindset for insights & problem-solving</td>
+            </tr>
+            <tr>
+              <td data-label="🎯 Foundation">🌱 Consistent Growth</td>
+              <td data-label="📘 Your Qualification">Math → Stats → MCA</td>
+              <td data-label="💡 Data Science Relevance">Perfect evolution toward AI/ML</td>
+            </tr>
           </tbody>
         </table>
       </div>
@@ -182,7 +205,7 @@
     <h2 class="mt-24">⚡ Future Market Power (India 2025–2030)</h2>
     <div class="table-wrap">
       <div class="scroll">
-        <table aria-label="Market comparison">
+        <table class="stacked-table" aria-label="Market comparison">
           <thead>
             <tr>
               <th>📈 Metric</th>
@@ -192,12 +215,42 @@
             </tr>
           </thead>
           <tbody>
-            <tr><td>Job Volume</td><td>100% (many roles)</td><td>25–30% (specialized)</td><td>SDE</td></tr>
-            <tr><td>Skill Uniqueness</td><td>Moderate</td><td>💥 Very High (Math + Code + Stats)</td><td>Data Science</td></tr>
-            <tr><td>Avg. Salary (0–5 yrs)</td><td>₹6–18 LPA</td><td>₹7–25 LPA</td><td>Data Science</td></tr>
-            <tr><td>Growth Ceiling (10+ yrs)</td><td>₹60 LPA</td><td>₹1 Cr+</td><td>Data Science 🚀</td></tr>
-            <tr><td>Global Demand (AI/ML)</td><td>8% YoY</td><td>💹 40% YoY</td><td>Data Science</td></tr>
-            <tr><td>Fit with Your Background</td><td>70%</td><td>💯 100%</td><td>✅ Data Science</td></tr>
+            <tr>
+              <td data-label="📈 Metric">Job Volume</td>
+              <td data-label="💻 SDE">100% (many roles)</td>
+              <td data-label="📊 Data Scientist">25–30% (specialized)</td>
+              <td data-label="🌟 Winner">SDE</td>
+            </tr>
+            <tr>
+              <td data-label="📈 Metric">Skill Uniqueness</td>
+              <td data-label="💻 SDE">Moderate</td>
+              <td data-label="📊 Data Scientist">💥 Very High (Math + Code + Stats)</td>
+              <td data-label="🌟 Winner">Data Science</td>
+            </tr>
+            <tr>
+              <td data-label="📈 Metric">Avg. Salary (0–5 yrs)</td>
+              <td data-label="💻 SDE">₹6–18 LPA</td>
+              <td data-label="📊 Data Scientist">₹7–25 LPA</td>
+              <td data-label="🌟 Winner">Data Science</td>
+            </tr>
+            <tr>
+              <td data-label="📈 Metric">Growth Ceiling (10+ yrs)</td>
+              <td data-label="💻 SDE">₹60 LPA</td>
+              <td data-label="📊 Data Scientist">₹1 Cr+</td>
+              <td data-label="🌟 Winner">Data Science 🚀</td>
+            </tr>
+            <tr>
+              <td data-label="📈 Metric">Global Demand (AI/ML)</td>
+              <td data-label="💻 SDE">8% YoY</td>
+              <td data-label="📊 Data Scientist">💹 40% YoY</td>
+              <td data-label="🌟 Winner">Data Science</td>
+            </tr>
+            <tr>
+              <td data-label="📈 Metric">Fit with Your Background</td>
+              <td data-label="💻 SDE">70%</td>
+              <td data-label="📊 Data Scientist">💯 100%</td>
+              <td data-label="🌟 Winner">✅ Data Science</td>
+            </tr>
           </tbody>
         </table>
       </div>
@@ -207,7 +260,7 @@
     <h2 class="mt-24">💰 Salary Projection (2027–2035)</h2>
     <div class="table-wrap">
       <div class="scroll">
-        <table aria-label="Salary projection">
+        <table class="stacked-table" aria-label="Salary projection">
           <thead>
             <tr>
               <th>🗓️ Year</th>
@@ -217,10 +270,30 @@
             </tr>
           </thead>
           <tbody>
-            <tr><td>2027</td><td>MCA Graduate</td><td>Data Analyst / ML Associate</td><td>₹6–12 LPA</td></tr>
-            <tr><td>2029</td><td>2 yrs Exp</td><td>Data Scientist / ML Engineer</td><td>₹15–25 LPA</td></tr>
-            <tr><td>2032</td><td>5–6 yrs Exp</td><td>Senior DS / MLOps Specialist</td><td>₹25–45 LPA</td></tr>
-            <tr><td>2035</td><td>8–10 yrs Exp</td><td>Lead DS / AI Manager</td><td>₹50 LPA – ₹1 Cr+ 🚀</td></tr>
+            <tr>
+              <td data-label="🗓️ Year">2027</td>
+              <td data-label="🎓 Stage">MCA Graduate</td>
+              <td data-label="🧠 Role">Data Analyst / ML Associate</td>
+              <td data-label="💸 Expected Salary">₹6–12 LPA</td>
+            </tr>
+            <tr>
+              <td data-label="🗓️ Year">2029</td>
+              <td data-label="🎓 Stage">2 yrs Exp</td>
+              <td data-label="🧠 Role">Data Scientist / ML Engineer</td>
+              <td data-label="💸 Expected Salary">₹15–25 LPA</td>
+            </tr>
+            <tr>
+              <td data-label="🗓️ Year">2032</td>
+              <td data-label="🎓 Stage">5–6 yrs Exp</td>
+              <td data-label="🧠 Role">Senior DS / MLOps Specialist</td>
+              <td data-label="💸 Expected Salary">₹25–45 LPA</td>
+            </tr>
+            <tr>
+              <td data-label="🗓️ Year">2035</td>
+              <td data-label="🎓 Stage">8–10 yrs Exp</td>
+              <td data-label="🧠 Role">Lead DS / AI Manager</td>
+              <td data-label="💸 Expected Salary">₹50 LPA – ₹1 Cr+ 🚀</td>
+            </tr>
           </tbody>
         </table>
       </div>
@@ -238,7 +311,7 @@
     <h2 class="mt-24">💎 Arpit’s Advantage Index (2025)</h2>
     <div class="table-wrap">
       <div class="scroll">
-        <table aria-label="Advantage index">
+        <table class="stacked-table" aria-label="Advantage index">
           <thead>
             <tr>
               <th>Factor</th>
@@ -248,12 +321,42 @@
             </tr>
           </thead>
           <tbody>
-            <tr><td>Math Foundation</td><td>20%</td><td>19/20</td><td>Excellent</td></tr>
-            <tr><td>Statistics</td><td>20%</td><td>20/20</td><td>Perfect major</td></tr>
-            <tr><td>Programming</td><td>20%</td><td>17/20</td><td>MCA gives depth</td></tr>
-            <tr><td>Logic & Problem Solving</td><td>20%</td><td>18/20</td><td>Consistently strong</td></tr>
-            <tr><td>Growth Potential</td><td>20%</td><td>19/20</td><td>Aligned with AI future</td></tr>
-            <tr><th>Total</th><th>100%</th><th>93% Fit ✅</th><th>Ideal for Data Science</th></tr>
+            <tr>
+              <td data-label="Factor">Math Foundation</td>
+              <td data-label="Weight">20%</td>
+              <td data-label="Your Score">19/20</td>
+              <td data-label="Comment">Excellent</td>
+            </tr>
+            <tr>
+              <td data-label="Factor">Statistics</td>
+              <td data-label="Weight">20%</td>
+              <td data-label="Your Score">20/20</td>
+              <td data-label="Comment">Perfect major</td>
+            </tr>
+            <tr>
+              <td data-label="Factor">Programming</td>
+              <td data-label="Weight">20%</td>
+              <td data-label="Your Score">17/20</td>
+              <td data-label="Comment">MCA gives depth</td>
+            </tr>
+            <tr>
+              <td data-label="Factor">Logic & Problem Solving</td>
+              <td data-label="Weight">20%</td>
+              <td data-label="Your Score">18/20</td>
+              <td data-label="Comment">Consistently strong</td>
+            </tr>
+            <tr>
+              <td data-label="Factor">Growth Potential</td>
+              <td data-label="Weight">20%</td>
+              <td data-label="Your Score">19/20</td>
+              <td data-label="Comment">Aligned with AI future</td>
+            </tr>
+            <tr>
+              <td data-label="Factor"><strong>Total</strong></td>
+              <td data-label="Weight"><strong>100%</strong></td>
+              <td data-label="Your Score"><strong>93% Fit ✅</strong></td>
+              <td data-label="Comment"><strong>Ideal for Data Science</strong></td>
+            </tr>
           </tbody>
         </table>
       </div>

@@ -6,237 +6,223 @@
   <title>🕗 Structured Routine — LIFE 2.0</title>
 
   <style>
-    /* ===== Theme (consistent with 01) ===== */
+    /* ===== Theme ===== */
     :root{
       --bg: radial-gradient(circle at top left, #0a0a0f, #050505);
       --panel: rgba(20, 20, 30, 0.7);
+      --panel-strong: rgba(22, 22, 32, 0.85);
       --border: rgba(255,255,255,0.1);
       --glow: #00ffe0;
-      --text: #e0e0e0;
-      --muted: #cfcfd4;
-    }
-    *{ box-sizing: border-box; }
-    html, body{ margin:0; padding:0; }
-    body{
-      font-family: 'Poppins', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      line-height: 1.65;
-      overflow-x: hidden;
-    }
-    .container{
-      width: min(1000px, 92%);
-      margin: 40px auto;
-      background: var(--panel);
-      border-radius: 20px;
-      padding: clamp(20px, 4vw, 32px);
-      box-shadow: 0 0 30px rgba(0,255,200,0.12);
-      backdrop-filter: blur(10px);
+      --text: #e9eef0;
+      --muted: #cfd6da;
+      --shadow: 0 10px 30px rgba(0,0,0,.45);
     }
 
-    /* Headings */
-    h1, h2, h3{
+    /* ===== Hard reset to avoid any side-by-side/adjacent layouts ===== */
+    *{ box-sizing: border-box; margin:0; padding:0; }
+    html, body { width: 100%; }
+    body{
+      font-family: 'Poppins', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      padding: clamp(16px, 4vw, 32px);
+    }
+
+    /* Force single-column vertical stacking everywhere */
+    .container{
+      width: min(860px, 94%);
+      margin: 0 auto;
+      background: var(--panel);
+      border-radius: 20px;
+      padding: clamp(20px, 4vw, 36px);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(10px);
+
+      /* key: never place items side-by-side */
+      display: flex;
+      flex-direction: column;
+      gap: clamp(16px, 2.4vw, 24px);
+    }
+
+    /* Ensure every major block takes full width and stacks */
+    section, .table-wrap, ul.clean, .note, .rule, h1, h2, p.center { 
+      display: block; 
+      width: 100%; 
+    }
+
+    /* Nuke any rogue floats/columns that could create adjacency */
+    [style*="float:"], [style*="columns:"], [style*="column-count"], [style*="flex-direction: row"]{
+      float: none !important;
+      columns: 1 !important;
+    }
+    ul.clean{ columns: 1 !important; }
+
+    h1, h2{
       color: var(--glow);
       text-shadow: 0 0 10px var(--glow);
       text-align: center;
-      margin: 0 0 14px;
-      line-height: 1.25;
     }
-    h1{ font-size: clamp(1.6rem, 2.6vw, 2.1rem); }
-    h2{ font-size: clamp(1.25rem, 2.2vw, 1.6rem); margin-top: 28px; }
-    h3{ font-size: 1.05rem; }
+    h1{ font-size: clamp(1.7rem, 4vw, 2.3rem); margin-bottom: 6px; }
+    h2{ font-size: clamp(1.3rem, 2.4vw, 1.6rem); margin-top: 8px; }
 
     p, li{ color: var(--muted); font-size: 1rem; }
-    .center{ text-align: center; }
+    .center{ text-align: center; margin-top: 2px; }
 
-    /* Rule */
     .rule{
       height: 1px;
       background: linear-gradient(90deg, transparent, var(--border), transparent);
-      margin: 24px 0;
+      margin: clamp(12px, 2.4vw, 20px) 0;
     }
 
-    /* Labels */
-    .label{
-      font-size: 1.02rem;
-      margin: 18px 0 8px;
-      color: #fff;
-      border-left: 4px solid var(--glow);
-      padding-left: 10px;
-      text-shadow: 0 0 10px var(--glow);
-    }
-
-    /* Lists */
-    ul.clean{ list-style: none; padding-left: 0; margin: 8px 0 0; }
+    ul.clean{ list-style: none; padding-left: 0; margin-top: 8px; }
     ul.clean li{
-      padding: 8px 12px;
+      padding: 10px 14px;
       border: 1px solid var(--border);
       background: rgba(255,255,255,0.03);
       border-radius: 10px;
-      margin: 8px 0;
+      margin-top: 10px;
+      display: block;
+      width: 100%;
     }
 
-    /* Tables (mobile scroll) */
-    .table-wrap{
-      margin-top: 14px;
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      overflow: hidden;
-      background: rgba(255,255,255,0.04);
-      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.03);
+    .table-wrap{ 
+      margin-top: 8px; 
+      border: 1px solid var(--border); 
+      border-radius: 12px; 
+      overflow-x: auto; 
+      background: rgba(255,255,255,0.04); 
     }
-    .table-wrap > .scroll{
-      overflow-x: auto;
-      -webkit-overflow-scrolling: touch;
-    }
-    table{
-      width: 100%;
-      border-collapse: collapse;
-      min-width: 680px;
-    }
-    thead th{
-      position: sticky;
-      top: 0;
-      background: rgba(0,255,200,0.16);
-      color: var(--glow);
-      font-weight: 600;
-      letter-spacing: .2px;
-    }
-    th, td{
-      border-bottom: 1px solid var(--border);
-      padding: 12px 10px;
-      text-align: center;
-      font-size: .98rem;
-      white-space: nowrap;
-    }
+    table{ width: 100%; border-collapse: collapse; min-width: 700px; }
+    th, td{ padding: 12px 10px; text-align: center; border-bottom: 1px solid var(--border); }
+    thead th{ background: rgba(0,255,200,0.16); color: var(--glow); font-weight: 600; }
     tbody tr:nth-child(odd){ background: rgba(255,255,255,0.03); }
 
-    /* Goal/Note card */
     .note{
-      background: rgba(0,255,200,0.10);
+      background: var(--panel-strong);
       border: 1px solid rgba(0,255,200,0.25);
-      padding: 16px;
+      padding: clamp(14px, 2vw, 20px);
       border-radius: 12px;
       text-align: center;
       color: var(--glow);
-      font-weight: 600;
-      box-shadow: 0 0 20px rgba(0,255,200,0.10);
-      margin-top: 18px;
+      font-weight: 700;
+      margin-top: 6px;
+      box-shadow: 0 0 20px rgba(0,255,200,0.1);
     }
 
-    /* Spacing */
-    .mt-8{ margin-top: 8px; }
-    .mt-16{ margin-top: 16px; }
-    .mt-24{ margin-top: 24px; }
+    /* Spacing helpers so everything is one-below-the-other but breathable */
+    .stack-gap-sm{ margin-top: 6px; }
+    .stack-gap-md{ margin-top: 10px; }
+    .stack-gap-lg{ margin-top: 14px; }
 
-    @media (max-width: 700px){
-      th, td{ font-size: .9rem; padding: 10px 8px; }
-    }
+    /* Prevent accidental side-by-side caused by images/media */
+    img, video, iframe { max-width: 100%; height: auto; display: block; }
   </style>
 </head>
 <body>
   <div class="container">
     <h1>🕗 Structured Routine — LIFE 2.0</h1>
     <p class="center"><em>“Simple. Focused. Unstoppable.”</em></p>
-    <p class="center">One clear daily operating system: fewer decisions, more momentum.</p>
+    <p class="center">A single streamlined daily system for unstoppable progress.</p>
 
     <div class="rule"></div>
 
-    <!-- Day Overview Blocks -->
-    <h2>📅 Daily Blocks (Overview)</h2>
-    <div class="table-wrap">
-      <div class="scroll">
-        <table aria-label="Daily blocks overview">
+    <section>
+      <h2>📅 Daily Blocks (Overview)</h2>
+      <div class="table-wrap">
+        <table>
           <thead>
-            <tr>
-              <th>Time</th>
-              <th>Block</th>
-              <th>Focus</th>
-              <th>Notes</th>
-            </tr>
+            <tr><th>Time</th><th>Block</th><th>Focus</th><th>Notes</th></tr>
           </thead>
           <tbody>
-            <tr><td>08:30</td><td>Wake & Hydrate</td><td>Energy + Intent</td><td>500ml water, light movement</td></tr>
-            <tr><td>08:35–09:30</td><td>Morning Energizer</td><td>Cardio + Mobility</td><td>Skipping / bodyweight circuits</td></tr>
-            <tr><td>09:30–10:30</td><td>Grooming & Prep</td><td>Clean start</td><td>Shower, outfit, tidy desk</td></tr>
+            <tr><td>08:30</td><td>Wake & Hydrate</td><td>Energy + Intent</td><td>Water + light movement</td></tr>
+            <tr><td>08:35–09:30</td><td>Morning Energizer</td><td>Cardio</td><td>Skipping / mobility</td></tr>
+            <tr><td>09:30–10:30</td><td>Prep</td><td>Clean start</td><td>Shower, outfit, tidy desk</td></tr>
             <tr><td>10:30</td><td>Breakfast</td><td>Fuel</td><td>Protein + carbs + fruit</td></tr>
-            <tr><td>11:00–13:00</td><td>Deep Work 1</td><td>Core Skill</td><td>DA / DSA / SQL (single target)</td></tr>
-            <tr><td>13:00–13:30</td><td>Lunch</td><td>Recover</td><td>Light + walk 5 min</td></tr>
-            <tr><td>13:30–15:30</td><td>Deep Work 2</td><td>Projects</td><td>Code / analysis / notes</td></tr>
-            <tr><td>15:30–16:00</td><td>Break</td><td>Reset</td><td>Hydrate, stretch, eyes off screen</td></tr>
-            <tr><td>16:00–18:00</td><td>Deep Work 3</td><td>Practice</td><td>LeetCode / SQL sets</td></tr>
-            <tr><td>18:00–19:00</td><td>Evening Refresh</td><td>Movement</td><td>Walk / light sport / family</td></tr>
-            <tr><td>19:30–20:30</td><td>Dinner</td><td>Fuel</td><td>Balanced plate, no heavy sugar</td></tr>
-            <tr><td>21:30–22:30</td><td>Wind-Down</td><td>Reflection</td><td>Journal + gratitude + planning</td></tr>
-            <tr><td>22:30–23:30</td><td>Night Care</td><td>Hygiene</td><td>Skincare, stretch, prep clothes</td></tr>
-            <tr><td>23:30–00:30</td><td>Sleep</td><td>Recovery</td><td>Cool, dark, phone away</td></tr>
+            <tr><td>11:00–13:00</td><td>Deep Work 1</td><td>Core Skill</td><td>DA / DSA / SQL</td></tr>
+            <tr><td>13:00–13:30</td><td>Lunch</td><td>Recover</td><td>Light + 5 min walk</td></tr>
+            <tr><td>13:30–15:30</td><td>Deep Work 2</td><td>Projects</td><td>Code / analysis</td></tr>
+            <tr><td>15:30–16:00</td><td>Break</td><td>Reset</td><td>Stretch / hydrate</td></tr>
+            <tr><td>16:00–18:00</td><td>Deep Work 3</td><td>Practice</td><td>LeetCode / SQL</td></tr>
+            <tr><td>18:00–19:00</td><td>Evening Refresh</td><td>Movement</td><td>Walk / sport</td></tr>
+            <tr><td>19:30–20:30</td><td>Dinner</td><td>Fuel</td><td>Balanced meal</td></tr>
+            <tr><td>21:30–22:30</td><td>Wind-Down</td><td>Reflection</td><td>Journal, gratitude</td></tr>
+            <tr><td>22:30–23:30</td><td>Night Care</td><td>Hygiene</td><td>Stretch, prep clothes</td></tr>
+            <tr><td>23:30–00:30</td><td>Sleep</td><td>Recovery</td><td>Cool, dark, no phone</td></tr>
           </tbody>
         </table>
       </div>
-    </div>
+    </section>
 
     <div class="rule"></div>
 
-    <!-- Morning Routine -->
-    <h2>🌞 Morning Routine (30–40 min)</h2>
-    <ul class="clean">
-      <li>1️⃣ <strong>Warm-up (5 min):</strong> Neck rolls, arm circles, leg swings, 1-min jog.</li>
-      <li>2️⃣ <strong>Cardio (5–7 min):</strong> 300–500 skips / brisk jog.</li>
-      <li>3️⃣ <strong>Strength (15–20 min):</strong> Push-ups, squats, planks, mountain climbers — 3 rounds.</li>
-      <li>4️⃣ <strong>Stretch & Breath (5–10 min):</strong> Cat-Cow, side bends, butterfly, deep breathing.</li>
-      <li>5️⃣ <strong>Meditation (5 min):</strong> Repeat: “I am calm, strong, and grateful.”</li>
-    </ul>
+    <section>
+      <h2>🌞 Morning Routine (30–40 min)</h2>
+      <ul class="clean">
+        <li>Warm-up (5 min): Neck rolls, arm circles, jog.</li>
+        <li>Cardio (7 min): Skipping / brisk jog.</li>
+        <li>Strength (20 min): Push-ups, squats, planks.</li>
+        <li>Stretch & Breath (10 min): Deep breathing, yoga.</li>
+        <li>Meditation (5 min): “I am calm, strong, grateful.”</li>
+      </ul>
+    </section>
 
-    <!-- Deep Work Protocol -->
-    <h2 class="mt-24">💼 Deep Work Protocol</h2>
-    <ul class="clean">
-      <li>🎯 <strong>One target only:</strong> DA / DSA / SQL / Project — pick one per block.</li>
-      <li>⏱️ <strong>Method:</strong> 50-minute focus sprints × 2 → 10-minute break.</li>
-      <li>🗒️ <strong>Notes live:</strong> Keep a scratchpad open for ideas; don’t context-switch.</li>
-      <li>🔕 <strong>Distractions:</strong> Phone in another room; use site blockers.</li>
-      <li>📦 <strong>End of block:</strong> Commit code/notes; write 2-line summary.</li>
-    </ul>
+    <section>
+      <h2>💼 Deep Work Protocol</h2>
+      <ul class="clean">
+        <li>🎯 One target only — DA / DSA / SQL / Project.</li>
+        <li>⏱️ 50-min focus sprint × 2, 10-min break.</li>
+        <li>🗒️ Keep scratchpad open for ideas.</li>
+        <li>🔕 Phone away, site blockers on.</li>
+        <li>📦 End of block: commit code + 2-line summary.</li>
+      </ul>
+    </section>
 
-    <!-- Hydration + Nutrition -->
-    <h2 class="mt-24">💧 Hydration & 🍽️ Nutrition</h2>
-    <ul class="clean">
-      <li>💧 6 × 500 ml checkpoints: 08:30 • 10:00 • 11:30 • 14:30 • 18:00 • 21:30.</li>
-      <li>🍳 Breakfast: protein + whole carbs + fruit.</li>
-      <li>🥗 Lunch: light, add greens; 5-min walk after.</li>
-      <li>🍽️ Dinner: balanced; reduce sugar and very oily foods.</li>
-      <li>☕ Green tea 1–2×; avoid caffeine after 4 PM.</li>
-    </ul>
+    <section>
+      <h2>💧 Hydration & 🍽️ Nutrition</h2>
+      <ul class="clean">
+        <li>💧 6×500ml: 08:30 • 10:00 • 11:30 • 14:30 • 18:00 • 21:30</li>
+        <li>🍳 Breakfast: protein + carbs + fruit.</li>
+        <li>🥗 Lunch: light + greens + 5-min walk.</li>
+        <li>🍽️ Dinner: balanced, less sugar + oil.</li>
+        <li>☕ Green tea ×2; no caffeine after 4 PM.</li>
+      </ul>
+    </section>
 
-    <!-- Evening & Sleep -->
-    <h2 class="mt-24">🌇 Evening & 🌙 Sleep</h2>
-    <ul class="clean">
-      <li>🚶 15–30 min walk or light sport after 6 PM.</li>
-      <li>📓 Journal: 3 wins, 1 improvement, plan tomorrow’s first task.</li>
-      <li>📵 Screens off 45–60 min before sleep; room cool & dark.</li>
-      <li>🧴 Night care: hygiene + 3-min stretch; prep clothes for tomorrow.</li>
-    </ul>
+    <section>
+      <h2>🌇 Evening & 🌙 Sleep</h2>
+      <ul class="clean">
+        <li>🚶 15–30 min walk / sport after 6 PM.</li>
+        <li>📓 Journal 3 wins + 1 improvement.</li>
+        <li>📵 Screens off 1h before sleep.</li>
+        <li>🧴 Hygiene + stretch + prep clothes.</li>
+      </ul>
+    </section>
 
-    <!-- Weekly Review -->
-    <h2 class="mt-24">📆 Weekly Review (Sunday, 30–45 min)</h2>
-    <ul class="clean">
-      <li>🔁 Review: DA/DSA/SQL progress, projects, health, habits.</li>
-      <li>🧭 Plan: 3 big tasks for the week; block them on the calendar.</li>
-      <li>🧹 Reset: room, desk, laptop files; refresh to-do list.</li>
-    </ul>
+    <section>
+      <h2>📆 Weekly Review (Sunday, 30–45 min)</h2>
+      <ul class="clean">
+        <li>🔁 Review DA/DSA/SQL progress + health.</li>
+        <li>🧭 Plan top 3 weekly tasks.</li>
+        <li>🧹 Reset room, desk, files, tasks.</li>
+      </ul>
+    </section>
 
-    <!-- Guardrails -->
-    <h2 class="mt-24">🛡️ Guardrails (Focus Rules)</h2>
-    <ul class="clean">
-      <li>🚫 No pointless scrolling, gossip, or doom-loops.</li>
-      <li>📶 Phone stays away during deep work & before sleep.</li>
-      <li>🧘 When tired, rest—don’t quit. Take a 10-min reset.</li>
-      <li>👥 Keep your circle small, kind, and ambitious.</li>
-      <li>🎯 Stick to the plan: decide once, execute daily.</li>
-    </ul>
+    <section>
+      <h2>🛡️ Guardrails (Focus Rules)</h2>
+      <ul class="clean">
+        <li>🚫 No gossip, doom-scrolls, or distraction loops.</li>
+        <li>📶 Phone away during deep work + pre-sleep.</li>
+        <li>🧘 Rest, don’t quit — take 10-min resets.</li>
+        <li>👥 Keep your circle small and ambitious.</li>
+        <li>🎯 Decide once, execute daily.</li>
+      </ul>
+    </section>
 
-    <div class="note">
-      Keep it simple: one routine, one focus, daily reps. Momentum beats motivation. ⚡
-    </div>
+    <div class="note">Keep it simple: one focus, one routine, daily reps. ⚡</div>
   </div>
 </body>
 </html>

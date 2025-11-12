@@ -25,16 +25,18 @@
       overflow-x:hidden;
     }
 
-    /* ===== Layout ===== */
+    /* ===== Layout: force single column everywhere ===== */
     .container{
-      width:min(1000px,92%);
+      width:min(900px,92%);
       margin:40px auto;
       background:var(--panel);
       border-radius:20px;
       padding:clamp(20px,4vw,32px);
       box-shadow:0 0 30px rgba(0,255,200,0.12);
       backdrop-filter:blur(10px);
+      display:block;
     }
+    .container > *{ display:block; width:100%; }
 
     /* ===== Headings ===== */
     h1,h2,h3{
@@ -58,40 +60,6 @@
       margin:24px 0;
     }
 
-    /* ===== Tables (mobile scroll + sticky header) ===== */
-    .table-wrap{
-      margin-top:14px;
-      border:1px solid var(--border);
-      border-radius:12px;
-      overflow:hidden;
-      background:rgba(255,255,255,0.04);
-      box-shadow:inset 0 0 0 1px rgba(255,255,255,0.03);
-    }
-    .table-wrap>.scroll{
-      overflow-x:auto;
-      -webkit-overflow-scrolling:touch;
-    }
-    table{
-      width:100%;
-      border-collapse:collapse;
-      min-width:680px; /* allow horizontal scroll on small screens */
-    }
-    thead th{
-      position:sticky; top:0;
-      background:rgba(0,255,200,0.16);
-      color:var(--glow);
-      font-weight:600;
-      letter-spacing:.2px;
-    }
-    th,td{
-      border-bottom:1px solid var(--border);
-      padding:12px 10px;
-      text-align:center;
-      font-size:.98rem;
-      white-space:nowrap;
-    }
-    tbody tr:nth-child(odd){ background:rgba(255,255,255,0.03); }
-
     /* ===== Lists ===== */
     ul.clean{ list-style:none; padding-left:0; margin:8px 0 0; }
     ul.clean li{
@@ -100,6 +68,45 @@
       background:rgba(255,255,255,0.03);
       border-radius:10px;
       margin:8px 0;
+      display:block;
+      width:100%;
+    }
+
+    /* ===== Tables turned into ALWAYS-STACKED cards ===== */
+    .table-wrap{
+      margin-top:14px;
+      border:1px solid var(--border);
+      border-radius:12px;
+      overflow:hidden;
+      background:rgba(255,255,255,0.04);
+      box-shadow:inset 0 0 0 1px rgba(255,255,255,0.03);
+    }
+    .table-wrap>.scroll{ overflow:visible; }
+    table{ width:100%; border-collapse:collapse; }
+
+    /* Stacked layout applies at ALL sizes */
+    .stacked-table thead{ display:none; }
+    .stacked-table, .stacked-table tbody, .stacked-table tr, .stacked-table td{
+      display:block;
+      width:100%;
+    }
+    .stacked-table tr{ border-bottom:1px solid var(--border); padding:10px 12px; }
+    .stacked-table tr:nth-child(odd){ background:rgba(255,255,255,0.03); }
+    .stacked-table tr:last-child{ border-bottom:0; }
+    .stacked-table td{
+      padding:8px 0;
+      border:0;
+      text-align:left;
+      white-space:normal;
+      font-size:.98rem;
+    }
+    .stacked-table td::before{
+      content:attr(data-label);
+      display:block;
+      font-weight:600;
+      color:var(--glow);
+      margin-bottom:4px;
+      letter-spacing:.2px;
     }
 
     /* ===== Goal/Note card ===== */
@@ -116,7 +123,8 @@
     }
 
     @media (max-width:700px){
-      th,td{ font-size:.9rem; padding:10px 8px; }
+      /* minor typography tweak only; layout already stacked */
+      .stacked-table td{ font-size:.95rem; }
     }
   </style>
 </head>
@@ -132,7 +140,7 @@
     <h2>🥇 1️⃣ Technical & IT Sector (Core Computer Science Jobs)</h2>
     <div class="table-wrap">
       <div class="scroll">
-        <table aria-label="Technical and IT sector">
+        <table class="stacked-table" aria-label="Technical and IT sector">
           <thead>
             <tr>
               <th>Organisation</th>
@@ -142,16 +150,66 @@
             </tr>
           </thead>
           <tbody>
-            <tr><td>🛰️ ISRO</td><td>Scientist / Engineer (CS)</td><td>₹70K – ₹1.2L</td><td>Space tech, AI, national prestige</td></tr>
-            <tr><td>🧠 DRDO</td><td>Scientist / Tech. Assistant</td><td>₹60K – ₹1.1L</td><td>Defence R&D, cybersecurity, ML</td></tr>
-            <tr><td>🖥️ NIC</td><td>Scientist B / Tech. Assistant</td><td>₹60K – ₹1L</td><td>E-governance, IT backbone</td></tr>
-            <tr><td>⚙️ PSUs (BHEL / ONGC / NTPC)</td><td>IT Officer / Engineer (GATE)</td><td>₹70K – ₹1.6L</td><td>Govt + corporate blend</td></tr>
-            <tr><td>💡 CDAC / BEL / ECIL</td><td>Project Engineer / Officer</td><td>₹50K – ₹1L</td><td>Software, embedded, R&D</td></tr>
-            <tr><td>🧩 BIS</td><td>Scientist-B (CS/IT)</td><td>₹75K – ₹1.2L</td><td>Govt data systems</td></tr>
-            <tr><td>🧑‍💻 NIELIT</td><td>Scientist / Assistant</td><td>₹60K – ₹1.1L</td><td>Digital infra roles</td></tr>
-            <tr><td>🧬 BARC</td><td>Scientist / Engineer</td><td>₹70K – ₹1.2L</td><td>Research innovation</td></tr>
-            <tr><td>🔐 CERT-In / MeitY</td><td>Cyber Analyst / Security Officer</td><td>₹60K – ₹1.3L</td><td>National cyber security</td></tr>
-            <tr><td>🧾 CSIR / DST / ICMR</td><td>Project Scientist / RA</td><td>₹50K – ₹90K</td><td>Govt-funded R&D</td></tr>
+            <tr>
+              <td data-label="Organisation">🛰️ ISRO</td>
+              <td data-label="Post">Scientist / Engineer (CS)</td>
+              <td data-label="Salary 💰">₹70K – ₹1.2L</td>
+              <td data-label="Highlights">Space tech, AI, national prestige</td>
+            </tr>
+            <tr>
+              <td data-label="Organisation">🧠 DRDO</td>
+              <td data-label="Post">Scientist / Tech. Assistant</td>
+              <td data-label="Salary 💰">₹60K – ₹1.1L</td>
+              <td data-label="Highlights">Defence R&D, cybersecurity, ML</td>
+            </tr>
+            <tr>
+              <td data-label="Organisation">🖥️ NIC</td>
+              <td data-label="Post">Scientist B / Tech. Assistant</td>
+              <td data-label="Salary 💰">₹60K – ₹1L</td>
+              <td data-label="Highlights">E-governance, IT backbone</td>
+            </tr>
+            <tr>
+              <td data-label="Organisation">⚙️ PSUs (BHEL / ONGC / NTPC)</td>
+              <td data-label="Post">IT Officer / Engineer (GATE)</td>
+              <td data-label="Salary 💰">₹70K – ₹1.6L</td>
+              <td data-label="Highlights">Govt + corporate blend</td>
+            </tr>
+            <tr>
+              <td data-label="Organisation">💡 CDAC / BEL / ECIL</td>
+              <td data-label="Post">Project Engineer / Officer</td>
+              <td data-label="Salary 💰">₹50K – ₹1L</td>
+              <td data-label="Highlights">Software, embedded, R&D</td>
+            </tr>
+            <tr>
+              <td data-label="Organisation">🧩 BIS</td>
+              <td data-label="Post">Scientist-B (CS/IT)</td>
+              <td data-label="Salary 💰">₹75K – ₹1.2L</td>
+              <td data-label="Highlights">Govt data systems</td>
+            </tr>
+            <tr>
+              <td data-label="Organisation">🧑‍💻 NIELIT</td>
+              <td data-label="Post">Scientist / Assistant</td>
+              <td data-label="Salary 💰">₹60K – ₹1.1L</td>
+              <td data-label="Highlights">Digital infra roles</td>
+            </tr>
+            <tr>
+              <td data-label="Organisation">🧬 BARC</td>
+              <td data-label="Post">Scientist / Engineer</td>
+              <td data-label="Salary 💰">₹70K – ₹1.2L</td>
+              <td data-label="Highlights">Research innovation</td>
+            </tr>
+            <tr>
+              <td data-label="Organisation">🔐 CERT-In / MeitY</td>
+              <td data-label="Post">Cyber Analyst / Security Officer</td>
+              <td data-label="Salary 💰">₹60K – ₹1.3L</td>
+              <td data-label="Highlights">National cyber security</td>
+            </tr>
+            <tr>
+              <td data-label="Organisation">🧾 CSIR / DST / ICMR</td>
+              <td data-label="Post">Project Scientist / RA</td>
+              <td data-label="Salary 💰">₹50K – ₹90K</td>
+              <td data-label="Highlights">Govt-funded R&D</td>
+            </tr>
           </tbody>
         </table>
       </div>
@@ -162,7 +220,7 @@
     <h2 class="mt-24">🏦 2️⃣ Banking & Finance IT Sector</h2>
     <div class="table-wrap">
       <div class="scroll">
-        <table aria-label="Banking and finance IT sector">
+        <table class="stacked-table" aria-label="Banking and finance IT sector">
           <thead>
             <tr>
               <th>Organisation / Exam</th>
@@ -172,12 +230,42 @@
             </tr>
           </thead>
           <tbody>
-            <tr><td>🏛️ RBI Grade B (IT / DEPR)</td><td>Officer</td><td>₹1L – ₹1.5L</td><td>Top-tier banking + tech</td></tr>
-            <tr><td>📊 SEBI Grade A (IT)</td><td>Assistant Manager</td><td>₹1.1L – ₹1.6L</td><td>Regulatory & data security</td></tr>
-            <tr><td>🌾 NABARD Grade A/B (IT)</td><td>Manager</td><td>₹90K – ₹1.4L</td><td>Agriculture + data policy</td></tr>
-            <tr><td>🏦 SBI / IBPS SO</td><td>IT Officer</td><td>₹60K – ₹1L</td><td>Core IT in PSU banks</td></tr>
-            <tr><td>💼 IRDAI / PFRDA / EXIM</td><td>Assistant Manager</td><td>₹90K – ₹1.3L</td><td>Finance + Tech interface</td></tr>
-            <tr><td>🏗️ NABFID / IFSCA</td><td>Assistant Manager (IT)</td><td>₹1L – ₹1.6L</td><td>Modern fintech roles</td></tr>
+            <tr>
+              <td data-label="Organisation / Exam">🏛️ RBI Grade B (IT / DEPR)</td>
+              <td data-label="Post">Officer</td>
+              <td data-label="Salary 💰">₹1L – ₹1.5L</td>
+              <td data-label="Highlights">Top-tier banking + tech</td>
+            </tr>
+            <tr>
+              <td data-label="Organisation / Exam">📊 SEBI Grade A (IT)</td>
+              <td data-label="Post">Assistant Manager</td>
+              <td data-label="Salary 💰">₹1.1L – ₹1.6L</td>
+              <td data-label="Highlights">Regulatory & data security</td>
+            </tr>
+            <tr>
+              <td data-label="Organisation / Exam">🌾 NABARD Grade A/B (IT)</td>
+              <td data-label="Post">Manager</td>
+              <td data-label="Salary 💰">₹90K – ₹1.4L</td>
+              <td data-label="Highlights">Agriculture + data policy</td>
+            </tr>
+            <tr>
+              <td data-label="Organisation / Exam">🏦 SBI / IBPS SO</td>
+              <td data-label="Post">IT Officer</td>
+              <td data-label="Salary 💰">₹60K – ₹1L</td>
+              <td data-label="Highlights">Core IT in PSU banks</td>
+            </tr>
+            <tr>
+              <td data-label="Organisation / Exam">💼 IRDAI / PFRDA / EXIM</td>
+              <td data-label="Post">Assistant Manager</td>
+              <td data-label="Salary 💰">₹90K – ₹1.3L</td>
+              <td data-label="Highlights">Finance + Tech interface</td>
+            </tr>
+            <tr>
+              <td data-label="Organisation / Exam">🏗️ NABFID / IFSCA</td>
+              <td data-label="Post">Assistant Manager (IT)</td>
+              <td data-label="Salary 💰">₹1L – ₹1.6L</td>
+              <td data-label="Highlights">Modern fintech roles</td>
+            </tr>
           </tbody>
         </table>
       </div>
@@ -188,7 +276,7 @@
     <h2 class="mt-24">🧑‍🏫 3️⃣ Research & Teaching (Academic Track)</h2>
     <div class="table-wrap">
       <div class="scroll">
-        <table aria-label="Research and teaching">
+        <table class="stacked-table" aria-label="Research and teaching">
           <thead>
             <tr>
               <th>Exam</th>
@@ -198,10 +286,30 @@
             </tr>
           </thead>
           <tbody>
-            <tr><td>🎓 UGC NET / JRF</td><td>Research Fellow / Asst. Professor</td><td>₹45K – ₹80K</td><td>Research + academia</td></tr>
-            <tr><td>🧑‍🏫 SET</td><td>Assistant Professor</td><td>₹60K – ₹1L</td><td>State universities</td></tr>
-            <tr><td>🎓 PhD (Post-JRF)</td><td>Researcher / Professor</td><td>₹1L+</td><td>Academic excellence</td></tr>
-            <tr><td>🧮 CSIR NET / ICMR</td><td>Junior Research Fellow</td><td>₹45K – ₹70K</td><td>Scientific computing</td></tr>
+            <tr>
+              <td data-label="Exam">🎓 UGC NET / JRF</td>
+              <td data-label="Role">Research Fellow / Asst. Professor</td>
+              <td data-label="Salary 💰">₹45K – ₹80K</td>
+              <td data-label="Highlights">Research + academia</td>
+            </tr>
+            <tr>
+              <td data-label="Exam">🧑‍🏫 SET</td>
+              <td data-label="Role">Assistant Professor</td>
+              <td data-label="Salary 💰">₹60K – ₹1L</td>
+              <td data-label="Highlights">State universities</td>
+            </tr>
+            <tr>
+              <td data-label="Exam">🎓 PhD (Post-JRF)</td>
+              <td data-label="Role">Researcher / Professor</td>
+              <td data-label="Salary 💰">₹1L+</td>
+              <td data-label="Highlights">Academic excellence</td>
+            </tr>
+            <tr>
+              <td data-label="Exam">🧮 CSIR NET / ICMR</td>
+              <td data-label="Role">Junior Research Fellow</td>
+              <td data-label="Salary 💰">₹45K – ₹70K</td>
+              <td data-label="Highlights">Scientific computing</td>
+            </tr>
           </tbody>
         </table>
       </div>
@@ -212,7 +320,7 @@
     <h2 class="mt-24">🧾 4️⃣ Central / State Government Opportunities</h2>
     <div class="table-wrap">
       <div class="scroll">
-        <table aria-label="Central and state">
+        <table class="stacked-table" aria-label="Central and state">
           <thead>
             <tr>
               <th>Exam</th>
@@ -222,12 +330,42 @@
             </tr>
           </thead>
           <tbody>
-            <tr><td>🧮 SSC Scientific Assistant / JE</td><td>Technical Officer</td><td>₹50K – ₹90K</td><td>Central roles</td></tr>
-            <tr><td>🏛️ UPSC ESE</td><td>Engineer / Officer</td><td>₹80K – ₹1.3L</td><td>Engineering Services</td></tr>
-            <tr><td>🧑‍💼 UPSC Civil Services</td><td>IAS / IPS / IFS</td><td>₹1L – ₹2.5L</td><td>Prestigious posts</td></tr>
-            <tr><td>🏢 EPFO / ESIC</td><td>Asst. Director (IT)</td><td>₹80K – ₹1.2L</td><td>IT-based regulation</td></tr>
-            <tr><td>🧾 CAG / State Auditors</td><td>IT Auditor / Analyst</td><td>₹60K – ₹1L</td><td>Audit + analytics</td></tr>
-            <tr><td>🏢 State PSCs</td><td>IT Officer / Professor</td><td>₹50K – ₹1.2L</td><td>Stable state jobs</td></tr>
+            <tr>
+              <td data-label="Exam">🧮 SSC Scientific Assistant / JE</td>
+              <td data-label="Role">Technical Officer</td>
+              <td data-label="Salary 💰">₹50K – ₹90K</td>
+              <td data-label="Highlights">Central roles</td>
+            </tr>
+            <tr>
+              <td data-label="Exam">🏛️ UPSC ESE</td>
+              <td data-label="Role">Engineer / Officer</td>
+              <td data-label="Salary 💰">₹80K – ₹1.3L</td>
+              <td data-label="Highlights">Engineering Services</td>
+            </tr>
+            <tr>
+              <td data-label="Exam">🧑‍💼 UPSC Civil Services</td>
+              <td data-label="Role">IAS / IPS / IFS</td>
+              <td data-label="Salary 💰">₹1L – ₹2.5L</td>
+              <td data-label="Highlights">Prestigious posts</td>
+            </tr>
+            <tr>
+              <td data-label="Exam">🏢 EPFO / ESIC</td>
+              <td data-label="Role">Asst. Director (IT)</td>
+              <td data-label="Salary 💰">₹80K – ₹1.2L</td>
+              <td data-label="Highlights">IT-based regulation</td>
+            </tr>
+            <tr>
+              <td data-label="Exam">🧾 CAG / State Auditors</td>
+              <td data-label="Role">IT Auditor / Analyst</td>
+              <td data-label="Salary 💰">₹60K – ₹1L</td>
+              <td data-label="Highlights">Audit + analytics</td>
+            </tr>
+            <tr>
+              <td data-label="Exam">🏢 State PSCs</td>
+              <td data-label="Role">IT Officer / Professor</td>
+              <td data-label="Salary 💰">₹50K – ₹1.2L</td>
+              <td data-label="Highlights">Stable state jobs</td>
+            </tr>
           </tbody>
         </table>
       </div>
@@ -238,7 +376,7 @@
     <h2 class="mt-24">🛡️ 5️⃣ Defence & Intelligence Tech Roles</h2>
     <div class="table-wrap">
       <div class="scroll">
-        <table aria-label="Defence and intelligence">
+        <table class="stacked-table" aria-label="Defence and intelligence">
           <thead>
             <tr>
               <th>Organisation</th>
@@ -248,10 +386,30 @@
             </tr>
           </thead>
           <tbody>
-            <tr><td>🧠 NTRO</td><td>Scientist / Technical Assistant</td><td>₹70K – ₹1.2L</td><td>Intelligence + cybersecurity</td></tr>
-            <tr><td>🕵️‍♂️ Intelligence Bureau</td><td>ACIO-II (Tech)</td><td>₹60K – ₹1.1L</td><td>Cybercrime operations</td></tr>
-            <tr><td>🛡️ I4C (MHA)</td><td>Analyst / Engineer</td><td>₹60K – ₹1.2L</td><td>National cyber mission</td></tr>
-            <tr><td>🪖 Armed Forces</td><td>Technical Officer (IT)</td><td>₹60K – ₹1.2L</td><td>Defence + technology</td></tr>
+            <tr>
+              <td data-label="Organisation">🧠 NTRO</td>
+              <td data-label="Role">Scientist / Technical Assistant</td>
+              <td data-label="Salary 💰">₹70K – ₹1.2L</td>
+              <td data-label="Highlights">Intelligence + cybersecurity</td>
+            </tr>
+            <tr>
+              <td data-label="Organisation">🕵️‍♂️ Intelligence Bureau</td>
+              <td data-label="Role">ACIO-II (Tech)</td>
+              <td data-label="Salary 💰">₹60K – ₹1.1L</td>
+              <td data-label="Highlights">Cybercrime operations</td>
+            </tr>
+            <tr>
+              <td data-label="Organisation">🛡️ I4C (MHA)</td>
+              <td data-label="Role">Analyst / Engineer</td>
+              <td data-label="Salary 💰">₹60K – ₹1.2L</td>
+              <td data-label="Highlights">National cyber mission</td>
+            </tr>
+            <tr>
+              <td data-label="Organisation">🪖 Armed Forces</td>
+              <td data-label="Role">Technical Officer (IT)</td>
+              <td data-label="Salary 💰">₹60K – ₹1.2L</td>
+              <td data-label="Highlights">Defence + technology</td>
+            </tr>
           </tbody>
         </table>
       </div>
@@ -262,7 +420,7 @@
     <h2 class="mt-24">🚆 6️⃣ State-Level & Digital Governance Roles</h2>
     <div class="table-wrap">
       <div class="scroll">
-        <table aria-label="State and digital governance">
+        <table class="stacked-table" aria-label="State and digital governance">
           <thead>
             <tr>
               <th>Organisation</th>
@@ -272,9 +430,24 @@
             </tr>
           </thead>
           <tbody>
-            <tr><td>🖥️ State Informatics Centres</td><td>IT Officer / Programmer</td><td>₹40K – ₹90K</td><td>e-Governance</td></tr>
-            <tr><td>🌆 Smart City Missions</td><td>MIS / Data Officer</td><td>₹50K – ₹1L</td><td>IoT + Smart City projects</td></tr>
-            <tr><td>🏛️ Digital India / NeGD</td><td>Tech Consultant / Lead</td><td>₹60K – ₹1.2L</td><td>Modern GovTech</td></tr>
+            <tr>
+              <td data-label="Organisation">🖥️ State Informatics Centres</td>
+              <td data-label="Role">IT Officer / Programmer</td>
+              <td data-label="Salary 💰">₹40K – ₹90K</td>
+              <td data-label="Highlights">e-Governance</td>
+            </tr>
+            <tr>
+              <td data-label="Organisation">🌆 Smart City Missions</td>
+              <td data-label="Role">MIS / Data Officer</td>
+              <td data-label="Salary 💰">₹50K – ₹1L</td>
+              <td data-label="Highlights">IoT + Smart City projects</td>
+            </tr>
+            <tr>
+              <td data-label="Organisation">🏛️ Digital India / NeGD</td>
+              <td data-label="Role">Tech Consultant / Lead</td>
+              <td data-label="Salary 💰">₹60K – ₹1.2L</td>
+              <td data-label="Highlights">Modern GovTech</td>
+            </tr>
           </tbody>
         </table>
       </div>
@@ -287,7 +460,7 @@
     <h2>🎯 Focused Preparation Plan (Post-June 2027)</h2>
     <div class="table-wrap">
       <div class="scroll">
-        <table aria-label="Preparation plan">
+        <table class="stacked-table" aria-label="Preparation plan">
           <thead>
             <tr>
               <th>Target Exam</th>
@@ -296,11 +469,31 @@
             </tr>
           </thead>
           <tbody>
-            <tr><td>🎓 GATE (CS/IT)</td><td>PSUs, Research</td><td>Jan–Feb 2028</td></tr>
-            <tr><td>📘 NET/JRF (CS)</td><td>Teaching & Research</td><td>June/Dec 2027–28</td></tr>
-            <tr><td>🏦 SBI / IBPS SO (IT)</td><td>Banking IT Roles</td><td>2027–28</td></tr>
-            <tr><td>🚀 ISRO / DRDO / NIC / NIELIT</td><td>Core Tech Jobs</td><td>2027–29</td></tr>
-            <tr><td>🔐 CERT-In / NTRO / IB (Tech)</td><td>Cybersecurity Govt Jobs</td><td>2028+</td></tr>
+            <tr>
+              <td data-label="Target Exam">🎓 GATE (CS/IT)</td>
+              <td data-label="Purpose">PSUs, Research</td>
+              <td data-label="Timeline">Jan–Feb 2028</td>
+            </tr>
+            <tr>
+              <td data-label="Target Exam">📘 NET/JRF (CS)</td>
+              <td data-label="Purpose">Teaching & Research</td>
+              <td data-label="Timeline">June/Dec 2027–28</td>
+            </tr>
+            <tr>
+              <td data-label="Target Exam">🏦 SBI / IBPS SO (IT)</td>
+              <td data-label="Purpose">Banking IT Roles</td>
+              <td data-label="Timeline">2027–28</td>
+            </tr>
+            <tr>
+              <td data-label="Target Exam">🚀 ISRO / DRDO / NIC / NIELIT</td>
+              <td data-label="Purpose">Core Tech Jobs</td>
+              <td data-label="Timeline">2027–29</td>
+            </tr>
+            <tr>
+              <td data-label="Target Exam">🔐 CERT-In / NTRO / IB (Tech)</td>
+              <td data-label="Purpose">Cybersecurity Govt Jobs</td>
+              <td data-label="Timeline">2028+</td>
+            </tr>
           </tbody>
         </table>
       </div>
@@ -313,3 +506,5 @@
   </div>
 </body>
 </html>
+
+

@@ -25,16 +25,20 @@
       overflow-x:hidden;
     }
 
-    /* ===== Layout ===== */
+    /* ===== Layout: force single column everywhere ===== */
     .container{
-      width:min(1000px,92%);
+      width:min(900px,92%);
       margin:40px auto;
       background:var(--panel);
       border-radius:20px;
       padding:clamp(20px,4vw,32px);
       box-shadow:0 0 30px rgba(0,255,200,0.12);
       backdrop-filter:blur(10px);
+      display:block;
     }
+    .container > *{ display:block; width:100%; }
+
+    /* ===== Headings ===== */
     h1,h2,h3{
       color:var(--glow);
       text-shadow:0 0 10px var(--glow);
@@ -54,7 +58,19 @@
       margin:24px 0;
     }
 
-    /* ===== Tables (mobile scroll + sticky header) ===== */
+    /* ===== Lists (already stacked) ===== */
+    ul.clean{ list-style:none; padding-left:0; margin:8px 0 0; }
+    ul.clean li{
+      padding:8px 12px;
+      border:1px solid var(--border);
+      background:rgba(255,255,255,0.03);
+      border-radius:10px;
+      margin:8px 0;
+      display:block;
+      width:100%;
+    }
+
+    /* ===== Tables converted to ALWAYS-STACKED cards ===== */
     .table-wrap{
       margin-top:14px;
       border:1px solid var(--border);
@@ -63,30 +79,33 @@
       background:rgba(255,255,255,0.04);
       box-shadow:inset 0 0 0 1px rgba(255,255,255,0.03);
     }
-    .table-wrap > .scroll{
-      overflow-x:auto;
-      -webkit-overflow-scrolling:touch;
-    }
-    table{
+    .table-wrap > .scroll{ overflow:visible; }
+    table{ width:100%; border-collapse:collapse; }
+
+    /* Stacked layout applies at ALL sizes */
+    .stacked-table thead{ display:none; }
+    .stacked-table, .stacked-table tbody, .stacked-table tr, .stacked-table td{
+      display:block;
       width:100%;
-      border-collapse:collapse;
-      min-width:720px; /* allow horizontal scroll on small screens */
     }
-    thead th{
-      position:sticky; top:0;
-      background:rgba(0,255,200,0.16);
-      color:var(--glow);
+    .stacked-table tr{ border-bottom:1px solid var(--border); padding:10px 12px; }
+    .stacked-table tr:nth-child(odd){ background:rgba(255,255,255,0.03); }
+    .stacked-table tr:last-child{ border-bottom:0; }
+    .stacked-table td{
+      padding:8px 0;
+      border:0;
+      text-align:left;
+      white-space:normal;
+      font-size:.98rem;
+    }
+    .stacked-table td::before{
+      content:attr(data-label);
+      display:block;
       font-weight:600;
+      color:var(--glow);
+      margin-bottom:4px;
       letter-spacing:.2px;
     }
-    th, td{
-      border-bottom:1px solid var(--border);
-      padding:12px 10px;
-      text-align:center;
-      font-size:.98rem;
-      white-space:nowrap;
-    }
-    tbody tr:nth-child(odd){ background:rgba(255,255,255,0.03); }
 
     /* ===== Goal card ===== */
     .goal{
@@ -107,7 +126,7 @@
     .mt-24{ margin-top:24px; }
 
     @media (max-width:700px){
-      th,td{ font-size:.9rem; padding:10px 8px; }
+      .stacked-table td{ font-size:.95rem; }
     }
   </style>
 </head>
@@ -121,22 +140,22 @@
     <h2>🎯 Overview</h2>
     <div class="table-wrap">
       <div class="scroll">
-        <table aria-label="Overview">
+        <table class="stacked-table" aria-label="Overview">
           <thead>
             <tr><th>Detail</th><th>Description</th></tr>
           </thead>
           <tbody>
-            <tr><td>👨‍💼 Name</td><td>Arpit</td></tr>
-            <tr><td>🎓 Starting Age</td><td>23</td></tr>
-            <tr><td>💼 Profession</td><td>Data Professional</td></tr>
-            <tr><td>💰 Starting CTC</td><td>₹8 LPA+</td></tr>
-            <tr><td>⏳ Switch After</td><td>2 Years</td></tr>
-            <tr><td>💥 New CTC After Switch</td><td>₹24 LPA+</td></tr>
-            <tr><td>📈 Annual Hike (Before Switch)</td><td>10%</td></tr>
-            <tr><td>📈 Annual Hike (After Switch)</td><td>12%</td></tr>
-            <tr><td>💸 Savings Rate</td><td>50% of Salary</td></tr>
-            <tr><td>💹 Investment Return</td><td>8% per year</td></tr>
-            <tr><td>⚖️ Spending Plan</td><td>50/30/20 Rule (Needs/Wants/Extra Savings)</td></tr>
+            <tr><td data-label="Detail">👨‍💼 Name</td><td data-label="Description">Arpit</td></tr>
+            <tr><td data-label="Detail">🎓 Starting Age</td><td data-label="Description">23</td></tr>
+            <tr><td data-label="Detail">💼 Profession</td><td data-label="Description">Data Professional</td></tr>
+            <tr><td data-label="Detail">💰 Starting CTC</td><td data-label="Description">₹8 LPA+</td></tr>
+            <tr><td data-label="Detail">⏳ Switch After</td><td data-label="Description">2 Years</td></tr>
+            <tr><td data-label="Detail">💥 New CTC After Switch</td><td data-label="Description">₹24 LPA+</td></tr>
+            <tr><td data-label="Detail">📈 Annual Hike (Before Switch)</td><td data-label="Description">10%</td></tr>
+            <tr><td data-label="Detail">📈 Annual Hike (After Switch)</td><td data-label="Description">12%</td></tr>
+            <tr><td data-label="Detail">💸 Savings Rate</td><td data-label="Description">50% of Salary</td></tr>
+            <tr><td data-label="Detail">💹 Investment Return</td><td data-label="Description">8% per year</td></tr>
+            <tr><td data-label="Detail">⚖️ Spending Plan</td><td data-label="Description">50/30/20 Rule (Needs/Wants/Extra Savings)</td></tr>
           </tbody>
         </table>
       </div>
@@ -146,18 +165,18 @@
     <h2 class="mt-24">💼 Step 1: Career Growth & Salary Progress</h2>
     <div class="table-wrap">
       <div class="scroll">
-        <table aria-label="Career growth">
+        <table class="stacked-table" aria-label="Career growth">
           <thead>
             <tr>
               <th>Age</th><th>Year</th><th>CTC (₹ LPA)</th><th>Monthly (₹)</th><th>Growth 🚀</th>
             </tr>
           </thead>
           <tbody>
-            <tr><td>23</td><td>Year 1</td><td>8.0</td><td>66,667</td><td>🎓 First Job – Data Role</td></tr>
-            <tr><td>24</td><td>Year 2</td><td>8.8</td><td>73,333</td><td>📈 10% Annual Hike</td></tr>
-            <tr><td>25</td><td>Year 3</td><td>24.0</td><td>2,00,000</td><td>💥 Big Switch! 172% Jump</td></tr>
-            <tr><td>26</td><td>Year 4</td><td>26.9</td><td>2,24,167</td><td>🔥 12% Annual Hike</td></tr>
-            <tr><td>27</td><td>Year 5</td><td>30.1</td><td>2,50,833</td><td>🚀 Consistent Growth</td></tr>
+            <tr><td data-label="Age">23</td><td data-label="Year">Year 1</td><td data-label="CTC (₹ LPA)">8.0</td><td data-label="Monthly (₹)">66,667</td><td data-label="Growth 🚀">🎓 First Job – Data Role</td></tr>
+            <tr><td data-label="Age">24</td><td data-label="Year">Year 2</td><td data-label="CTC (₹ LPA)">8.8</td><td data-label="Monthly (₹)">73,333</td><td data-label="Growth 🚀">📈 10% Annual Hike</td></tr>
+            <tr><td data-label="Age">25</td><td data-label="Year">Year 3</td><td data-label="CTC (₹ LPA)">24.0</td><td data-label="Monthly (₹)">2,00,000</td><td data-label="Growth 🚀">💥 Big Switch! 172% Jump</td></tr>
+            <tr><td data-label="Age">26</td><td data-label="Year">Year 4</td><td data-label="CTC (₹ LPA)">26.9</td><td data-label="Monthly (₹)">2,24,167</td><td data-label="Growth 🚀">🔥 12% Annual Hike</td></tr>
+            <tr><td data-label="Age">27</td><td data-label="Year">Year 5</td><td data-label="CTC (₹ LPA)">30.1</td><td data-label="Monthly (₹)">2,50,833</td><td data-label="Growth 🚀">🚀 Consistent Growth</td></tr>
           </tbody>
         </table>
       </div>
@@ -167,18 +186,18 @@
     <h2 class="mt-24">💰 Step 2: Investment Journey (Saving 50% + 8% Returns)</h2>
     <div class="table-wrap">
       <div class="scroll">
-        <table aria-label="Investment journey">
+        <table class="stacked-table" aria-label="Investment journey">
           <thead>
             <tr>
               <th>Age</th><th>CTC (₹ LPA)</th><th>Monthly (₹)</th><th>50% Saved</th><th>Annual Invested</th><th>Corpus @8% (₹)</th>
             </tr>
           </thead>
           <tbody>
-            <tr><td>23</td><td>8.0</td><td>66,667</td><td>33,333</td><td>4,00,000</td><td>4,32,000</td></tr>
-            <tr><td>24</td><td>8.8</td><td>73,333</td><td>36,667</td><td>4,40,000</td><td>9,23,000</td></tr>
-            <tr><td>25</td><td>24.0</td><td>2,00,000</td><td>1,00,000</td><td>12,00,000</td><td>22,78,000</td></tr>
-            <tr><td>26</td><td>26.9</td><td>2,24,167</td><td>1,12,083</td><td>13,45,000</td><td>38,46,000</td></tr>
-            <tr><td>27</td><td>30.1</td><td>2,50,833</td><td>1,25,417</td><td>15,05,000</td><td>₹57,00,000 💎</td></tr>
+            <tr><td data-label="Age">23</td><td data-label="CTC (₹ LPA)">8.0</td><td data-label="Monthly (₹)">66,667</td><td data-label="50% Saved">33,333</td><td data-label="Annual Invested">4,00,000</td><td data-label="Corpus @8% (₹)">4,32,000</td></tr>
+            <tr><td data-label="Age">24</td><td data-label="CTC (₹ LPA)">8.8</td><td data-label="Monthly (₹)">73,333</td><td data-label="50% Saved">36,667</td><td data-label="Annual Invested">4,40,000</td><td data-label="Corpus @8% (₹)">9,23,000</td></tr>
+            <tr><td data-label="Age">25</td><td data-label="CTC (₹ LPA)">24.0</td><td data-label="Monthly (₹)">2,00,000</td><td data-label="50% Saved">1,00,000</td><td data-label="Annual Invested">12,00,000</td><td data-label="Corpus @8% (₹)">22,78,000</td></tr>
+            <tr><td data-label="Age">26</td><td data-label="CTC (₹ LPA)">26.9</td><td data-label="Monthly (₹)">2,24,167</td><td data-label="50% Saved">1,12,083</td><td data-label="Annual Invested">13,45,000</td><td data-label="Corpus @8% (₹)">38,46,000</td></tr>
+            <tr><td data-label="Age">27</td><td data-label="CTC (₹ LPA)">30.1</td><td data-label="Monthly (₹)">2,50,833</td><td data-label="50% Saved">1,25,417</td><td data-label="Annual Invested">15,05,000</td><td data-label="Corpus @8% (₹)">₹57,00,000 💎</td></tr>
           </tbody>
         </table>
       </div>
@@ -190,18 +209,18 @@
     <h2 class="mt-24">🧾 Step 3: Spending Plan (50/30/20 Rule on Remaining 50%)</h2>
     <div class="table-wrap">
       <div class="scroll">
-        <table aria-label="Spending plan">
+        <table class="stacked-table" aria-label="Spending plan">
           <thead>
             <tr>
               <th>Age</th><th>Monthly Income (₹)</th><th>50% Invested</th><th>Remaining (₹)</th><th>Needs (50%) 🏠</th><th>Wants (30%) 🎬</th><th>Extra Savings (20%) 💼</th>
             </tr>
           </thead>
           <tbody>
-            <tr><td>23</td><td>66,667</td><td>33,333</td><td>33,333</td><td>16,667</td><td>10,000</td><td>6,667</td></tr>
-            <tr><td>24</td><td>73,333</td><td>36,667</td><td>36,667</td><td>18,333</td><td>11,000</td><td>7,333</td></tr>
-            <tr><td>25</td><td>2,00,000</td><td>1,00,000</td><td>1,00,000</td><td>50,000</td><td>30,000</td><td>20,000</td></tr>
-            <tr><td>26</td><td>2,24,167</td><td>1,12,083</td><td>1,12,083</td><td>56,042</td><td>33,625</td><td>22,417</td></tr>
-            <tr><td>27</td><td>2,50,833</td><td>1,25,417</td><td>1,25,417</td><td>62,708</td><td>37,625</td><td>25,083</td></tr>
+            <tr><td data-label="Age">23</td><td data-label="Monthly Income (₹)">66,667</td><td data-label="50% Invested">33,333</td><td data-label="Remaining (₹)">33,333</td><td data-label="Needs (50%) 🏠">16,667</td><td data-label="Wants (30%) 🎬">10,000</td><td data-label="Extra Savings (20%) 💼">6,667</td></tr>
+            <tr><td data-label="Age">24</td><td data-label="Monthly Income (₹)">73,333</td><td data-label="50% Invested">36,667</td><td data-label="Remaining (₹)">36,667</td><td data-label="Needs (50%) 🏠">18,333</td><td data-label="Wants (30%) 🎬">11,000</td><td data-label="Extra Savings (20%) 💼">7,333</td></tr>
+            <tr><td data-label="Age">25</td><td data-label="Monthly Income (₹)">2,00,000</td><td data-label="50% Invested">1,00,000</td><td data-label="Remaining (₹)">1,00,000</td><td data-label="Needs (50%) 🏠">50,000</td><td data-label="Wants (30%) 🎬">30,000</td><td data-label="Extra Savings (20%) 💼">20,000</td></tr>
+            <tr><td data-label="Age">26</td><td data-label="Monthly Income (₹)">2,24,167</td><td data-label="50% Invested">1,12,083</td><td data-label="Remaining (₹)">1,12,083</td><td data-label="Needs (50%) 🏠">56,042</td><td data-label="Wants (30%) 🎬">33,625</td><td data-label="Extra Savings (20%) 💼">22,417</td></tr>
+            <tr><td data-label="Age">27</td><td data-label="Monthly Income (₹)">2,50,833</td><td data-label="50% Invested">1,25,417</td><td data-label="Remaining (₹)">1,25,417</td><td data-label="Needs (50%) 🏠">62,708</td><td data-label="Wants (30%) 🎬">37,625</td><td data-label="Extra Savings (20%) 💼">25,083</td></tr>
           </tbody>
         </table>
       </div>
@@ -211,17 +230,17 @@
     <h2 class="mt-24">📊 Step 4: Summary Snapshot</h2>
     <div class="table-wrap">
       <div class="scroll">
-        <table aria-label="Summary snapshot">
+        <table class="stacked-table" aria-label="Summary snapshot">
           <thead>
             <tr><th>Metric</th><th>Value</th></tr>
           </thead>
           <tbody>
-            <tr><td>🪙 Total Earned (5 years)</td><td>₹78.8 Lakh</td></tr>
-            <tr><td>💸 Total Invested</td><td>₹49.9 Lakh</td></tr>
-            <tr><td>💹 Corpus @8%</td><td>₹57 Lakh+</td></tr>
-            <tr><td>🏡 Lifestyle Spending (Needs + Wants)</td><td>₹24.4 Lakh</td></tr>
-            <tr><td>💼 Extra Savings</td><td>₹4.9 Lakh</td></tr>
-            <tr><td>💎 Financial Position by 27</td><td>Excellent — Balanced, Wealthy, and Free</td></tr>
+            <tr><td data-label="Metric">🪙 Total Earned (5 years)</td><td data-label="Value">₹78.8 Lakh</td></tr>
+            <tr><td data-label="Metric">💸 Total Invested</td><td data-label="Value">₹49.9 Lakh</td></tr>
+            <tr><td data-label="Metric">💹 Corpus @8%</td><td data-label="Value">₹57 Lakh+</td></tr>
+            <tr><td data-label="Metric">🏡 Lifestyle Spending (Needs + Wants)</td><td data-label="Value">₹24.4 Lakh</td></tr>
+            <tr><td data-label="Metric">💼 Extra Savings</td><td data-label="Value">₹4.9 Lakh</td></tr>
+            <tr><td data-label="Metric">💎 Financial Position by 27</td><td data-label="Value">Excellent — Balanced, Wealthy, and Free</td></tr>
           </tbody>
         </table>
       </div>
@@ -231,16 +250,16 @@
     <h2 class="mt-24">🌟 Arpit’s Success Formula</h2>
     <div class="table-wrap">
       <div class="scroll">
-        <table aria-label="Success formula">
+        <table class="stacked-table" aria-label="Success formula">
           <thead>
             <tr><th>Habit</th><th>Impact</th></tr>
           </thead>
           <tbody>
-            <tr><td>💻 Skill Growth</td><td>3× Salary in 2 Years</td></tr>
-            <tr><td>💰 50% Saving Habit</td><td>Financial Freedom Early</td></tr>
-            <tr><td>📈 8% Returns</td><td>Compounded Wealth</td></tr>
-            <tr><td>⚖️ 50/30/20 Rule</td><td>Balanced Lifestyle</td></tr>
-            <tr><td>🔥 Long-Term Focus</td><td>₹57L Corpus by 27</td></tr>
+            <tr><td data-label="Habit">💻 Skill Growth</td><td data-label="Impact">3× Salary in 2 Years</td></tr>
+            <tr><td data-label="Habit">💰 50% Saving Habit</td><td data-label="Impact">Financial Freedom Early</td></tr>
+            <tr><td data-label="Habit">📈 8% Returns</td><td data-label="Impact">Compounded Wealth</td></tr>
+            <tr><td data-label="Habit">⚖️ 50/30/20 Rule</td><td data-label="Impact">Balanced Lifestyle</td></tr>
+            <tr><td data-label="Habit">🔥 Long-Term Focus</td><td data-label="Impact">₹57L Corpus by 27</td></tr>
           </tbody>
         </table>
       </div>
