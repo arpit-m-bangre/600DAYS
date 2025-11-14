@@ -4,10 +4,8 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
 <title>HappyLife — Ikigai & Kintsugi (Print & Mobile Friendly)</title>
-
 <!-- Google Fonts -->
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500;700;900&family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
-
 <style>
   :root{
     --bg1:#07101a; --bg2:#0b1720;
@@ -15,133 +13,807 @@
     --muted:#9aa6b2; --glass:rgba(255,255,255,0.04);
     --card:rgba(255,255,255,0.03); --radius:16px;
     --maxw:1100px; --petal-pink:#ffdbe6; --petal-deep:#ff9bb3;
+    --section-gap:28px; --card-padding:24px;
   }
 
   /* base */
-  html,body{height:100%;margin:0;font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,Arial;background:
-    radial-gradient(1200px 600px at 10% 20%, rgba(255,209,120,0.02), transparent 6%),
-    radial-gradient(900px 500px at 90% 80%, rgba(255,118,64,0.01), transparent 6%),
-    linear-gradient(180deg,var(--bg1),var(--bg2));
-    color:#e6eef6;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;
-    -webkit-font-feature-settings: "kern"; font-feature-settings: "kern"; }
+  * {
+    box-sizing: border-box;
+  }
 
-  .wrap{max-width:calc(var(--maxw)+40px);margin:20px auto;padding:18px;position:relative;}
+  html,body{
+    height:100%;
+    margin:0;
+    font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,Arial;
+    background:
+      radial-gradient(1200px 600px at 10% 20%, rgba(255,209,120,0.02), transparent 6%),
+      radial-gradient(900px 500px at 90% 80%, rgba(255,118,64,0.01), transparent 6%),
+      linear-gradient(180deg,var(--bg1),var(--bg2));
+    color:#e6eef6;
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+    -webkit-font-feature-settings: "kern";
+    font-feature-settings: "kern";
+    scroll-behavior: smooth;
+  }
+
+  .wrap{
+    max-width:calc(var(--maxw) + 40px);
+    margin:20px auto;
+    padding:18px;
+    position:relative;
+  }
 
   /* Scroll progress */
-  #scrollProgress{position:fixed;left:0;top:0;height:4px;background:linear-gradient(90deg,var(--accent),var(--accent-2));width:0%;z-index:1600;box-shadow:0 6px 18px rgba(0,0,0,0.35)}
+  #scrollProgress{
+    position:fixed;
+    left:0;
+    top:0;
+    height:4px;
+    background:linear-gradient(90deg,var(--accent),var(--accent-2));
+    width:0%;
+    z-index:1600;
+    box-shadow:0 6px 18px rgba(0,0,0,0.35);
+    transition: width 0.1s ease-out;
+  }
 
   /* NAV */
-  nav.navbar{position:sticky;top:14px;z-index:1500;display:flex;align-items:center;justify-content:space-between;padding:10px 14px;border-radius:14px;background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));backdrop-filter: blur(6px);border:1px solid rgba(255,255,255,0.03);box-shadow:0 10px 30px rgba(2,6,23,0.6)}
-  .brand{display:flex;align-items:center;gap:12px}
-  .logo{width:52px;height:52px;border-radius:12px;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));box-shadow: inset 0 -10px 30px rgba(0,0,0,0.35);border:1px solid rgba(255,255,255,0.03);}
-  .brand h3{margin:0;font-family:'Playfair Display',serif;color:var(--accent);letter-spacing:0.3px}
-  .nav-links{display:flex;gap:8px;align-items:center}
-  .nav-links a{color:#eaf2ff;text-decoration:none;padding:8px 12px;border-radius:10px;transition:all .18s ease;font-weight:600;font-size:14px}
-  .nav-links a:hover{transform:translateY(-4px);background:rgba(255,255,255,0.02);box-shadow:0 8px 28px rgba(0,0,0,0.45)}
-  .nav-cta{background:linear-gradient(90deg,rgba(255,209,102,0.12),rgba(255,209,102,0.04));border:1px solid rgba(255,209,102,0.14);color:var(--accent);padding:8px 14px;border-radius:12px;cursor:pointer}
+  nav.navbar{
+    position:sticky;
+    top:14px;
+    z-index:1500;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:12px 18px;
+    border-radius:14px;
+    background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    border:1px solid rgba(255,255,255,0.03);
+    box-shadow:0 10px 30px rgba(2,6,23,0.6);
+    transition: all 0.3s ease;
+  }
 
-  .hamburger{display:none;border:0;background:transparent;padding:8px;border-radius:10px;cursor:pointer}
-  .hamburger svg{display:block}
+  nav.navbar:hover {
+    box-shadow:0 12px 40px rgba(2,6,23,0.7);
+  }
+
+  .brand{
+    display:flex;
+    align-items:center;
+    gap:12px;
+  }
+
+  .logo{
+    width:52px;
+    height:52px;
+    border-radius:12px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:linear-gradient(135deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
+    box-shadow: inset 0 -10px 30px rgba(0,0,0,0.35);
+    border:1px solid rgba(255,255,255,0.03);
+    transition: transform 0.3s ease;
+  }
+
+  .logo:hover {
+    transform: scale(1.05) rotate(5deg);
+  }
+
+  .brand h3{
+    margin:0;
+    font-family:'Playfair Display',serif;
+    color:var(--accent);
+    letter-spacing:0.3px;
+    font-size: clamp(16px, 2vw, 20px);
+  }
+
+  .nav-links{
+    display:flex;
+    gap:8px;
+    align-items:center;
+  }
+
+  .nav-links a{
+    color:#eaf2ff;
+    text-decoration:none;
+    padding:8px 12px;
+    border-radius:10px;
+    transition:all .25s cubic-bezier(0.4, 0, 0.2, 1);
+    font-weight:600;
+    font-size:14px;
+    position: relative;
+  }
+
+  .nav-links a::before {
+    content: '';
+    position: absolute;
+    bottom: 4px;
+    left: 12px;
+    right: 12px;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent), var(--accent-2));
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+  }
+
+  .nav-links a:hover{
+    transform:translateY(-2px);
+    background:rgba(255,255,255,0.02);
+    box-shadow:0 8px 28px rgba(0,0,0,0.45);
+  }
+
+  .nav-links a:hover::before {
+    transform: scaleX(1);
+  }
+
+  .nav-cta{
+    background:linear-gradient(90deg,rgba(255,209,102,0.12),rgba(255,209,102,0.04));
+    border:1px solid rgba(255,209,102,0.14);
+    color:var(--accent);
+    padding:8px 14px;
+    border-radius:12px;
+    cursor:pointer;
+    transition: all 0.3s ease;
+    font-weight: 600;
+  }
+
+  .nav-cta:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(255,209,102,0.2);
+  }
+
+  .hamburger{
+    display:none;
+    border:0;
+    background:transparent;
+    padding:8px;
+    border-radius:10px;
+    cursor:pointer;
+    transition: all 0.3s ease;
+  }
+
+  .hamburger:hover {
+    background: rgba(255,255,255,0.05);
+  }
+
+  .hamburger svg{
+    display:block;
+  }
 
   /* HERO */
-  header.hero{display:flex;gap:18px;align-items:center;justify-content:space-between;padding:20px;border-radius:calc(var(--radius)+6px);position:relative;overflow:hidden;box-shadow:0 12px 40px rgba(2,6,23,0.6);border:1px solid rgba(255,255,255,0.02);background:linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));}
-  .hero-left{display:flex;gap:14px;align-items:center;flex:1;min-width:0}
-  .badge{width:120px;height:120px;border-radius:14px;display:flex;align-items:center;justify-content:center;flex-direction:column;background:linear-gradient(135deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));box-shadow: inset 0 -12px 40px rgba(0,0,0,0.35);border:1px solid rgba(255,255,255,0.03);transform:translateY(0);animation: bob 6s ease-in-out infinite}
-  .badge .emoji{font-size:44px;filter:drop-shadow(0 6px 18px rgba(0,0,0,0.6))}
-  .badge h4{margin:4px 0 0;font-family:'Playfair Display',serif;color:var(--accent);font-weight:700;font-size:16px}
-  .title{font-family:'Playfair Display',serif;font-size:clamp(18px,3.8vw,40px);line-height:1.02;margin:0;color:#fff;text-shadow:0 8px 30px rgba(0,0,0,0.6);transition:transform .45s ease}
-  .subtitle{margin-top:8px;color:var(--muted);font-size:13.5px}
+  header.hero{
+    display:flex;
+    gap:18px;
+    align-items:center;
+    justify-content:space-between;
+    padding:28px;
+    margin-top: 20px;
+    border-radius:calc(var(--radius) + 6px);
+    position:relative;
+    overflow:hidden;
+    box-shadow:0 12px 40px rgba(2,6,23,0.6);
+    border:1px solid rgba(255,255,255,0.02);
+    background:linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
+    transition: all 0.4s ease;
+  }
 
-  .hero-right{display:flex;gap:12px;align-items:center}
-  .cta{background: linear-gradient(90deg, rgba(255,209,102,0.10), rgba(255,209,102,0.06));border:1px solid rgba(255,209,102,0.16);color:var(--accent);padding:10px 14px;border-radius:12px;cursor:pointer;font-weight:600;backdrop-filter: blur(6px);transition: transform .18s ease, box-shadow .18s ease}
-  .cta:active{transform:translateY(1px) scale(.998)}
-  .cta:hover{transform:translateY(-4px);box-shadow:0 12px 30px rgba(0,0,0,0.45)}
+  header.hero:hover {
+    box-shadow:0 16px 50px rgba(2,6,23,0.7);
+    transform: translateY(-2px);
+  }
+
+  .hero-left{
+    display:flex;
+    gap:14px;
+    align-items:center;
+    flex:1;
+    min-width:0;
+  }
+
+  .badge{
+    width:120px;
+    height:120px;
+    border-radius:14px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-direction:column;
+    background:linear-gradient(135deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
+    box-shadow: inset 0 -12px 40px rgba(0,0,0,0.35);
+    border:1px solid rgba(255,255,255,0.03);
+    transform:translateY(0);
+    animation: bob 6s ease-in-out infinite;
+    transition: transform 0.3s ease;
+  }
+
+  .badge:hover {
+    transform: scale(1.05);
+  }
+
+  .badge .emoji{
+    font-size:44px;
+    filter:drop-shadow(0 6px 18px rgba(0,0,0,0.6));
+  }
+
+  .badge h4{
+    margin:4px 0 0;
+    font-family:'Playfair Display',serif;
+    color:var(--accent);
+    font-weight:700;
+    font-size:16px;
+  }
+
+  .title{
+    font-family:'Playfair Display',serif;
+    font-size:clamp(18px,3.8vw,40px);
+    line-height:1.15;
+    margin:0;
+    color:#fff;
+    text-shadow:0 8px 30px rgba(0,0,0,0.6);
+    transition:transform .45s ease;
+  }
+
+  .subtitle{
+    margin-top:10px;
+    color:var(--muted);
+    font-size:13.5px;
+    line-height: 1.5;
+  }
+
+  .hero-right{
+    display:flex;
+    gap:12px;
+    align-items:center;
+  }
+
+  .cta{
+    background: linear-gradient(90deg, rgba(255,209,102,0.10), rgba(255,209,102,0.06));
+    border:1px solid rgba(255,209,102,0.16);
+    color:var(--accent);
+    padding:12px 18px;
+    border-radius:12px;
+    cursor:pointer;
+    font-weight:600;
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    font-size: 14px;
+  }
+
+  .cta:active{
+    transform:translateY(1px) scale(.98);
+  }
+
+  .cta:hover{
+    transform:translateY(-4px);
+    box-shadow:0 12px 30px rgba(255,209,102,0.25);
+    border-color: rgba(255,209,102,0.25);
+  }
 
   /* layout */
-  main{margin-top:18px;display:grid;grid-template-columns:1fr 360px;gap:20px;align-items:start}
-  .card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border-radius:14px;padding:20px;box-shadow:0 12px 40px rgba(2,6,23,0.6);border:1px solid rgba(255,255,255,0.02);color:#e9f2ff;overflow:hidden;transition:transform .28s ease}
-  .card:hover{transform:translateY(-6px);box-shadow:0 20px 60px rgba(2,6,23,0.7)}
-  .lead{color:#dfe9f9;font-size:15.6px;line-height:1.62}
-  h2.section-title{font-family:'Playfair Display',serif;margin:2px 0 12px;color:#fff;font-size:20px}
-  .section{margin-bottom:18px;animation: appearUp .9s ease both}
-  ul.clean{padding-left:18px;margin:8px 0 0}
-  ul.clean li{margin:8px 0;color:#dbeaf8;line-height:1.55}
-  .small{color:var(--muted);font-size:13px}
+  main{
+    margin-top:28px;
+    display:grid;
+    grid-template-columns:1fr 360px;
+    gap:24px;
+    align-items:start;
+  }
 
-  aside.side{position:relative;display:flex;flex-direction:column;gap:16px}
-  .gold-line{height:6px;border-radius:999px;background:linear-gradient(90deg, rgba(255,213,102,1), rgba(255,153,51,0.98));box-shadow:0 6px 22px rgba(255,171,63,0.12) inset;margin:10px 0 14px;transform-origin:left;animation: grow .7s ease both}
+  .card{
+    background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+    border-radius:14px;
+    padding:var(--card-padding);
+    box-shadow:0 12px 40px rgba(2,6,23,0.6);
+    border:1px solid rgba(255,255,255,0.02);
+    color:#e9f2ff;
+    overflow:hidden;
+    transition:all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+  }
+
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--accent), transparent);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+  }
+
+  .card:hover{
+    transform:translateY(-6px);
+    box-shadow:0 20px 60px rgba(2,6,23,0.7);
+    border-color: rgba(255,255,255,0.04);
+  }
+
+  .card:hover::before {
+    opacity: 0.6;
+  }
+
+  .lead{
+    color:#dfe9f9;
+    font-size:15.6px;
+    line-height:1.7;
+    margin: 12px 0;
+  }
+
+  h2.section-title{
+    font-family:'Playfair Display',serif;
+    margin:4px 0 16px;
+    color:#fff;
+    font-size:clamp(18px, 2.5vw, 24px);
+    line-height: 1.3;
+  }
+
+  h3.section-title {
+    font-family:'Playfair Display',serif;
+    margin:20px 0 12px;
+    color:#fff;
+    font-size:clamp(18px, 2.2vw, 22px);
+    line-height: 1.3;
+  }
+
+  .section{
+    margin-bottom:var(--section-gap);
+    animation: appearUp .9s ease both;
+    padding-bottom: var(--section-gap);
+    border-bottom: 1px solid rgba(255,255,255,0.03);
+  }
+
+  .section:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+  }
+
+  ul.clean{
+    padding-left:20px;
+    margin:12px 0;
+    list-style: none;
+  }
+
+  ul.clean li{
+    margin:10px 0;
+    color:#dbeaf8;
+    line-height:1.65;
+    position: relative;
+    padding-left: 8px;
+  }
+
+  ul.clean li::marker {
+    color: var(--accent);
+  }
+
+  ul.clean li::before {
+    content: '▸';
+    position: absolute;
+    left: -16px;
+    color: var(--accent);
+    font-size: 12px;
+  }
+
+  .small{
+    color:var(--muted);
+    font-size:13px;
+    line-height: 1.6;
+  }
+
+  aside.side{
+    position:relative;
+    display:flex;
+    flex-direction:column;
+    gap:20px;
+  }
+
+  .gold-line{
+    height:6px;
+    border-radius:999px;
+    background:linear-gradient(90deg, rgba(255,213,102,1), rgba(255,153,51,0.98));
+    box-shadow:0 6px 22px rgba(255,171,63,0.12) inset;
+    margin:10px 0 20px;
+    transform-origin:left;
+    animation: grow .7s ease both;
+  }
 
   /* cherry petals */
-  .petals{position:fixed;left:0;right:0;top:0;bottom:0;pointer-events:none;overflow:hidden;z-index:1200}
-  .petal{position:absolute;width:18px;height:18px;border-radius:70% 30% 60% 40%;background:linear-gradient(135deg,var(--petal-pink),var(--petal-deep));opacity:0.95;filter:drop-shadow(0 6px 12px rgba(0,0,0,0.18));transform:rotate(25deg)}
-  @keyframes float1{0%{transform:translateY(-12vh) rotate(0deg) translateX(0)}50%{transform:translateY(50vh) rotate(120deg) translateX(10vw)}100%{transform:translateY(110vh) rotate(260deg) translateX(-8vw)}}
-  @keyframes float2{0%{transform:translateY(-20vh) rotate(10deg) translateX(0)}50%{transform:translateY(55vh) rotate(-100deg) translateX(-6vw)}100%{transform:translateY(125vh) rotate(-220deg) translateX(6vw)}}
+  .petals{
+    position:fixed;
+    left:0;
+    right:0;
+    top:0;
+    bottom:0;
+    pointer-events:none;
+    overflow:hidden;
+    z-index:1200;
+  }
+
+  .petal{
+    position:absolute;
+    width:18px;
+    height:18px;
+    border-radius:70% 30% 60% 40%;
+    background:linear-gradient(135deg,var(--petal-pink),var(--petal-deep));
+    opacity:0.95;
+    filter:drop-shadow(0 6px 12px rgba(0,0,0,0.18));
+    transform:rotate(25deg);
+  }
+
+  @keyframes float1{
+    0%{transform:translateY(-12vh) rotate(0deg) translateX(0)}
+    50%{transform:translateY(50vh) rotate(120deg) translateX(10vw)}
+    100%{transform:translateY(110vh) rotate(260deg) translateX(-8vw)}
+  }
+
+  @keyframes float2{
+    0%{transform:translateY(-20vh) rotate(10deg) translateX(0)}
+    50%{transform:translateY(55vh) rotate(-100deg) translateX(-6vw)}
+    100%{transform:translateY(125vh) rotate(-220deg) translateX(6vw)}
+  }
 
   /* tree silhouette */
-  .cherry-tree{position:fixed;left:18px;bottom:18px;opacity:0.12;pointer-events:none;filter:drop-shadow(0 10px 30px rgba(255,118,64,0.04));z-index:0}
+  .cherry-tree{
+    position:fixed;
+    left:18px;
+    bottom:18px;
+    opacity:0.12;
+    pointer-events:none;
+    filter:drop-shadow(0 10px 30px rgba(255,118,64,0.04));
+    z-index:0;
+  }
 
   /* modal */
-  .modal{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:linear-gradient(180deg, rgba(2,6,23,0.65), rgba(2,6,23,0.85));z-index:1400;visibility:hidden;opacity:0;transition:opacity .2s ease,visibility .2s}
-  .modal.open{visibility:visible;opacity:1}
-  .modal-sheet{width:min(980px,94%);max-height:86vh;overflow:auto;border-radius:14px;background:linear-gradient(180deg,#07101a,#0b1620);padding:20px;border:1px solid rgba(255,209,102,0.06)}
+  .modal{
+    position:fixed;
+    inset:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:linear-gradient(180deg, rgba(2,6,23,0.65), rgba(2,6,23,0.85));
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    z-index:1400;
+    visibility:hidden;
+    opacity:0;
+    transition:opacity .3s ease,visibility .3s;
+  }
+
+  .modal.open{
+    visibility:visible;
+    opacity:1;
+  }
+
+  .modal-sheet{
+    width:min(980px,94%);
+    max-height:86vh;
+    overflow:auto;
+    border-radius:14px;
+    background:linear-gradient(180deg,#07101a,#0b1620);
+    padding:24px;
+    border:1px solid rgba(255,209,102,0.06);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.8);
+    transform: scale(0.95);
+    transition: transform 0.3s ease;
+  }
+
+  .modal.open .modal-sheet {
+    transform: scale(1);
+  }
 
   /* buttons ghost */
-  .ghost{background:transparent;border:1px dashed rgba(255,255,255,0.04);color:var(--muted);padding:8px 10px;border-radius:8px;cursor:pointer}
+  .ghost{
+    background:transparent;
+    border:1px dashed rgba(255,255,255,0.04);
+    color:var(--muted);
+    padding:8px 12px;
+    border-radius:8px;
+    cursor:pointer;
+    transition: all 0.3s ease;
+    font-size: 13px;
+  }
+
+  .ghost:hover {
+    border-color: rgba(255,255,255,0.1);
+    background: rgba(255,255,255,0.02);
+    color: #eaf2ff;
+  }
 
   /* small touches */
-  .pill{padding:6px 10px;border-radius:999px;font-weight:600;background: linear-gradient(90deg, rgba(255,209,102,0.06), rgba(255,209,102,0.02));color:var(--accent);border:1px solid rgba(255,209,102,0.1);display:inline-block}
+  .pill{
+    padding:6px 12px;
+    border-radius:999px;
+    font-weight:600;
+    background: linear-gradient(90deg, rgba(255,209,102,0.06), rgba(255,209,102,0.02));
+    color:var(--accent);
+    border:1px solid rgba(255,209,102,0.1);
+    display:inline-block;
+    font-size: 13px;
+  }
 
   /* relationships specific */
-  .relationship-header{display:flex;align-items:center;gap:12px;margin-bottom:8px}
-  .relationship-emoji{font-size:34px}
-  .timeline{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:10px}
-  .timeline .box{background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00));border-radius:10px;padding:12px;border:1px solid rgba(255,255,255,0.02)}
-  .memories-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:10px}
+  .relationship-header{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    margin-bottom:12px;
+  }
+
+  .relationship-emoji{
+    font-size:34px;
+  }
+
+  .timeline{
+    display:grid;
+    grid-template-columns:repeat(2, 1fr);
+    gap:14px;
+    margin-top:14px;
+  }
+
+  .timeline .box{
+    background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00));
+    border-radius:10px;
+    padding:14px;
+    border:1px solid rgba(255,255,255,0.02);
+    transition: all 0.3s ease;
+  }
+
+  .timeline .box:hover {
+    background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+    border-color: rgba(255,255,255,0.04);
+    transform: translateY(-2px);
+  }
+
+  .memories-grid{
+    display:grid;
+    grid-template-columns:repeat(2, 1fr);
+    gap:14px;
+    margin-top:14px;
+  }
+
+  .memories-grid .box {
+    background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00));
+    border-radius:10px;
+    padding:14px;
+    border:1px solid rgba(255,255,255,0.02);
+    transition: all 0.3s ease;
+  }
+
+  .memories-grid .box:hover {
+    background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+    border-color: rgba(255,255,255,0.04);
+    transform: translateY(-2px);
+  }
+
+  /* quote styling */
+  .quote {
+    font-style: italic;
+    padding: 12px 16px;
+    background: rgba(255,209,102,0.03);
+    border-left: 3px solid var(--accent);
+    border-radius: 6px;
+    margin: 12px 0;
+  }
 
   /* responsive */
   @media (max-width:980px){
-    main{grid-template-columns:1fr;gap:14px}
-    .nav-links{display:none}
-    .hamburger{display:block}
-    .hero{padding:16px}
-    .badge{width:96px;height:96px}
-    .hero-right{display:none}
-    .timeline{grid-template-columns:1fr}
-    .memories-grid{grid-template-columns:1fr}
+    main{
+      grid-template-columns:1fr;
+      gap:20px;
+    }
+
+    .nav-links{
+      display:none;
+      position: absolute;
+      top: 100%;
+      right: 14px;
+      margin-top: 8px;
+      flex-direction: column;
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      padding: 12px;
+      border-radius: 12px;
+      box-shadow: 0 12px 40px rgba(2,6,23,0.6);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      border: 1px solid rgba(255,255,255,0.03);
+      min-width: 200px;
+    }
+
+    .nav-links.active {
+      display: flex;
+    }
+
+    .hamburger{
+      display:block;
+    }
+
+    .hero{
+      padding:20px;
+    }
+
+    .badge{
+      width:96px;
+      height:96px;
+    }
+
+    .hero-right{
+      display:none;
+    }
+
+    .timeline{
+      grid-template-columns:1fr;
+    }
+
+    .memories-grid{
+      grid-template-columns:1fr;
+    }
+
+    .section {
+      padding-bottom: 20px;
+      margin-bottom: 20px;
+    }
   }
+
   @media (max-width:560px){
-    .wrap{padding:12px;margin:8px}
-    .title{font-size:20px}
-    header.hero{flex-direction:column;align-items:flex-start;gap:12px}
-    .badge{width:86px;height:86px}
-    .logo{width:44px;height:44px}
-    .card{padding:16px}
-    .nav-cta{padding:8px 10px;font-size:14px}
+    .wrap{
+      padding:12px;
+      margin:8px;
+    }
+
+    .title{
+      font-size:20px;
+    }
+
+    header.hero{
+      flex-direction:column;
+      align-items:flex-start;
+      gap:12px;
+      padding: 18px;
+    }
+
+    .badge{
+      width:86px;
+      height:86px;
+    }
+
+    .badge .emoji {
+      font-size: 36px;
+    }
+
+    .logo{
+      width:44px;
+      height:44px;
+    }
+
+    .card{
+      padding:18px;
+    }
+
+    .nav-cta{
+      padding:8px 10px;
+      font-size:13px;
+    }
+
+    .cta {
+      padding: 10px 14px;
+      font-size: 13px;
+    }
+
+    h2.section-title, h3.section-title {
+      font-size: 18px;
+    }
+
+    .lead {
+      font-size: 14.5px;
+    }
   }
 
   /* print */
   @media print{
-    body{background:#fff;color:#000}
-    nav.navbar, .petals, .cta, .hamburger, .kintsugi, .cherry-tree{display:none !important}
-    main{grid-template-columns:1fr !important}
-    .card{box-shadow:none;border-radius:0;background:transparent;color:#000;border:0;padding:0}
+    body{
+      background:#fff;
+      color:#000;
+    }
+
+    nav.navbar, .petals, .cta, .hamburger, .kintsugi, .cherry-tree{
+      display:none !important;
+    }
+
+    main{
+      grid-template-columns:1fr !important;
+    }
+
+    .card{
+      box-shadow:none;
+      border-radius:0;
+      background:transparent;
+      color:#000;
+      border:0;
+      padding:0;
+      page-break-inside: avoid;
+    }
+
+    .section {
+      page-break-inside: avoid;
+      border-bottom: 1px solid #ddd;
+    }
   }
 
   /* animations */
-  @keyframes appearUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
-  @keyframes bob{0%{transform:translateY(0)}50%{transform:translateY(-8px)}100%{transform:translateY(0)}}
-  @keyframes grow{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+  @keyframes appearUp{
+    from{
+      opacity:0;
+      transform:translateY(20px);
+    }
+    to{
+      opacity:1;
+      transform:translateY(0);
+    }
+  }
+
+  @keyframes bob{
+    0%{transform:translateY(0)}
+    50%{transform:translateY(-8px)}
+    100%{transform:translateY(0)}
+  }
+
+  @keyframes grow{
+    from{transform:scaleX(0)}
+    to{transform:scaleX(1)}
+  }
 
   /* focus for accessibility */
-  a:focus,button:focus{outline:3px solid rgba(255,209,102,0.14);outline-offset:3px}
+  a:focus,button:focus{
+    outline:3px solid rgba(255,209,102,0.14);
+    outline-offset:3px;
+  }
+
+  /* smooth scrolling */
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /* better list styling */
+  ol.clean {
+    padding-left: 24px;
+    margin: 12px 0;
+  }
+
+  ol.clean li {
+    margin: 12px 0;
+    color: #dbeaf8;
+    line-height: 1.7;
+  }
+
+  /* hr styling */
+  hr {
+    border: 0;
+    border-top: 1px solid rgba(255,255,255,0.04);
+    margin: 16px 0;
+  }
+
+  /* box styling improvements */
+  .box {
+    transition: all 0.3s ease;
+  }
+
+  /* improved spacing */
+  h4 {
+    margin: 12px 0 8px;
+    color: var(--accent);
+    font-size: 16px;
+    font-weight: 600;
+  }
 </style>
 </head>
 <body>
   <div id="scrollProgress" aria-hidden="true"></div>
   <div class="petals" aria-hidden="true"></div>
-
   <div class="wrap" id="pageWrap">
-
     <nav class="navbar" role="navigation" aria-label="Main navigation">
       <div class="brand">
         <div class="logo" aria-hidden="true">
@@ -153,7 +825,6 @@
         </div>
         <h3>HappyLife</h3>
       </div>
-
       <div class="nav-links" id="navLinks">
         <a href="#manifestoContent">Manifesto</a>
         <a href="#quick">Rituals</a>
@@ -161,7 +832,6 @@
         <a href="#relationships">Relationships</a>
         <button class="nav-cta" id="openManifestoBtn">Open Manifesto</button>
       </div>
-
       <button class="hamburger" id="hamburgerBtn" aria-label="Open menu" aria-expanded="false">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M4 6h16M4 12h16M4 18h16" stroke="#eaf2ff" stroke-width="1.6" stroke-linecap="round"/></svg>
       </button>
@@ -173,19 +843,16 @@
         <path d="M12 48C98 30 156 22 210 34C260 45 324 62 398 36" stroke="url(#g2)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
         <defs><linearGradient id="g2" x1="0" x2="1"><stop offset="0" stop-color="#ffd166"/><stop offset="1" stop-color="#ff8a4b"/></linearGradient></defs>
       </svg>
-
       <div class="hero-left">
         <div class="badge" aria-hidden="true">
           <div class="emoji">🌸</div>
           <h4>HappyLife</h4>
         </div>
-
         <div style="min-width:0">
           <h1 id="heroTitle" class="title">IKIGAI & KINTSUGI — The Way I Want To Live My Life</h1>
           <div class="subtitle">A poetic, philosophical, and soulful 50-year Life Formula — made to honor wounds and celebrate growth.</div>
         </div>
       </div>
-
       <div class="hero-right">
         <button class="cta" id="openManifestoTop">Open Manifesto</button>
         <button class="cta" id="downloadPrint">Printable Version</button>
@@ -195,7 +862,6 @@
     <main>
       <section class="card" aria-labelledby="manifestoTitle">
         <div class="gold-line" aria-hidden="true"></div>
-
         <div class="section reveal" id="manifestoContent">
           <h2 id="manifestoTitle" class="section-title">🌸 IKIGAI & KINTSUGI — THE WAY I WANT TO LIVE MY LIFE</h2>
           <div class="quote small">"A life shaped by meaning and mended with gold."</div>
@@ -205,10 +871,9 @@
           <h3 class="section-title">🌱 1. The Path of IKIGAI — My Reason for Waking Up Each Morning</h3>
           <p class="lead">Ikigai means: <em>"A life worth living. A reason to get out of bed."</em></p>
           <p class="lead">My Ikigai is a constellation of small reasons that light my life every day.</p>
-
           <strong style="color:var(--accent)">✨ My Ikigai includes:</strong>
           <ul class="clean">
-            <li><strong>Creating</strong> something I’m proud of</li>
+            <li><strong>Creating</strong> something I'm proud of</li>
             <li><strong>Growing</strong> a little every day</li>
             <li><strong>Loving</strong> deeply and honestly</li>
             <li><strong>Learning</strong> something new</li>
@@ -217,8 +882,7 @@
             <li><strong>Sharing</strong> kindness, peace and joy</li>
             <li><strong>Becoming</strong> someone future-me respects</li>
           </ul>
-
-          <p class="small" style="margin-top:8px">Ikigai reminds me:
+          <p class="small" style="margin-top:12px">Ikigai reminds me:
             <br>🔹 Life is a slow craft
             <br>🔹 Small steps matter more than big plans
             <br>🔹 Consistency beats short bursts
@@ -242,24 +906,21 @@
         <article class="section reveal">
           <h3 class="section-title">🔮 3. The Long-Life Philosophy — A 50-Year Way of Living</h3>
           <p class="lead">Guiding principles inspired by Okinawa, Ikigai & Kintsugi:</p>
-
-          <h4 style="margin:10px 0 6px;color:var(--accent)">🌅 A. Move Slowly, Live Fully</h4>
+          <h4 style="margin:12px 0 8px;color:var(--accent)">🌅 A. Move Slowly, Live Fully</h4>
           <ul class="clean"><li>Rush less</li><li>Feel more</li><li>Enjoy small moments</li><li>Be here now</li></ul>
-
-          <h4 style="margin:10px 0 6px;color:var(--accent)">🫖 B. Rituals, Not Routines</h4>
+          <h4 style="margin:12px 0 8px;color:var(--accent)">🫖 B. Rituals, Not Routines</h4>
           <p class="lead">Daily rituals that nourish: Morning stillness, warm tea, light exercise, gentle learning, evening gratitude.</p>
-
-          <h4 style="margin:10px 0 6px;color:var(--accent)">🔥 F. Follow the 1% Rule</h4>
+          <h4 style="margin:12px 0 8px;color:var(--accent)">🔥 F. Follow the 1% Rule</h4>
           <p class="lead">Small daily improvements compound into a golden life.</p>
         </article>
 
         <article class="section reveal" id="gold">
           <h3 class="section-title">🌈 4. The Golden Principles for My Whole Life</h3>
-          <ol class="clean" style="list-style:decimal;padding-left:20px;">
-            <li class="lead"><span class="pill">🌤️ 1. Choose Joy Daily</span><div class="small">Happiness is a habit.</div></li>
-            <li class="lead"><span class="pill">♻️ 2. Keep Evolving</span><div class="small">Never stop learning.</div></li>
-            <li class="lead"><span class="pill">🧡 3. Heal, Don’t Hide</span><div class="small">Face pain to transform it.</div></li>
-            <li class="lead"><span class="pill">🕰️ 5. Value Time More than Money</span><div class="small">Time builds meaning.</div></li>
+          <ol class="clean" style="list-style:decimal;padding-left:24px;">
+            <li class="lead" style="margin:14px 0;"><span class="pill">🌤️ 1. Choose Joy Daily</span><div class="small" style="margin-top:6px;">Happiness is a habit.</div></li>
+            <li class="lead" style="margin:14px 0;"><span class="pill">♻️ 2. Keep Evolving</span><div class="small" style="margin-top:6px;">Never stop learning.</div></li>
+            <li class="lead" style="margin:14px 0;"><span class="pill">🧡 3. Heal, Don't Hide</span><div class="small" style="margin-top:6px;">Face pain to transform it.</div></li>
+            <li class="lead" style="margin:14px 0;"><span class="pill">🕰️ 5. Value Time More than Money</span><div class="small" style="margin-top:6px;">Time builds meaning.</div></li>
           </ol>
         </article>
 
@@ -277,29 +938,27 @@
               <div class="small">A gentle guide to make people feel loved, valued, and emotionally safe.</div>
             </div>
           </div>
-
-          <hr style="border:0;border-top:1px solid rgba(255,255,255,0.04);margin:10px 0 14px">
-
-          <h4 style="margin:6px 0;color:var(--accent)">1. How to Make People Genuinely Happy 😊</h4>
+          <hr>
+          <h4>1. How to Make People Genuinely Happy 😊</h4>
           <p class="lead">People feel happy when they feel:</p>
           <ul class="clean">
             <li>✔ <strong>Seen</strong> — You notice their small efforts, moods, and achievements.</li>
             <li>✔ <strong>Heard</strong> — You listen fully without interrupting or judging.</li>
             <li>✔ <strong>Appreciated</strong> — You remind them—through words or actions—why they matter.</li>
             <li>✔ <strong>Supported</strong> — You show up consistently in small ways.</li>
-            <li>✔ <strong>Safe</strong> — You communicate calmly and don’t react harshly.</li>
+            <li>✔ <strong>Safe</strong> — You communicate calmly and don't react harshly.</li>
           </ul>
-          <p class="small" style="margin-top:6px">✨ Happiness isn’t created by big gestures—but by small, daily kindness.</p>
+          <p class="small" style="margin-top:10px">✨ Happiness isn't created by big gestures—but by small, daily kindness.</p>
 
-          <h4 style="margin:10px 0;color:var(--accent)">2. How to Show Love Consistently ❤️</h4>
-          <p class="lead">Consistency is not about doing everything every day. It’s about sending a message that says: “I’m here. I remember you. You matter.”</p>
+          <h4>2. How to Show Love Consistently ❤️</h4>
+          <p class="lead">Consistency is not about doing everything every day. It's about sending a message that says: "I'm here. I remember you. You matter."</p>
           <div class="timeline" aria-hidden="false">
             <div class="box">
               <strong>🌞 Daily (1 minute)</strong>
               <ul class="clean" style="margin-top:8px">
-                <li>Good morning or “thinking of you” message</li>
+                <li>Good morning or "thinking of you" message</li>
                 <li>Share something that reminded you of them</li>
-                <li>Ask: “How was your day?”</li>
+                <li>Ask: "How was your day?"</li>
               </ul>
             </div>
             <div class="box">
@@ -307,10 +966,9 @@
               <ul class="clean" style="margin-top:8px">
                 <li>A short call</li>
                 <li>Share a song, photo, memory</li>
-                <li>Appreciate them: “Thank you for ___ this week.”</li>
+                <li>Appreciate them: "Thank you for ___ this week."</li>
               </ul>
             </div>
-
             <div class="box">
               <strong>💌 Monthly (Few hours)</strong>
               <ul class="clean" style="margin-top:8px">
@@ -324,24 +982,24 @@
             </div>
           </div>
 
-          <h4 style="margin:10px 0;color:var(--accent)">3. How to Give Time to Everyone 🕒</h4>
-          <p class="lead">You don’t need more hours — just a predictable rhythm.</p>
+          <h4>3. How to Give Time to Everyone 🕒</h4>
+          <p class="lead">You don't need more hours — just a predictable rhythm.</p>
           <ul class="clean">
-            <li><strong>🔹 Daily (20–30 minutes total)</strong>
-              <div class="small">Girlfriend: 10–20 min · Parents: 5–10 min · Siblings: 2–5 min · Friends: reply/voice note · Dadaji: 2 minutes</div>
+            <li style="margin:12px 0;"><strong>🔹 Daily (20–30 minutes total)</strong>
+              <div class="small" style="margin-top:6px;">Girlfriend: 10–20 min · Parents: 5–10 min · Siblings: 2–5 min · Friends: reply/voice note · Dadaji: 2 minutes</div>
             </li>
-            <li><strong>🔹 Weekly (1–2 hours total)</strong>
-              <div class="small">Mon: Sister · Tue: Brother · Wed: Friend 1 · Thu: Friend 2 · Fri: Girlfriend long call · Weekend: Parents & family</div>
+            <li style="margin:12px 0;"><strong>🔹 Weekly (1–2 hours total)</strong>
+              <div class="small" style="margin-top:6px;">Mon: Sister · Tue: Brother · Wed: Friend 1 · Thu: Friend 2 · Fri: Girlfriend long call · Weekend: Parents & family</div>
             </li>
-            <li><strong>🔹 Monthly (2–4 hours)</strong>
-              <div class="small">Family dinner · Date with girlfriend · Meet 1–2 friends · Visit or call grandparents</div>
+            <li style="margin:12px 0;"><strong>🔹 Monthly (2–4 hours)</strong>
+              <div class="small" style="margin-top:6px;">Family dinner · Date with girlfriend · Meet 1–2 friends · Visit or call grandparents</div>
             </li>
-            <li><strong>🔹 Yearly (Big moments)</strong>
-              <div class="small">Trip with girlfriend · One family vacation · Birthday celebrations done well · Memory project (album, surprises)</div>
+            <li style="margin:12px 0;"><strong>🔹 Yearly (Big moments)</strong>
+              <div class="small" style="margin-top:6px;">Trip with girlfriend · One family vacation · Birthday celebrations done well · Memory project (album, surprises)</div>
             </li>
           </ul>
 
-          <h4 style="margin:10px 0;color:var(--accent)">4. How to Create Beautiful Small Memories 🌤</h4>
+          <h4>4. How to Create Beautiful Small Memories 🌤</h4>
           <div class="memories-grid">
             <div class="box">
               <strong>👩‍👦 With Your Mother</strong>
@@ -361,7 +1019,6 @@
                 <li>Show respect</li>
               </ul>
             </div>
-
             <div class="box">
               <strong>👧🧒 With Your Siblings</strong>
               <ul class="clean" style="margin-top:8px">
@@ -379,7 +1036,6 @@
                 <li>Emotional stability</li>
               </ul>
             </div>
-
             <div class="box">
               <strong>🤝 With Friends</strong>
               <ul class="clean" style="margin-top:8px">
@@ -397,55 +1053,52 @@
               </ul>
             </div>
           </div>
-          <p class="small" style="margin-top:8px">✨ Small moments build lifelong bonds.</p>
+          <p class="small" style="margin-top:12px">✨ Small moments build lifelong bonds.</p>
 
-          <h4 style="margin:10px 0;color:var(--accent)">5. How to Make Your Girlfriend Feel Special Daily 💖</h4>
+          <h4>5. How to Make Your Girlfriend Feel Special Daily 💖</h4>
           <p class="lead">Every girl needs: ❤️ Attention · 🛡 Emotional safety · 🤝 Loyalty · ✨ Effort · 💞 Small signs of love</p>
           <ul class="clean">
             <li><strong>Daily</strong> — Good morning + good night · Ask about her day · One compliment · Listen without fixing</li>
             <li><strong>Weekly</strong> — Video call · Tiny surprise (song, message, photo)</li>
             <li><strong>Monthly</strong> — One date · One thoughtful gesture</li>
-            <li><strong>Always</strong> — Communicate · Don’t disappear · Speak kindly · Don’t let ego win</li>
+            <li><strong>Always</strong> — Communicate · Don't disappear · Speak kindly · Don't let ego win</li>
           </ul>
-          <p class="small" style="margin-top:6px">✨ Your consistency = her peace. ✨ Your attention = her happiness.</p>
+          <p class="small" style="margin-top:10px">✨ Your consistency = her peace. ✨ Your attention = her happiness.</p>
 
-          <h4 style="margin:10px 0;color:var(--accent)">6. How to Rebuild Old Bonds & Not Hurt People Again 🌟</h4>
-          <ol class="clean" style="list-style:decimal;padding-left:20px;">
-            <li>Acknowledge your mistakes quietly, maturely.</li>
-            <li>Become predictable — trust comes from patterns.</li>
-            <li>Communicate better:
-              <div class="small">“If I hurt you, tell me — I want to fix it.” · “I’m learning to express myself.”</div>
+          <h4>6. How to Rebuild Old Bonds & Not Hurt People Again 🌟</h4>
+          <ol class="clean" style="list-style:decimal;padding-left:24px;">
+            <li style="margin:10px 0;">Acknowledge your mistakes quietly, maturely.</li>
+            <li style="margin:10px 0;">Become predictable — trust comes from patterns.</li>
+            <li style="margin:10px 0;">Communicate better:
+              <div class="small" style="margin-top:6px;">"If I hurt you, tell me — I want to fix it." · "I'm learning to express myself."</div>
             </li>
-            <li>Improve emotional maturity:
-              <div class="small">Pause before reacting · Use calm tone · Respect boundaries</div>
+            <li style="margin:10px 0;">Improve emotional maturity:
+              <div class="small" style="margin-top:6px;">Pause before reacting · Use calm tone · Respect boundaries</div>
             </li>
-            <li>Show up consistently — actions rebuild trust, not words.</li>
+            <li style="margin:10px 0;">Show up consistently — actions rebuild trust, not words.</li>
           </ol>
-
-          <hr style="border:0;border-top:1px solid rgba(255,255,255,0.04);margin:12px 0 14px">
-
-          <div style="background:linear-gradient(180deg, rgba(255,209,102,0.03), rgba(255,209,102,0.01));padding:12px;border-radius:10px;border:1px solid rgba(255,209,102,0.06);margin-top:8px">
+          <hr>
+          <div style="background:linear-gradient(180deg, rgba(255,209,102,0.03), rgba(255,209,102,0.01));padding:16px;border-radius:10px;border:1px solid rgba(255,209,102,0.06);margin-top:12px">
             <strong style="color:var(--accent)">🌟 Final Message for You, Arpit</strong>
-            <p class="small" style="margin:8px 0 0">You’re not trying to impress anyone. You’re becoming someone who brings peace, love, and value into the lives of the people you care about. That is rare. That is beautiful.</p>
-            <p class="small" style="margin:6px 0 0">You don’t need to be perfect — just:</p>
-            <ul class="clean" style="margin-top:6px">
+            <p class="small" style="margin:10px 0 0">You're not trying to impress anyone. You're becoming someone who brings peace, love, and value into the lives of the people you care about. That is rare. That is beautiful.</p>
+            <p class="small" style="margin:8px 0 0">You don't need to be perfect — just:</p>
+            <ul class="clean" style="margin-top:8px">
               <li>🌿 A little more present</li>
               <li>🌿 A little more consistent</li>
               <li>🌿 A little more patient</li>
               <li>🌿 A little more loving</li>
             </ul>
-            <p class="small" style="margin-top:6px"><strong>And you will become the exact man you want to be. 💛</strong></p>
+            <p class="small" style="margin-top:8px"><strong>And you will become the exact man you want to be. 💛</strong></p>
           </div>
         </article>
         <!-- end relationships -->
-
       </section>
 
       <aside class="side">
         <div class="card" id="quick">
-          <h3 style="margin:0 0 6px;color:var(--accent)">Quick Rituals</h3>
+          <h3 style="margin:0 0 8px;color:var(--accent);font-size:18px">Quick Rituals</h3>
           <div class="small">Tiny, daily acts that connect to your Ikigai — designed as rituals, not rules.</div>
-          <ul class="clean" style="margin-top:12px">
+          <ul class="clean" style="margin-top:14px">
             <li>Morning stillness — 5 minutes of breath</li>
             <li>Warm tea — taste it slowly</li>
             <li>15-minute learning — read or watch something meaningful</li>
@@ -455,9 +1108,9 @@
         </div>
 
         <div class="card">
-          <h3 style="margin:0 0 6px;color:var(--accent)">Daily 1% Rule</h3>
+          <h3 style="margin:0 0 8px;color:var(--accent);font-size:18px">Daily 1% Rule</h3>
           <div class="small">Pick one tiny habit and keep it protected.</div>
-          <div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap">
+          <div style="margin-top:14px;display:flex;gap:8px;flex-wrap:wrap">
             <button class="ghost" id="smallHabit">Pick a Habit</button>
             <button class="ghost" id="viewWallpaper">Wallpaper Mode</button>
             <button class="ghost" id="downloadPNG_small">Download PNG</button>
@@ -466,12 +1119,12 @@
 
         <div class="card small">
           <strong>Notes</strong>
-          <p style="margin:8px 0 0">Page is optimized for printing and mobile. Use the printable button for a clean PDF. On mobile, tap the hamburger to view navigation.</p>
+          <p style="margin:10px 0 0">Page is optimized for printing and mobile. Use the printable button for a clean PDF. On mobile, tap the hamburger to view navigation.</p>
         </div>
       </aside>
     </main>
 
-    <footer style="margin-top:18px;text-align:center;color:var(--muted);font-size:13px">
+    <footer style="margin-top:28px;text-align:center;color:var(--muted);font-size:13px;padding:20px 0">
       Made with ❤️ — small golden steps create a golden life.
     </footer>
   </div>
@@ -486,20 +1139,20 @@
 
   <!-- modal -->
   <div class="modal" id="manifestoModal" role="dialog" aria-modal="true" aria-hidden="true">
-    <div class="modal-sheet" id="manifestoSheet">
-      <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:10px">
-        <div style="font-weight:700;color:var(--accent)">Printable Manifesto</div>
+    <div class="modal-sheet" id="manifestoSheet" role="document">
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:14px">
+        <div style="font-weight:700;color:var(--accent);font-size:18px">Printable Manifesto</div>
         <div style="display:flex;gap:8px">
           <button class="ghost" id="closeModal">Close</button>
           <button class="ghost" id="printBtn">Print / Save as PDF</button>
         </div>
       </div>
-      <div id="manifestoPrintable" style="color:#e8f2ff;font-family:Inter, system-ui;line-height:1.5;">
+      <div id="manifestoPrintable" style="color:#e8f2ff;font-family:Inter, system-ui;line-height:1.6;">
         <!-- content for printable preview (clean) -->
-        <h1 style="font-family:'Playfair Display',serif;color:#fff;margin-bottom:6px">IKIGAI & KINTSUGI — THE WAY I WANT TO LIVE MY LIFE</h1>
-        <p style="color:var(--muted)">This printable view is optimized for PDF export. Use the Print button (or Cmd/Ctrl+P).</p>
-        <hr style="border:0;border-top:2px solid rgba(255,209,102,0.08);margin:12px 0 18px">
-        <p style="margin-top:8px">Ikigai: A life worth living. Kintsugi: Beauty through healing. Keep your manifesto simple and printable.</p>
+        <h1 style="font-family:'Playfair Display',serif;color:#fff;margin-bottom:8px;font-size:28px">IKIGAI & KINTSUGI — THE WAY I WANT TO LIVE MY LIFE</h1>
+        <p style="color:var(--muted);margin-bottom:16px">This printable view is optimized for PDF export. Use the Print button (or Cmd/Ctrl+P).</p>
+        <hr style="border:0;border-top:2px solid rgba(255,209,102,0.08);margin:16px 0 20px">
+        <p style="margin-top:12px;line-height:1.7">Ikigai: A life worth living. Kintsugi: Beauty through healing. Keep your manifesto simple and printable.</p>
       </div>
     </div>
   </div>
@@ -510,10 +1163,18 @@
 
   // ---------- scroll progress ----------
   const progress = document.getElementById('scrollProgress');
-  window.addEventListener('scroll', ()=>{
-    const total = document.body.scrollHeight - window.innerHeight;
-    const pct = total > 0 ? (window.scrollY/total)*100 : 0;
-    progress.style.width = clamp(pct,0,100) + '%';
+  let ticking = false;
+
+  window.addEventListener('scroll', ()=> {
+    if (!ticking) {
+      window.requestAnimationFrame(() => {
+        const total = document.body.scrollHeight - window.innerHeight;
+        const pct = total > 0 ? (window.scrollY/total)*100 : 0;
+        progress.style.width = clamp(pct,0,100) + '%';
+        ticking = false;
+      });
+      ticking = true;
+    }
   }, {passive:true});
 
   // ---------- petals generation ----------
@@ -525,7 +1186,8 @@
       const p = document.createElement('div');
       p.className = 'petal';
       const size = 8 + Math.random()*26;
-      p.style.width = size + 'px'; p.style.height = size + 'px';
+      p.style.width = size + 'px';
+      p.style.height = size + 'px';
       p.style.left = (Math.random()*100) + 'vw';
       p.style.top = (-20 - Math.random()*20) + 'vh';
       p.style.opacity = 0.6 + Math.random()*0.4;
@@ -540,82 +1202,173 @@
 
   // ---------- reveal on scroll ----------
   const reveals = Array.from(document.querySelectorAll('.reveal'));
-  const observer = new IntersectionObserver((entries)=>{
-    entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
-  }, {threshold:0.12});
-  reveals.forEach(r => observer.observe(r));
+  const observer = new IntersectionObserver((entries)=> {
+    entries.forEach(e => {
+      if(e.isIntersecting) {
+        e.target.style.opacity = '1';
+        e.target.style.transform = 'translateY(0)';
+      }
+    });
+  }, {threshold:0.12, rootMargin: '0px 0px -50px 0px'});
+
+  reveals.forEach(r => {
+    r.style.opacity = '0';
+    r.style.transform = 'translateY(20px)';
+    r.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+    observer.observe(r);
+  });
 
   // ---------- modal & print handling ----------
   const modal = document.getElementById('manifestoModal');
-  const openBtns = [document.getElementById('openManifestoBtn'), document.getElementById('openManifestoTop'), document.getElementById('openManifesto')];
-  // attach safe listeners (filter nulls)
-  openBtns.forEach(b=>{ if(b) b.addEventListener('click', ()=> openPrintableModal(false)); });
+  const openBtns = [
+    document.getElementById('openManifestoBtn'),
+    document.getElementById('openManifestoTop')
+  ].filter(Boolean);
 
-  document.getElementById('openManifestoTop').addEventListener('click', ()=> openPrintableModal(false));
-  document.getElementById('closeModal').addEventListener('click', closePrintableModal);
+  openBtns.forEach(b => {
+    b.addEventListener('click', () => openPrintableModal(false));
+  });
+
+  const closeBtn = document.getElementById('closeModal');
+  if(closeBtn) {
+    closeBtn.addEventListener('click', closePrintableModal);
+  }
+
+  const printBtn = document.getElementById('printBtn');
+  if(printBtn) {
+    printBtn.addEventListener('click', () => window.print());
+  }
+
+  // Focus-trap variables
+  let lastFocusedBeforeModal = null;
+  const focusableSelectors = 'a[href], area[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), iframe, [tabindex]:not([tabindex="-1"])';
 
   function openPrintableModal(doPrintImmediately){
+    if(!modal) return;
+    lastFocusedBeforeModal = document.activeElement;
     modal.classList.add('open');
     modal.setAttribute('aria-hidden','false');
-    // if immediate print requested, wait for modal to be visible then print
+    document.body.style.overflow = 'hidden';
+
+    // focus first focusable element inside modal
+    const sheet = modal.querySelector('.modal-sheet');
+    if(sheet){
+      const first = sheet.querySelector(focusableSelectors);
+      if(first) first.focus();
+      // trap focus
+      modal.addEventListener('keydown', trapFocus);
+    }
+
     if(doPrintImmediately){
-      // wait for the CSS transition to complete visually (safe)
-      setTimeout(()=> {
-        // open print dialog
-        window.print();
-        // keep modal open so user can see result; close automatically after small delay
+      setTimeout(() => {
+        try {
+          window.print();
+        } catch(e) {
+          console.warn('Print not available', e);
+        }
         setTimeout(closePrintableModal, 400);
       }, 300);
     }
   }
+
   function closePrintableModal(){
+    if(!modal) return;
     modal.classList.remove('open');
     modal.setAttribute('aria-hidden','true');
+    document.body.style.overflow = '';
+    modal.removeEventListener('keydown', trapFocus);
+
+    // restore focus
+    if(lastFocusedBeforeModal && typeof lastFocusedBeforeModal.focus === 'function') {
+      lastFocusedBeforeModal.focus();
+    }
   }
 
-  // Print button at top should open modal and trigger print automatically
-  document.getElementById('downloadPrint').addEventListener('click', ()=>{
-    // open modal and then print (ensures print styles are applied & user sees preview)
-    openPrintableModal(true);
-  });
+  function trapFocus(e){
+    if(e.key !== 'Tab') return;
+    const sheet = modal.querySelector('.modal-sheet');
+    if(!sheet) return;
+    const focusable = Array.from(sheet.querySelectorAll(focusableSelectors)).filter(el => el.offsetParent !== null);
+    if(focusable.length === 0) {
+      e.preventDefault();
+      return;
+    }
+    const first = focusable[0];
+    const last = focusable[focusable.length-1];
+    if(e.shiftKey){
+      if(document.activeElement === first){
+        e.preventDefault();
+        last.focus();
+      }
+    } else {
+      if(document.activeElement === last){
+        e.preventDefault();
+        first.focus();
+      }
+    }
+  }
 
-  // Modal print button just prints current printable content
-  document.getElementById('printBtn').addEventListener('click', ()=> window.print());
+  // close modal by clicking backdrop
+  if(modal) {
+    modal.addEventListener('click', (e) => {
+      if(e.target === modal) closePrintableModal();
+    });
+    // close on escape
+    document.addEventListener('keydown', (e) => {
+      if(e.key === 'Escape' && modal.classList.contains('open')) {
+        closePrintableModal();
+      }
+    });
+  }
 
-  // Close modal with Escape or outside click
-  modal.addEventListener('click', (e)=> { if(e.target === modal) closePrintableModal(); });
-  document.addEventListener('keydown', (e)=> { if(e.key === 'Escape') closePrintableModal(); });
+  // ---------- printable open from hero ----------
+  const downloadPrintBtn = document.getElementById('downloadPrint');
+  if(downloadPrintBtn) {
+    downloadPrintBtn.addEventListener('click', () => {
+      openPrintableModal(true);
+    });
+  }
 
   // ---------- habit picker ----------
-  document.getElementById('smallHabit').addEventListener('click', ()=>{
-    const habits = [
-      '5 minutes morning stillness',
-      'Drink tea slowly and mindfully',
-      '15 mins learning (read/watch)',
-      '10 squats or gentle stretch',
-      'Write 3 things you’re grateful for',
-      'Watch one inspiring short video',
-      'Smile and greet someone'
-    ];
-    const pick = habits[Math.floor(Math.random()*habits.length)];
-    // better small toast instead of alert for mobile comfort
-    toast('Tiny habit suggestion ➜ ' + pick);
-  });
+  const smallHabitBtn = document.getElementById('smallHabit');
+  if(smallHabitBtn) {
+    smallHabitBtn.addEventListener('click', () => {
+      const habits = [
+        '5 minutes morning stillness',
+        'Drink tea slowly and mindfully',
+        '15 mins learning (read/watch)',
+        '10 squats or gentle stretch',
+        'Write 3 things you\'re grateful for',
+        'Watch one inspiring short video',
+        'Smile and greet someone'
+      ];
+      const pick = habits[Math.floor(Math.random()*habits.length)];
+      toast('Tiny habit suggestion ➜ ' + pick);
+    });
+  }
 
   // ---------- wallpaper / PNG ----------
-  document.getElementById('viewWallpaper').addEventListener('click', () => {
-    document.documentElement.requestFullscreen?.();
-    document.body.style.transition = 'filter .35s ease';
-    document.body.style.filter = 'brightness(1.02) saturate(1.06)';
-    toast('Wallpaper mode: press F11 (or Esc) to exit fullscreen.');
-  });
+  const viewWallpaperBtn = document.getElementById('viewWallpaper');
+  if(viewWallpaperBtn) {
+    viewWallpaperBtn.addEventListener('click', () => {
+      if (document.documentElement.requestFullscreen) {
+        document.documentElement.requestFullscreen().catch(()=>{});
+      } else if (document.documentElement.webkitRequestFullscreen) {
+        document.documentElement.webkitRequestFullscreen();
+      } else if (document.documentElement.msRequestFullscreen) {
+        document.documentElement.msRequestFullscreen();
+      }
+      document.body.style.transition = 'filter .35s ease';
+      document.body.style.filter = 'brightness(1.02) saturate(1.06)';
+      toast('Wallpaper mode: press Esc to exit fullscreen.');
+    });
+  }
 
   function elementToPNG(el, name='HappyLife_Ikigai_Kintsugi.png'){
-    // quick SVG foreignObject trick — works in many modern browsers
     try{
       const content = el.innerHTML;
-      const width = Math.min(1400, el.clientWidth*2 || 1200);
-      const height = Math.min(2200, el.clientHeight*2 || 1600);
+      const width = Math.min(1400, Math.max(900, el.clientWidth*2 || 1200));
+      const height = Math.min(2200, Math.max(800, el.clientHeight*2 || 1600));
       const svg = `<svg xmlns='http://www.w3.org/2000/svg' width='${width}' height='${height}'>
         <foreignObject width='100%' height='100%'>
           <div xmlns='http://www.w3.org/1999/xhtml' style='font-family:Inter,system-ui; font-size:18px; color:#e8f2ff; background:linear-gradient(180deg,#07101a,#0b1620); padding:30px; box-sizing:border-box;'>
@@ -627,18 +1380,38 @@
       const url = URL.createObjectURL(blob);
       const img = new Image();
       img.onload = () => {
-        const c = document.createElement('canvas'); c.width = width; c.height = height;
+        const c = document.createElement('canvas');
+        c.width = width;
+        c.height = height;
         const ctx = c.getContext('2d');
-        ctx.fillStyle = '#07101a'; ctx.fillRect(0,0,width,height);
+        ctx.fillStyle = '#07101a';
+        ctx.fillRect(0,0,width,height);
         ctx.drawImage(img,0,0);
         URL.revokeObjectURL(url);
-        c.toBlob(b => {
-          const a = document.createElement('a');
-          a.href = URL.createObjectURL(b); a.download = name; document.body.appendChild(a); a.click();
-          setTimeout(()=>{ URL.revokeObjectURL(a.href); a.remove(); }, 250);
-        }, 'image/png');
+        try {
+          c.toBlob(b => {
+            if(!b){
+              toast('PNG export failed — use Print to save as PDF.');
+              return;
+            }
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(b);
+            a.download = name;
+            document.body.appendChild(a);
+            a.click();
+            setTimeout(() => {
+              URL.revokeObjectURL(a.href);
+              a.remove();
+            }, 250);
+          }, 'image/png');
+        } catch(err) {
+          toast('PNG export is not supported in this browser — use Print to save as PDF.');
+        }
       };
-      img.onerror = () => { toast('PNG export is not supported in this browser — use Print to save as PDF.'); };
+      img.onerror = () => {
+        toast('PNG export is not supported in this browser — use Print to save as PDF.');
+        URL.revokeObjectURL(url);
+      };
       img.src = url;
     }catch(err){
       console.error(err);
@@ -646,61 +1419,143 @@
     }
   }
 
-  document.getElementById('downloadPNG_small').addEventListener('click', ()=>{
-    const printable = document.getElementById('manifestoContent');
-    if(printable) elementToPNG(printable, 'HappyLife_Manifesto.png');
-  });
+  const downloadPNGBtn = document.getElementById('downloadPNG_small');
+  if(downloadPNGBtn) {
+    downloadPNGBtn.addEventListener('click', () => {
+      const printable = document.getElementById('manifestoContent') || document.getElementById('manifestoPrintable');
+      if(printable) elementToPNG(printable, 'HappyLife_Manifesto.png');
+    });
+  }
 
   // ---------- toast (small in-page notification) ----------
   function toast(msg, ms=2400){
     let t = document.getElementById('hf_toast');
-    if(t) { t.remove(); clearTimeout(t._timeout); }
+    if(t) {
+      t.remove();
+      if(t._timeout) clearTimeout(t._timeout);
+    }
     t = document.createElement('div');
     t.id='hf_toast';
     t.style.position='fixed';
     t.style.left='50%';
     t.style.transform='translateX(-50%)';
     t.style.bottom='26px';
-    t.style.background='linear-gradient(90deg, rgba(0,0,0,0.6), rgba(0,0,0,0.4))';
+    t.style.background='linear-gradient(90deg, rgba(0,0,0,0.7), rgba(0,0,0,0.5))';
     t.style.color='#fff';
-    t.style.padding='10px 14px';
+    t.style.padding='12px 18px';
     t.style.borderRadius='999px';
     t.style.boxShadow='0 8px 30px rgba(0,0,0,0.6)';
     t.style.zIndex='1700';
     t.style.fontWeight='600';
+    t.style.fontSize='14px';
+    t.style.backdropFilter='blur(8px)';
+    t.style.webkitBackdropFilter='blur(8px)';
     t.innerText = msg;
     document.body.appendChild(t);
-    t._timeout = setTimeout(()=>{ t.style.transition='opacity .25s ease'; t.style.opacity='0'; setTimeout(()=>t.remove(),260); }, ms);
+    t._timeout = setTimeout(() => {
+      t.style.transition='opacity .25s ease';
+      t.style.opacity='0';
+      setTimeout(() => t.remove(), 260);
+    }, ms);
   }
 
   // ---------- responsive hamburger ----------
   const hamburger = document.getElementById('hamburgerBtn');
   const navLinks = document.getElementById('navLinks');
-  hamburger.addEventListener('click', ()=>{
-    const expanded = hamburger.getAttribute('aria-expanded') === 'true';
-    hamburger.setAttribute('aria-expanded', String(!expanded));
-    if(navLinks.style.display === 'flex') { navLinks.style.display = 'none'; }
-    else { navLinks.style.display = 'flex'; navLinks.style.flexDirection = 'column'; navLinks.style.position='absolute'; navLinks.style.right='14px'; navLinks.style.top='64px'; navLinks.style.background='linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01))'; navLinks.style.padding='12px'; navLinks.style.borderRadius='12px'; navLinks.style.boxShadow='0 12px 40px rgba(2,6,23,0.6)'; }
-  });
+
+  if(hamburger && navLinks) {
+    hamburger.addEventListener('click', (e) => {
+      const expanded = hamburger.getAttribute('aria-expanded') === 'true';
+      hamburger.setAttribute('aria-expanded', String(!expanded));
+      navLinks.classList.toggle('active');
+    });
+
+    // Close menu when clicking outside
+    document.addEventListener('click', (e) => {
+      if (window.innerWidth <= 980 && navLinks.classList.contains('active')) {
+        if (!navLinks.contains(e.target) && !hamburger.contains(e.target)) {
+          navLinks.classList.remove('active');
+          hamburger.setAttribute('aria-expanded', 'false');
+        }
+      }
+    });
+
+    // Close menu when clicking a link
+    navLinks.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        if (window.innerWidth <= 980) {
+          navLinks.classList.remove('active');
+          hamburger.setAttribute('aria-expanded', 'false');
+        }
+      });
+    });
+  }
 
   // keep nav shown on resize if larger
-  window.addEventListener('resize', ()=>{
-    if(window.innerWidth > 980){ navLinks.style.display = 'flex'; navLinks.style.flexDirection='row'; navLinks.style.position='static'; navLinks.style.top='auto'; navLinks.style.right='auto'; navLinks.style.background='transparent'; navLinks.style.padding='0'; navLinks.style.boxShadow='none'; }
-    else { /* keep collapsed state */ }
+  window.addEventListener('resize', () => {
+    if(window.innerWidth > 980 && navLinks){
+      navLinks.style.display = 'flex';
+      navLinks.style.flexDirection='row';
+      navLinks.style.position='static';
+      navLinks.style.top='auto';
+      navLinks.style.right='auto';
+      navLinks.style.background='transparent';
+      navLinks.style.padding='0';
+      navLinks.style.boxShadow='none';
+      navLinks.classList.remove('active');
+      if(hamburger) hamburger.setAttribute('aria-expanded', 'false');
+    }
   });
 
   // ---------- accessible focus rings on keyboard nav ----------
   (function keyboardNav(){
     let usingKeyboard = false;
-    window.addEventListener('keydown', e => { if(e.key === 'Tab') { usingKeyboard = true; document.body.classList.add('kb'); }});
-    window.addEventListener('mousedown', ()=>{ usingKeyboard = false; document.body.classList.remove('kb'); });
+    window.addEventListener('keydown', e => {
+      if(e.key === 'Tab') {
+        usingKeyboard = true;
+        document.body.classList.add('kb');
+      }
+    });
+    window.addEventListener('mousedown', () => {
+      usingKeyboard = false;
+      document.body.classList.remove('kb');
+    });
   })();
 
   // ready: small animated header flourish on load
-  window.addEventListener('load', ()=> {
-    // gentle push on title
+  window.addEventListener('load', () => {
     const t = document.querySelector('.title');
-    if(t) { t.animate([{transform:'translateY(6px)'},{transform:'translateY(0)'}], {duration:600, easing:'cubic-bezier(.2,.9,.3,1)'}); }
+    if(t) {
+      t.animate([
+        {transform:'translateY(6px)', opacity: 0},
+        {transform:'translateY(0)', opacity: 1}
+      ], {
+        duration:800,
+        easing:'cubic-bezier(.2,.9,.3,1)'
+      });
+    }
+
+    // Smooth fade-in for cards
+    const cards = document.querySelectorAll('.card');
+    cards.forEach((card, index) => {
+      // initialize for animation
+      card.style.opacity = '0';
+      card.style.transform = 'translateY(12px)';
+      card.style.transition = 'opacity 520ms ease, transform 520ms ease';
+      setTimeout(() => {
+        card.style.opacity = '1';
+        card.style.transform = 'translateY(0)';
+      }, 160 + index * 120);
+    });
+
+    // small decorative flourish for badge
+    const badge = document.querySelector('.badge');
+    if(badge){
+      badge.animate([
+        {transform: 'translateY(6px) scale(0.98)', opacity:0},
+        {transform: 'translateY(0) scale(1)', opacity:1}
+      ], {duration:700, easing:'cubic-bezier(.2,.9,.3,1)'});
+    }
   });
 </script>
 </body>
