@@ -8,6 +8,7 @@ ________________________________________
 Structure
 index.html      → Main system interface
 strictplan.html → Daily routine plan
+happylife.html  → happy life thought
 docs/           → Personal blueprints & notes
 ________________________________________
 Purpose
