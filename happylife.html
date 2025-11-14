@@ -91,6 +91,13 @@
   /* small touches */
   .pill{padding:6px 10px;border-radius:999px;font-weight:600;background: linear-gradient(90deg, rgba(255,209,102,0.06), rgba(255,209,102,0.02));color:var(--accent);border:1px solid rgba(255,209,102,0.1);display:inline-block}
 
+  /* relationships specific */
+  .relationship-header{display:flex;align-items:center;gap:12px;margin-bottom:8px}
+  .relationship-emoji{font-size:34px}
+  .timeline{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:10px}
+  .timeline .box{background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00));border-radius:10px;padding:12px;border:1px solid rgba(255,255,255,0.02)}
+  .memories-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:10px}
+
   /* responsive */
   @media (max-width:980px){
     main{grid-template-columns:1fr;gap:14px}
@@ -99,6 +106,8 @@
     .hero{padding:16px}
     .badge{width:96px;height:96px}
     .hero-right{display:none}
+    .timeline{grid-template-columns:1fr}
+    .memories-grid{grid-template-columns:1fr}
   }
   @media (max-width:560px){
     .wrap{padding:12px;margin:8px}
@@ -149,6 +158,7 @@
         <a href="#manifestoContent">Manifesto</a>
         <a href="#quick">Rituals</a>
         <a href="#gold">Principles</a>
+        <a href="#relationships">Relationships</a>
         <button class="nav-cta" id="openManifestoBtn">Open Manifesto</button>
       </div>
 
@@ -257,6 +267,178 @@
           <h3 class="section-title">🕯️ 5. Final Blessing — My Life, My Art</h3>
           <p class="lead"><strong>Ikigai gives me purpose.</strong><br><strong>Kintsugi gives me strength.</strong><br><strong>Presence gives me peace.</strong></p>
         </article>
+
+        <!-- NEW: Relationships section (added per request) -->
+        <article class="section reveal" id="relationships" aria-labelledby="relationshipsTitle">
+          <div class="relationship-header">
+            <div class="relationship-emoji" aria-hidden="true">🌱</div>
+            <div>
+              <h3 id="relationshipsTitle" class="section-title">The Art of Keeping Your Relationships Alive</h3>
+              <div class="small">A gentle guide to make people feel loved, valued, and emotionally safe.</div>
+            </div>
+          </div>
+
+          <hr style="border:0;border-top:1px solid rgba(255,255,255,0.04);margin:10px 0 14px">
+
+          <h4 style="margin:6px 0;color:var(--accent)">1. How to Make People Genuinely Happy 😊</h4>
+          <p class="lead">People feel happy when they feel:</p>
+          <ul class="clean">
+            <li>✔ <strong>Seen</strong> — You notice their small efforts, moods, and achievements.</li>
+            <li>✔ <strong>Heard</strong> — You listen fully without interrupting or judging.</li>
+            <li>✔ <strong>Appreciated</strong> — You remind them—through words or actions—why they matter.</li>
+            <li>✔ <strong>Supported</strong> — You show up consistently in small ways.</li>
+            <li>✔ <strong>Safe</strong> — You communicate calmly and don’t react harshly.</li>
+          </ul>
+          <p class="small" style="margin-top:6px">✨ Happiness isn’t created by big gestures—but by small, daily kindness.</p>
+
+          <h4 style="margin:10px 0;color:var(--accent)">2. How to Show Love Consistently ❤️</h4>
+          <p class="lead">Consistency is not about doing everything every day. It’s about sending a message that says: “I’m here. I remember you. You matter.”</p>
+          <div class="timeline" aria-hidden="false">
+            <div class="box">
+              <strong>🌞 Daily (1 minute)</strong>
+              <ul class="clean" style="margin-top:8px">
+                <li>Good morning or “thinking of you” message</li>
+                <li>Share something that reminded you of them</li>
+                <li>Ask: “How was your day?”</li>
+              </ul>
+            </div>
+            <div class="box">
+              <strong>📞 Weekly (10–15 minutes)</strong>
+              <ul class="clean" style="margin-top:8px">
+                <li>A short call</li>
+                <li>Share a song, photo, memory</li>
+                <li>Appreciate them: “Thank you for ___ this week.”</li>
+              </ul>
+            </div>
+
+            <div class="box">
+              <strong>💌 Monthly (Few hours)</strong>
+              <ul class="clean" style="margin-top:8px">
+                <li>A date or outing</li>
+                <li>A letter, gift, walk, or movie</li>
+                <li>Intentional time together</li>
+              </ul>
+            </div>
+            <div class="box">
+              <strong class="small">✨ Love = attention + effort + emotional maturity.</strong>
+            </div>
+          </div>
+
+          <h4 style="margin:10px 0;color:var(--accent)">3. How to Give Time to Everyone 🕒</h4>
+          <p class="lead">You don’t need more hours — just a predictable rhythm.</p>
+          <ul class="clean">
+            <li><strong>🔹 Daily (20–30 minutes total)</strong>
+              <div class="small">Girlfriend: 10–20 min · Parents: 5–10 min · Siblings: 2–5 min · Friends: reply/voice note · Dadaji: 2 minutes</div>
+            </li>
+            <li><strong>🔹 Weekly (1–2 hours total)</strong>
+              <div class="small">Mon: Sister · Tue: Brother · Wed: Friend 1 · Thu: Friend 2 · Fri: Girlfriend long call · Weekend: Parents & family</div>
+            </li>
+            <li><strong>🔹 Monthly (2–4 hours)</strong>
+              <div class="small">Family dinner · Date with girlfriend · Meet 1–2 friends · Visit or call grandparents</div>
+            </li>
+            <li><strong>🔹 Yearly (Big moments)</strong>
+              <div class="small">Trip with girlfriend · One family vacation · Birthday celebrations done well · Memory project (album, surprises)</div>
+            </li>
+          </ul>
+
+          <h4 style="margin:10px 0;color:var(--accent)">4. How to Create Beautiful Small Memories 🌤</h4>
+          <div class="memories-grid">
+            <div class="box">
+              <strong>👩‍👦 With Your Mother</strong>
+              <ul class="clean" style="margin-top:8px">
+                <li>Sit with her</li>
+                <li>Help with one small task</li>
+                <li>Bring her fruits/sweets</li>
+                <li>Ask about her younger days</li>
+              </ul>
+            </div>
+            <div class="box">
+              <strong>👨‍👦 With Your Father</strong>
+              <ul class="clean" style="margin-top:8px">
+                <li>Walk with him</li>
+                <li>Watch news/match together</li>
+                <li>Ask for life advice</li>
+                <li>Show respect</li>
+              </ul>
+            </div>
+
+            <div class="box">
+              <strong>👧🧒 With Your Siblings</strong>
+              <ul class="clean" style="margin-top:8px">
+                <li>Share memes</li>
+                <li>Tease playfully</li>
+                <li>Help when needed</li>
+              </ul>
+            </div>
+            <div class="box">
+              <strong>💕 With Your Girlfriend</strong>
+              <ul class="clean" style="margin-top:8px">
+                <li>Voice notes</li>
+                <li>Compliments</li>
+                <li>Cute surprises (songs, photos)</li>
+                <li>Emotional stability</li>
+              </ul>
+            </div>
+
+            <div class="box">
+              <strong>🤝 With Friends</strong>
+              <ul class="clean" style="margin-top:8px">
+                <li>Random voice note</li>
+                <li>Chai meet-up</li>
+                <li>Be available during tough times</li>
+              </ul>
+            </div>
+            <div class="box">
+              <strong>👴 With Dadaji</strong>
+              <ul class="clean" style="margin-top:8px">
+                <li>Listen to stories</li>
+                <li>Sit silently with him</li>
+                <li>Touch his feet daily if possible</li>
+              </ul>
+            </div>
+          </div>
+          <p class="small" style="margin-top:8px">✨ Small moments build lifelong bonds.</p>
+
+          <h4 style="margin:10px 0;color:var(--accent)">5. How to Make Your Girlfriend Feel Special Daily 💖</h4>
+          <p class="lead">Every girl needs: ❤️ Attention · 🛡 Emotional safety · 🤝 Loyalty · ✨ Effort · 💞 Small signs of love</p>
+          <ul class="clean">
+            <li><strong>Daily</strong> — Good morning + good night · Ask about her day · One compliment · Listen without fixing</li>
+            <li><strong>Weekly</strong> — Video call · Tiny surprise (song, message, photo)</li>
+            <li><strong>Monthly</strong> — One date · One thoughtful gesture</li>
+            <li><strong>Always</strong> — Communicate · Don’t disappear · Speak kindly · Don’t let ego win</li>
+          </ul>
+          <p class="small" style="margin-top:6px">✨ Your consistency = her peace. ✨ Your attention = her happiness.</p>
+
+          <h4 style="margin:10px 0;color:var(--accent)">6. How to Rebuild Old Bonds & Not Hurt People Again 🌟</h4>
+          <ol class="clean" style="list-style:decimal;padding-left:20px;">
+            <li>Acknowledge your mistakes quietly, maturely.</li>
+            <li>Become predictable — trust comes from patterns.</li>
+            <li>Communicate better:
+              <div class="small">“If I hurt you, tell me — I want to fix it.” · “I’m learning to express myself.”</div>
+            </li>
+            <li>Improve emotional maturity:
+              <div class="small">Pause before reacting · Use calm tone · Respect boundaries</div>
+            </li>
+            <li>Show up consistently — actions rebuild trust, not words.</li>
+          </ol>
+
+          <hr style="border:0;border-top:1px solid rgba(255,255,255,0.04);margin:12px 0 14px">
+
+          <div style="background:linear-gradient(180deg, rgba(255,209,102,0.03), rgba(255,209,102,0.01));padding:12px;border-radius:10px;border:1px solid rgba(255,209,102,0.06);margin-top:8px">
+            <strong style="color:var(--accent)">🌟 Final Message for You, Arpit</strong>
+            <p class="small" style="margin:8px 0 0">You’re not trying to impress anyone. You’re becoming someone who brings peace, love, and value into the lives of the people you care about. That is rare. That is beautiful.</p>
+            <p class="small" style="margin:6px 0 0">You don’t need to be perfect — just:</p>
+            <ul class="clean" style="margin-top:6px">
+              <li>🌿 A little more present</li>
+              <li>🌿 A little more consistent</li>
+              <li>🌿 A little more patient</li>
+              <li>🌿 A little more loving</li>
+            </ul>
+            <p class="small" style="margin-top:6px"><strong>And you will become the exact man you want to be. 💛</strong></p>
+          </div>
+        </article>
+        <!-- end relationships -->
+
       </section>
 
       <aside class="side">
